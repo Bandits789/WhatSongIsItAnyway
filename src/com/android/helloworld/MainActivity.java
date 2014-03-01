@@ -1,10 +1,10 @@
 package com.android.helloworld;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -22,13 +22,11 @@ public class MainActivity extends Activity {
 	}
 
 	/** 
-	 * Called when the user clicks the button!!1 
+	 * Plays music
 	 */
-	public void switchText(View view) {
-		// find the thing!
-		TextView textView = (TextView) findViewById(R.id.textView1);
-		// change the thing!
-		textView.setText("Goodbye 21w.789");
+	public void play(View view) {
+		MediaPlayer mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.doiwannaknow);
+		mediaPlayer.start();
 	}
 
 }
