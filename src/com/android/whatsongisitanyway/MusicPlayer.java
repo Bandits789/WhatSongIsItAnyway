@@ -1,9 +1,11 @@
-package com.android.helloworld;
+package com.android.whatsongisitanyway;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.android.helloworld.R;
 
 /**
  * Plays music from /res/raw (eventually sdcard)
