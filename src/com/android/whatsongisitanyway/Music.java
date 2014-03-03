@@ -15,6 +15,7 @@ public class Music {
 	}
 
 	/**
+	 * ID is the location of the music (currently R.raw.<something>)
 	 * 
 	 * @return the id of the music
 	 */
