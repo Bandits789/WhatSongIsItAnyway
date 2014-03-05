@@ -92,12 +92,17 @@ public class MainActivity extends Activity {
 			try {
 				// set the new title
 				textView.setText(nextSong.getID());
+				mediaPlayer.stop();
 				mediaPlayer.reset();
 
 				// get the music file
-				FileDescriptor fd = getResources().openRawResourceFd(
+				 FileDescriptor fd = getResources().openRawResourceFd(
 						nextSong.getID()).getFileDescriptor();
+//				FileInputStream fdstream = res
+//						.openRawResource(nextSong.getID());
+//				FileDescriptor fd = fdstream.getFD();
 				mediaPlayer.setDataSource(fd);
+				Log.d("fielsdir", getFilesDir() + "");
 
 				Log.d("media player", fd + "");
 
