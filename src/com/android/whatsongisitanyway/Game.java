@@ -41,7 +41,8 @@ public class Game {
 		// add the music object to the list
 		for (int i = 0; i < fields.length; i++) {
 			try { // to please eclipse
-				Music music = new Music(fields[i].getInt(fields[i]));
+				Music music = new Music(fields[i].getInt(fields[i]),
+						"songTitle"); // TODO: find song title
 				songs.add(music);
 			} catch (Exception e) {
 				e.printStackTrace();
