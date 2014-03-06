@@ -5,7 +5,6 @@ import java.io.FileDescriptor;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -98,13 +97,7 @@ public class MainActivity extends Activity {
 				// get the music file
 				 FileDescriptor fd = getResources().openRawResourceFd(
 						nextSong.getID()).getFileDescriptor();
-//				FileInputStream fdstream = res
-//						.openRawResource(nextSong.getID());
-//				FileDescriptor fd = fdstream.getFD();
 				mediaPlayer.setDataSource(fd);
-				Log.d("fielsdir", getFilesDir() + "");
-
-				Log.d("media player", fd + "");
 
 				// play it!
 				mediaPlayer.prepare();
