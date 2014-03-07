@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.helloworld.R;
+import com.android.whatsongisitanyway.R;
 
 public class MainActivity extends Activity {
 	Game game;
