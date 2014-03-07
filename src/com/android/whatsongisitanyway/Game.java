@@ -1,24 +1,15 @@
 package com.android.whatsongisitanyway;
 
 import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-
-import android.util.Log;
 import android.media.MediaMetadataRetriever;
-
-import com.android.whatsongisitanyway.R;
+import android.util.Log;
 
 /**
  * ADT that represents a single game of WSIIA. Has the songs list, and can
@@ -28,18 +19,18 @@ import com.android.whatsongisitanyway.R;
 public class Game {
 	private List<Music> songsList;
 	private int currentSongIndex;
-	MediaMetadataRetriever retriever; 
-	Resources res; 
+	private MediaMetadataRetriever retriever;
+	private Resources res;
 	
 	
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
 	 * be played
 	 */
-	public Game(Context context) {
+	public Game(Resources resources) {
 		currentSongIndex = -1;
+		res = resources;
 		songsList = populateSongs(); 
-		res = context.getResources(); 
 	}
 
 	/**
@@ -67,9 +58,9 @@ public class Game {
 			    String duration = "0"; 
 			    
 			    int musicID = fields[i].getInt(fields[i]); 
-			    Log.d("musicID", "id: "+ musicID); 
-			    FileInputStream fdstream = (FileInputStream) res.openRawResource(musicID);
-			    FileDescriptor fd = fdstream.getFD();
+				Log.d("musicID", "id: " + musicID);
+				FileDescriptor fd = res.openRawResourceFd(musicID)
+						.getFileDescriptor();
 			    retriever.setDataSource(fd); 
 //				
 //		        // Get song metadata and store 

@@ -7,17 +7,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.whatsongisitanyway.R;
-
 public class MainActivity extends Activity {
-	Game game;
-	MediaPlayer mediaPlayer = null;
+	private Game game;
+	private MediaPlayer mediaPlayer = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Game game = new Game(this);
 	}
 
 	@Override
@@ -35,7 +32,7 @@ public class MainActivity extends Activity {
 	 */
 	public void skip(View view) {
 		if (mediaPlayer == null) {
-			game = new Game(view.getContext());
+			game = new Game(getResources());
 		}
 
 		goToNextSong();
