@@ -5,7 +5,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.whatsongisitanyway.R;
@@ -33,27 +32,27 @@ public class MainActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void play(View view) {
+	public void skip(View view) {
 		if (mediaPlayer == null) {
-			startPlayer();
-		} else {
-			goToNextSong();
+			game = new Game();
 		}
+
+		goToNextSong();
 	}
 
 	/**
-	 * Starts up the mediaPlayer and starts playing the first song (if not
-	 * stopped or skipped, will keep playing songs until done)
+	 * Pauses/resumes song play
 	 * 
+	 * @param view
 	 */
-	public void startPlayer() {
-		game = new Game();
-
-		// we can only skip from now on
-		Button button = (Button) findViewById(R.id.playButton);
-		button.setText("Skip");
-
-		goToNextSong();
+	public void pause(View view) {
+		if (mediaPlayer != null) {
+			if (mediaPlayer.isPlaying()) {
+				mediaPlayer.pause();
+			} else {
+				mediaPlayer.start();
+			}
+		}
 	}
 
 	/**
@@ -102,9 +101,6 @@ public class MainActivity extends Activity {
 			// TODO: do something to alert user here...
 			mediaPlayer.release();
 			mediaPlayer = null;
-
-			Button button = (Button) findViewById(R.id.playButton);
-			button.setText("Play");
 			textView.setText("What Song Is It Anyway?");
 		}
 	}

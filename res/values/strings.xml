@@ -4,6 +4,7 @@
     <string name="app_name">What Song Is It Anyway?</string>
     <string name="action_settings">Settings</string>
     <string name="title">What Song Is It Anyway?</string>
-    <string name="playButton">Play</string>
+    <string name="pauseButton">Pause</string>
+    <string name="skipButton">Play/Skip</string>
 
 </resources>

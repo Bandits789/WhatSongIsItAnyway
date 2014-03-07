@@ -1,3 +1,5 @@
 /bin/
 /gen/
 /.settings/
+hs_err*
+lint.xml
