@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		Game game = new Game(this);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
 	 */
 	public void skip(View view) {
 		if (mediaPlayer == null) {
-			game = new Game();
+			game = new Game(view.getContext());
 		}
 
 		goToNextSong();

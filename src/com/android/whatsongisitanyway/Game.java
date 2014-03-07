@@ -10,6 +10,7 @@ import java.util.Random;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -28,15 +29,17 @@ public class Game {
 	private List<Music> songsList;
 	private int currentSongIndex;
 	MediaMetadataRetriever retriever; 
+	Resources res; 
 	
 	
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
 	 * be played
 	 */
-	public Game() {
+	public Game(Context context) {
 		currentSongIndex = -1;
-		songsList = populateSongs();
+		songsList = populateSongs(); 
+		res = context.getResources(); 
 	}
 
 	/**
@@ -52,8 +55,6 @@ public class Game {
 
 		Field[] fields = R.raw.class.getFields();
 		
-		Resources res = getResources(); 
-		
 		// add the music object to the list
 		// and add song metadata to the music object 
 		for (int i = 0; i < fields.length; i++) {
@@ -67,7 +68,8 @@ public class Game {
 			    
 			    int musicID = fields[i].getInt(fields[i]); 
 			    Log.d("musicID", "id: "+ musicID); 
-			    FileDescriptor fd = getResources().openRawResourceFd(musicID).getFileDescriptor();
+			    FileInputStream fdstream = (FileInputStream) res.openRawResource(musicID);
+			    FileDescriptor fd = fdstream.getFD();
 			    retriever.setDataSource(fd); 
 //				
 //		        // Get song metadata and store 
