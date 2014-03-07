@@ -8,11 +8,12 @@ import org.junit.Test;
 public class MusicTest {
 
 	@Test
-	public void IDTest() {
+	public void songInfoTest() {
 		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
 				"rock");
-		assertEquals("do i wanna know", song.getID());
-
+		assertTrue(42 == song.getID());
+		assertEquals("do i wanna know", song.getTitle());
+		assertEquals("arctic monkeys", song.getArtist());
 	}
 
 	@Test
