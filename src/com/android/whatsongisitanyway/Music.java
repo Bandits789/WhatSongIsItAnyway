@@ -7,11 +7,19 @@ package com.android.whatsongisitanyway;
  * 
  */
 public class Music {
-	private int id;
-	private String name;
+	private final int id;
+	private final String duration; 
+	private final String title;
+	private final String artist;
+	private final String genre; 
 
-	public Music(int id) {
-		this.id = id;
+
+	public Music(int id, String title, String artist, String duration, String genre) { 
+	    this.id = id; 
+	    this.title = title;
+	    this.artist = artist;
+	    this.duration = duration; 
+	    this.genre = genre; 
 	}
 
 	/**
@@ -22,5 +30,28 @@ public class Music {
 	public int getID() {
 		return id;
 	}
-
+	
+	/** 
+	 * Gets the music title
+	 * @return the name of the music 
+	 */
+	public String getTitle() { 
+	    return this.title; 
+	}
+	
+	/**
+	 * Gets the music artist 
+	 * @return the name of the artist
+	 */
+	public String getArtist() { 
+	    return this.artist; 
+	}
+	
+	/** 
+	 * Gets the music genre
+	 * @return the genre of the music 
+	 */
+	public String getGenre() { 
+	    return this.genre; 
+	}
 }
