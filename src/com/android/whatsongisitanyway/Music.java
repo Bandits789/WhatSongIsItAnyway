@@ -1,5 +1,7 @@
 package com.android.whatsongisitanyway;
 
+import android.R.integer;
+
 /**
  * Represents a music object.
  * 
@@ -12,15 +14,20 @@ public class Music {
 	private final String title;
 	private final String artist;
 	private final String genre; 
-
+	private int playCount;
+    private int timesCorrect;
+    private float avgGuessTime;
 
 	public Music(int id, String title, String artist, String duration, String genre) { 
 	    this.id = id; 
 	    this.title = title;
 	    this.artist = artist;
 	    this.duration = duration; 
-	    this.genre = genre; 
-	}
+	    this.genre = genre;
+	    this.playCount = playCount;
+        this.timesCorrect = timesCorrect;
+        this.avgGuessTime = avgGuessTime;
+    }
 
 	/**
 	 * ID is the location of the music (currently R.raw.<something>)
@@ -54,4 +61,38 @@ public class Music {
 	public String getGenre() { 
 	    return this.genre; 
 	}
+
+	public int getPlayCount() {
+		return playCount;
+	}
+	
+	public void setPlayCount(int count) {
+		this.playCount = count;
+	}
+	
+	public int getTimesCorrect() {
+		return timesCorrect;
+	}
+	
+	public void setTimesCorrect(int count) {
+		this.timesCorrect = count;
+	}
+	
+	public float getAvgGuessTime() {
+		return this.avgGuessTime;
+	}
+	
+	public void setAvgGuessTime(float f) {
+		this.avgGuessTime = f;
+	}
+	
+	public void playSong() {
+		this.setPlayCount(this.getPlayCount() + 1);
+	}
+	
+	public void guessCorrectly(int time) {
+		this.setAvgGuessTime((this.getAvgGuessTime() * this.getTimesCorrect() + time)/((float) (this.getTimesCorrect()+1)));
+		this.setTimesCorrect(this.getTimesCorrect() + 1);
+		
+	}	
 }

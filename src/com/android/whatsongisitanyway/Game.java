@@ -63,6 +63,7 @@ public class Game {
 	            Music music = new Music(musicID, title, artist, duration, genre); 
 	            
 	            Log.d(" Title:",title+" Artist:"+artist+" Genre:"+genre+" Duration:"+duration); 
+
 				songs.add(music);
 			} catch (Exception e) {
 				e.printStackTrace();
