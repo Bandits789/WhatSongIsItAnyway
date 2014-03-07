@@ -10,17 +10,28 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="@string/title" />
 
     <Button
-        android:id="@+id/playButton"
+        android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/title"
         android:layout_below="@+id/title"
-        android:text="@string/playButton" 
-        android:onClick="play"/>
+        android:layout_toLeftOf="@+id/skipButton"
+        android:layout_alignParentLeft="true"
+        android:text="@string/pauseButton"
+        android:onClick="pause"/>
+    
+    <Button
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:text="@string/skipButton" 
+        android:layout_alignParentRight="true"
+        android:onClick="skip"/>
 
 </RelativeLayout>
