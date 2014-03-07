@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import android.util.Log;
-import android.annotation.SuppressLint;
 import android.media.MediaMetadataRetriever;
 
-import com.android.helloworld.R;
+import com.android.whatsongisitanyway.R;
 
 /**
  * ADT that represents a single game of WSIIA. Has the songs list, and can
@@ -20,7 +19,7 @@ import com.android.helloworld.R;
 public class Game {
 	private List<Music> songsList;
 	private int currentSongIndex;
-	MediaMetadataRetriever retriever;
+	MediaMetadataRetriever retriever = new MediaMetadataRetriever(); 
 
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
@@ -36,29 +35,36 @@ public class Game {
 	 * 
 	 * @return the list of Music objects
 	 */
-	@SuppressLint("NewApi")
+	
     private List<Music> populateSongs() {
 		List<Music> songs = new ArrayList<Music>();
 
 		Field[] fields = R.raw.class.getFields();
 		
-		retriever = new MediaMetadataRetriever(); 
-
 		// add the music object to the list
 		// and add song metadata to the music object 
 		for (int i = 0; i < fields.length; i++) {
 			try { // to please eclipse
-				int musicID = fields[i].getInt(fields[i]); 
+
+			    // Dummy initializing for now
+			    String title = "0";
+			    String artist = "0";
+			    String genre = "0";
+			    String duration = "0"; 
+			    
+			    Log.d(" Title:",title+" Artist:"+artist+" Genre:"+genre+" Duration:"+duration); 
+			        
+			    int musicID = fields[i].getInt(fields[i]); 
 				retriever.setDataSource(Integer.toString(musicID)); 
-
+				
 		        // Get song metadata and store 
-	            String title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+				title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
 
-				String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+				artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
 	            
-	            String genre = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
+	            genre = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
 	            
-	            String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); 
+	            duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); 
 
 	            Music music = new Music(musicID, title, artist, duration, genre); 
 	            
@@ -68,6 +74,7 @@ public class Game {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		}
 
 		// randomize!
