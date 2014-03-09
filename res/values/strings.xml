@@ -6,8 +6,10 @@
     <string name="title">What Song Is It Anyway?</string>
     <string name="pauseButton">Pause</string>
     <string name="skipButton">Play/Skip</string>
-    <string name="timerText">2:00</string>
-    <string name="streak">0</string>
-    <string name="multiplier">0</string>
+    <string name="timer">2:00</string>
+    <string name="streak">Streak: 0</string>
+    <string name="multiplier">Multiplier: 0</string>
+    <string name="score">Score: 0</string>
+    <string name="submit">Description for the submit button</string>
 
 </resources>

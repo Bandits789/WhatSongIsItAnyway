@@ -11,47 +11,44 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="@string/title"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:typeface="normal" />
     
     <RelativeLayout
         android:id="@+id/controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:paddingTop="0dp"
         tools:context=".MainActivity" >
 
-		    <Button
-		        android:id="@+id/pauseButton"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentBottom="false"
-		        android:layout_alignParentLeft="true"
-		        android:layout_toLeftOf="@+id/streakMultiplier"
-		        android:height="@dimen/activity_vertical_margin"
-		        android:onClick="pause"
-		        android:text="@string/pauseButton" />
-		    
-		    <Button
-		        android:id="@+id/skipButton"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentRight="true"
-		        android:layout_toRightOf="@+id/streakMultiplier"
-		        android:onClick="skip"
-		        android:text="@string/skipButton" />
+        <ImageButton
+            android:id="@+id/pauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/streakMultiplier"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/pauseButton"
+            android:cropToPadding="false"
+            android:onClick="pause"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:scaleType="center"
+            android:src="@android:drawable/ic_media_pause" />
 
 		    <TextView
 		        android:id="@+id/timer"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_alignParentTop="true"
 		        android:layout_centerHorizontal="true"
 		        android:layout_centerVertical="true"
-		        android:text="@string/timerText"
+		        android:text="@string/timer"
 		        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 		    <LinearLayout
@@ -59,14 +56,8 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_below="@id/timer"
-		        android:layout_centerHorizontal="true" >
-
-		        <TextView
-		            android:id="@+id/streakLabel"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="Streak:"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
+		        android:layout_centerHorizontal="true"
+		        android:paddingTop="20dp" >
 
 		        <TextView
 		            android:id="@+id/streak"
@@ -76,22 +67,78 @@
 		            android:textAppearance="?android:attr/textAppearanceSmall" />
 
 		        <TextView
-		            android:id="@+id/multiplierLabel"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:paddingLeft="5dp"
-		            android:text="Multiplier:"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-		        <TextView
 		            android:id="@+id/multiplier"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
+		            android:paddingLeft="5dp"
 		            android:text="@string/multiplier"
 		            android:textAppearance="?android:attr/textAppearanceSmall" />
 
 		    </LinearLayout>
 
+		    <ImageButton
+		        android:id="@+id/skipButton"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignParentTop="true"
+		        android:layout_toRightOf="@id/streakMultiplier"
+		        android:contentDescription="@string/skipButton"
+		        android:paddingBottom="20dp"
+		        android:paddingTop="20dp"
+		        android:onClick="skip"
+		        android:src="@android:drawable/ic_media_next" />
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/controls"
+        android:layout_centerHorizontal="true"
+        android:text="@string/score"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ProgressBar
+        android:id="@+id/scoreBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp" />
+
+    <LinearLayout
+        android:id="@+id/dataEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scoreBar"
+        android:layout_centerHorizontal="true" >
+
+        <EditText
+            android:id="@+id/songTextbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textNoSuggestions" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/submit"
+            android:src="@android:drawable/ic_menu_send" />
+
+    </LinearLayout>
 
 </RelativeLayout>
