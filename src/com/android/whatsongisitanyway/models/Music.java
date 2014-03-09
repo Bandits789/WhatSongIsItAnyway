@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.android.whatsongisitanyway.models;
 
 
 /**

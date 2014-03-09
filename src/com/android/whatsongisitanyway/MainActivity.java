@@ -1,5 +1,8 @@
 package com.android.whatsongisitanyway;
 
+import com.android.whatsongisitanyway.models.Game;
+import com.android.whatsongisitanyway.models.Music;
+
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -33,6 +36,10 @@ public class MainActivity extends Activity {
 	public void skip(View view) {
 		if (mediaPlayer == null) {
 			game = new Game(getResources());
+			// initTimerThread();
+		} else {
+			// penalty for skipping
+			// game.skipPenalty();
 		}
 
 		goToNextSong();

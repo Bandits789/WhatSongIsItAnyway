@@ -1,9 +1,11 @@
-package com.android.whatsongisitanyway;
+package com.android.whatsongisitanyway.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.android.whatsongisitanyway.models.Music;
 
 public class MusicTest {
 

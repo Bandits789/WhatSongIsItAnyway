@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.android.whatsongisitanyway.models;
 
 public class Timer {
 	private final int time;
