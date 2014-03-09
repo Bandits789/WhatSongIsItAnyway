@@ -7,12 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.android.whatsongisitanyway.R;
-import com.android.whatsongisitanyway.R.raw;
-
 import android.content.res.Resources;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
+
+import com.android.whatsongisitanyway.R;
 
 /**
  * ADT that represents a single game of WSIIA. Has the songs list, and can
@@ -20,11 +19,14 @@ import android.util.Log;
  * 
  */
 public class Game {
-	private List<Music> songsList;
+	private final List<Music> songsList;
 	private int currentSongIndex;
-	private MediaMetadataRetriever retriever;
-	private Resources res;
+	private final Timer timer;
+	private final Resources res;
 	
+	// in seconds
+	private final int duration = 2 * 60;
+	private final int skipPenalty = 2;
 	
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
@@ -34,6 +36,7 @@ public class Game {
 		currentSongIndex = -1;
 		res = resources;
 		songsList = populateSongs(); 
+		timer = new Timer(duration);
 	}
 
 	/**
@@ -44,7 +47,7 @@ public class Game {
 	
     private List<Music> populateSongs() {
         
-        retriever = new MediaMetadataRetriever(); 
+		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
 		List<Music> songs = new ArrayList<Music>();
 
 		Field[] fields = R.raw.class.getFields();
@@ -109,6 +112,36 @@ public class Game {
 		}
 
 		return songsList.get(currentSongIndex);
+	}
+
+	/**
+	 * Decrement the timer by skipPenalty number of seconds
+	 */
+	public void skipPenalty() {
+		timer.decrement(skipPenalty);
+	}
+
+	/**
+	 * Pause the game and the timer
+	 */
+	public void pause() {
+		timer.pause();
+	}
+
+	/**
+	 * Resume the game and the timer
+	 */
+	public void resume() {
+		timer.run();
+	}
+
+	/**
+	 * Return the amount of time left on the timer
+	 * 
+	 * @return time left in seconds
+	 */
+	public int timeLeft() {
+		return timer.getTimeLeft();
 	}
 
 }

@@ -1,8 +1,5 @@
 package com.android.whatsongisitanyway;
 
-import com.android.whatsongisitanyway.models.Game;
-import com.android.whatsongisitanyway.models.Music;
-
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -10,9 +7,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.whatsongisitanyway.models.Game;
+import com.android.whatsongisitanyway.models.Music;
+
 public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
+	private Thread timerThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,10 @@ public class MainActivity extends Activity {
 	public void skip(View view) {
 		if (mediaPlayer == null) {
 			game = new Game(getResources());
-			// initTimerThread();
+			initTimerThread();
 		} else {
 			// penalty for skipping
-			// game.skipPenalty();
+			game.skipPenalty();
 		}
 
 		goToNextSong();
@@ -54,8 +55,10 @@ public class MainActivity extends Activity {
 		if (mediaPlayer != null) {
 			if (mediaPlayer.isPlaying()) {
 				mediaPlayer.pause();
+				game.pause();
 			} else {
 				mediaPlayer.start();
+				game.resume();
 			}
 		}
 	}
@@ -108,6 +111,29 @@ public class MainActivity extends Activity {
 			mediaPlayer = null;
 			textView.setText("What Song Is It Anyway?");
 		}
+	}
+
+	private void initTimerThread() {
+		timerThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				// while we have time left
+				while (game.timeLeft() > 0) {
+					// TextView timerLabel = (TextView)
+					// findViewById(R.id.timer);
+					// timerLabel.setText(game.timeLeft());
+				}
+
+				// TODO: we're done, now what?
+				mediaPlayer.pause();
+				game.pause();
+
+			}
+		});
+
+		timerThread.start();
 	}
 
 }

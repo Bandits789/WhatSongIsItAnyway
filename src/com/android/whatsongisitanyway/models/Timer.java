@@ -49,6 +49,23 @@ public class Timer {
 		return time_passed;
 	}
 
+	/**
+	 * Pause the timer
+	 */
+	public void pause() {
+		// TODO
+	}
+
+	/**
+	 * Decrement the timer by a number of seconds (used for penalties)
+	 * 
+	 * @param seconds
+	 *            seconds to decrement by
+	 */
+	public void decrement(int seconds) {
+		// TODO
+	}
+
 	public int getScore() {
 		return score;
 	}
