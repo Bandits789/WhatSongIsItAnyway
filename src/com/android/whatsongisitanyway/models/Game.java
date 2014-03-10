@@ -26,7 +26,7 @@ public class Game {
 	private final Resources res;
 	
 	// in seconds
-	private final int duration = 2 * 60;
+	private final int duration = 30;
 	private final int skipPenalty = 2;
 	
 	private int multiplier = 1;

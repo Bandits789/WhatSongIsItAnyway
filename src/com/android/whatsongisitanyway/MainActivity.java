@@ -3,6 +3,7 @@ package com.android.whatsongisitanyway;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
 	private Thread timerThread = null;
+	private final Handler mHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,17 +122,31 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				game.resume();
+				final TextView timerLabel = (TextView) findViewById(R.id.timer);
 
 				// while we have time left
 				while (game.timeLeft() > 0) {
-					// TextView timerLabel = (TextView)
-					// findViewById(R.id.timer);
-					// Log.d("timerLabel is", timerLabel.getText().toString());
-					// Log.d("timeLeft is", game.timeLeft() + "");
-					// timerLabel.setText(game.timeLeft());
+
+					// update UI on its own thread
+					runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run() {
+							timerLabel.setText(game.timeLeft() + "");
+						}
+					});
+
+					// to avoid updating too often, sleep for .3 secs
+					try {
+						Thread.sleep(300);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
 				}
 
 				// TODO: we're done, now what?
+				timerLabel.setText("0");
 				mediaPlayer.pause();
 				game.pause();
 

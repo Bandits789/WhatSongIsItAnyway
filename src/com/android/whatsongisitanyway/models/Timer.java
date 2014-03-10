@@ -5,6 +5,7 @@ public class Timer {
 	private double time_passed;
 	private boolean done;
 	private int score;
+	private Thread timerThread = null;
 
 	public Timer(int time) {
 		this.time = time;
@@ -18,25 +19,30 @@ public class Timer {
 	}
 
 	/**
-	 * Starts the timer. THIS CAN ONLY BE CALLED FROM INSIDE ANOTHER THREAD or
-	 * you'll get into a loop until this finishes
-	 * 
-	 * @return whether or not this is done yet
+	 * Starts the timer inside the timerThread
 	 */
-	public boolean run() {
-		double startTime = System.currentTimeMillis() / 1000.0;
-		while (time - time_passed > 0) {
-			double currentTime = (System.currentTimeMillis() / 1000.0);
-			time_passed = currentTime - startTime;
-			if (time == 10) {
-				score = 50 - (int) (50 * (time_passed) / ((double) time));
-			}
-			done = false;
-		}
-		done = true;
-		time_passed = (double) time;
+	public void run() {
+		// THIS MUST ALWAYS BE IN A THREAD
+		// otherwise, it won't return until time is up
+		timerThread = new Thread(new Runnable() {
 
-		return done;
+			@Override
+			public void run() {
+				double startTime = System.currentTimeMillis() / 1000.0;
+				while (time - time_passed > 0) {
+					double currentTime = (System.currentTimeMillis() / 1000.0);
+					time_passed = currentTime - startTime;
+					if (time == 10) {
+						score = 50 - (int) (50 * (time_passed) / ((double) time));
+					}
+					done = false;
+				}
+				done = true;
+				time_passed = (double) time;
+			}
+		});
+
+		timerThread.start();
 	}
 
 	public boolean isDone() {
@@ -59,7 +65,7 @@ public class Timer {
 	 * Pause the timer
 	 */
 	public void pause() {
-		// TODO
+		// TODO: make sure to pause inside the thread
 	}
 
 	/**
@@ -69,7 +75,7 @@ public class Timer {
 	 *            seconds to decrement by
 	 */
 	public void decrement(int seconds) {
-		// TODO
+		// TODO: also make sure inside thread
 	}
 
 	public int getScore() {
