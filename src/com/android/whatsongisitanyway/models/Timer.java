@@ -17,6 +17,12 @@ public class Timer {
 		}
 	}
 
+	/**
+	 * Starts the timer. THIS CAN ONLY BE CALLED FROM INSIDE ANOTHER THREAD or
+	 * you'll get into a loop until this finishes
+	 * 
+	 * @return whether or not this is done yet
+	 */
 	public boolean run() {
 		double startTime = System.currentTimeMillis() / 1000.0;
 		while (time - time_passed > 0) {

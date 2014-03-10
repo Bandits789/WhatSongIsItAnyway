@@ -21,6 +21,7 @@ import com.android.whatsongisitanyway.R;
 public class Game {
 	private final List<Music> songsList;
 	private int currentSongIndex;
+	private Music currentSong = null;
 	private final Timer timer;
 	private final Resources res;
 	
@@ -28,6 +29,10 @@ public class Game {
 	private final int duration = 2 * 60;
 	private final int skipPenalty = 2;
 	
+	private int multiplier = 1;
+	private int streak = 0;
+	private int score;
+
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
 	 * be played
@@ -111,7 +116,8 @@ public class Game {
 			return null;
 		}
 
-		return songsList.get(currentSongIndex);
+		currentSong = songsList.get(currentSongIndex);
+		return currentSong;
 	}
 
 	/**
@@ -119,6 +125,14 @@ public class Game {
 	 */
 	public void skipPenalty() {
 		timer.decrement(skipPenalty);
+		multiplier = 1;
+		streak = 0;
+	}
+
+	public void correctGuess(){
+		// multiplier = ??
+		streak += 1;
+		score += currentSong.getScore();
 	}
 
 	/**

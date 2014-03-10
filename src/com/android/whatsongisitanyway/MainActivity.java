@@ -13,7 +13,7 @@ import com.android.whatsongisitanyway.models.Music;
 public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
-	private Thread timerThread;
+	private Thread timerThread = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 				game.pause();
 			} else {
 				mediaPlayer.start();
-				game.resume();
+				// game.resume();
 			}
 		}
 	}
@@ -66,9 +66,6 @@ public class MainActivity extends Activity {
 	/**
 	 * Set the music player to go to the next song, if there are any left.
 	 * Release the player if we're done.
-	 * 
-	 * @param context
-	 *            the context of the view
 	 */
 	public void goToNextSong() {
 		Music nextSong = game.getNextSong();
@@ -113,16 +110,23 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Initialize the timer loop thread
+	 * 
+	 */
 	private void initTimerThread() {
 		timerThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
+				game.resume();
 
 				// while we have time left
 				while (game.timeLeft() > 0) {
 					// TextView timerLabel = (TextView)
 					// findViewById(R.id.timer);
+					// Log.d("timerLabel is", timerLabel.getText().toString());
+					// Log.d("timeLeft is", game.timeLeft() + "");
 					// timerLabel.setText(game.timeLeft());
 				}
 

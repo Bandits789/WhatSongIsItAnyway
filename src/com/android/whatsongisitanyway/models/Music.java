@@ -2,9 +2,7 @@ package com.android.whatsongisitanyway.models;
 
 
 /**
- * Represents a music object.
- * 
- * TODO: actually write this
+ * Immutable class that represents a music object
  * 
  */
 public class Music {
@@ -13,6 +11,7 @@ public class Music {
 	private final String title;
 	private final String artist;
 	private final String genre;
+
 	private int playCount;
 	private int timesCorrect;
 	private float avgGuessTime;
@@ -24,6 +23,16 @@ public class Music {
 		this.artist = artist;
 		this.duration = duration;
 		this.genre = genre;
+	}
+
+	/**
+	 * Calculates the score based off the timer
+	 * 
+	 * @return score for the song
+	 */
+	public int getScore() {
+		// TODO: do this
+		return 1;
 	}
 
 	/**
