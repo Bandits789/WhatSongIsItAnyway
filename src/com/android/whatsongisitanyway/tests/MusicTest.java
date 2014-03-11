@@ -29,13 +29,13 @@ public class MusicTest {
 
 		// times correct is initially 0
 		assertTrue(song.getTimesCorrect() == 0);
-		song.guessCorrectly(5);
+		// song.guessCorrectly(5);
 		assertTrue(song.getAvgGuessTime() == 5.0);
 		assertTrue(song.getTimesCorrect() == 1);
 
 		song.playSong();
 		assertTrue(song.getPlayCount() == 3);
-		song.guessCorrectly(2);
+		// song.guessCorrectly(2);
 		assertTrue(song.getAvgGuessTime() == 3.5);
 	}
 }

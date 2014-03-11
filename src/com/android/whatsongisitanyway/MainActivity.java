@@ -3,9 +3,10 @@ package com.android.whatsongisitanyway;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.android.whatsongisitanyway.models.Game;
@@ -15,12 +16,15 @@ public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
 	private Thread timerThread = null;
-	private final Handler mHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// add enter listener
+		TextView songBox = (TextView) findViewById(R.id.songTextbox);
+		songBox.setOnEditorActionListener(submitListener);
 	}
 
 	@Override
@@ -62,6 +66,26 @@ public class MainActivity extends Activity {
 				mediaPlayer.start();
 				// game.resume();
 			}
+		}
+	}
+
+	/**
+	 * Submits the guess to the game, updates the score
+	 * 
+	 * @param view
+	 */
+	public void submit(View view) {
+		TextView songBox = (TextView) findViewById(R.id.songTextbox);
+		TextView scoreLabel = (TextView) findViewById(R.id.score);
+
+		// if the score hasn't changed, it returns 0
+		int score = game.guess(songBox.getText().toString());
+		songBox.setText("");
+
+		// if they got it right, update score and skip songs
+		if (score > 0) {
+			scoreLabel.setText("Score: " + score);
+			goToNextSong();
 		}
 	}
 
@@ -108,6 +132,7 @@ public class MainActivity extends Activity {
 			// TODO: do something to alert user here...
 			mediaPlayer.release();
 			mediaPlayer = null;
+			game.stopTimer();
 			textView.setText("What Song Is It Anyway?");
 		}
 	}
@@ -128,8 +153,7 @@ public class MainActivity extends Activity {
 				while (game.timeLeft() > 0) {
 
 					// update UI on its own thread
-					runOnUiThread(new Runnable()
-					{
+					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
 							timerLabel.setText(game.timeLeft() + "");
@@ -155,5 +179,19 @@ public class MainActivity extends Activity {
 
 		timerThread.start();
 	}
+
+	/**
+	 * This is the on enter listener- it submits the entered text
+	 */
+	TextView.OnEditorActionListener submitListener = new TextView.OnEditorActionListener() {
+		public boolean onEditorAction(TextView view, int actionId,
+				KeyEvent event) {
+			if (actionId == EditorInfo.IME_NULL
+					&& event.getAction() == KeyEvent.ACTION_DOWN) {
+				submit(view);
+			}
+			return true;
+		}
+	};
 
 }

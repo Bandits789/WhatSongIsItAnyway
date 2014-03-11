@@ -129,10 +129,24 @@ public class Game {
 		streak = 0;
 	}
 
-	public void correctGuess(){
-		// multiplier = ??
-		streak += 1;
-		score += currentSong.getScore();
+	/**
+	 * Guess a song title, get the points for the guess (0 if wrong)
+	 * 
+	 * @param guess
+	 *            the string of the title guessed
+	 * @return the score for the guess
+	 */
+	public int guess(String guess) {
+		int points = currentSong.guess(guess);
+		score += points;
+
+		if (points > 0) {
+			// multiplier = ??
+			streak += 1;
+			return score;
+		}
+
+		return 0;
 	}
 
 	/**
@@ -156,6 +170,13 @@ public class Game {
 	 */
 	public int timeLeft() {
 		return timer.getTimeLeft();
+	}
+
+	/**
+	 * Resets timer back to zero, doesn't restart it
+	 */
+	public void stopTimer() {
+		timer.stop();
 	}
 
 }

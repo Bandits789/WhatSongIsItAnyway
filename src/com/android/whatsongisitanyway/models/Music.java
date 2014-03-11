@@ -1,8 +1,7 @@
 package com.android.whatsongisitanyway.models;
 
-
 /**
- * Immutable class that represents a music object
+ * Class that represents a music object
  * 
  */
 public class Music {
@@ -16,6 +15,9 @@ public class Music {
 	private int timesCorrect;
 	private float avgGuessTime;
 
+	private final Timer timer;
+	private final int playDuration = 5; // secs
+
 	public Music(int id, String title, String artist, String duration,
 			String genre) {
 		this.id = id;
@@ -23,6 +25,8 @@ public class Music {
 		this.artist = artist;
 		this.duration = duration;
 		this.genre = genre;
+
+		timer = new Timer(playDuration);
 	}
 
 	/**
@@ -31,7 +35,7 @@ public class Music {
 	 * @return score for the song
 	 */
 	public int getScore() {
-		// TODO: do this
+		// TODO: something to do with timer
 		return 1;
 	}
 
@@ -45,12 +49,32 @@ public class Music {
 	}
 
 	/**
+	 * Guess a song title, get the points for the guess (0 if wrong)
+	 * 
+	 * @param guess
+	 *            the string of the title guessed
+	 * @return the score for the guess
+	 */
+	public int guess(String guess) {
+		// TODO: fuzzy matching
+		if (guess.equals(title)) {
+			avgGuessTime = (float) ((avgGuessTime * timesCorrect + timer
+					.getTimeLeft()) / (timesCorrect + 1.0));
+			timesCorrect += 1;
+
+			return getScore();
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Gets the music title
 	 * 
 	 * @return the name of the music
 	 */
 	public String getTitle() {
-		return this.title;
+		return title;
 	}
 
 	/**
@@ -59,7 +83,7 @@ public class Music {
 	 * @return the name of the artist
 	 */
 	public String getArtist() {
-		return this.artist;
+		return artist;
 	}
 
 	/**
@@ -68,41 +92,23 @@ public class Music {
 	 * @return the genre of the music
 	 */
 	public String getGenre() {
-		return this.genre;
+		return genre;
 	}
 
 	public int getPlayCount() {
 		return playCount;
 	}
 
-	public void setPlayCount(int count) {
-		this.playCount = count;
-	}
-
 	public int getTimesCorrect() {
 		return timesCorrect;
 	}
 
-	public void setTimesCorrect(int count) {
-		this.timesCorrect = count;
-	}
-
 	public float getAvgGuessTime() {
-		return this.avgGuessTime;
-	}
-
-	public void setAvgGuessTime(float f) {
-		this.avgGuessTime = f;
+		return avgGuessTime;
 	}
 
 	public void playSong() {
-		this.setPlayCount(this.getPlayCount() + 1);
-	}
-
-	public void guessCorrectly(int time) {
-		this.setAvgGuessTime((this.getAvgGuessTime() * this.getTimesCorrect() + time)
-				/ ((float) (this.getTimesCorrect() + 1)));
-		this.setTimesCorrect(this.getTimesCorrect() + 1);
-
+		playCount += 1;
+		timer.run();
 	}
 }

@@ -17,7 +17,7 @@
         android:text="@string/title"
         android:textSize="20sp"
         android:typeface="normal" />
-    
+
     <RelativeLayout
         android:id="@+id/controls"
         android:layout_width="wrap_content"
@@ -42,53 +42,51 @@
             android:scaleType="center"
             android:src="@android:drawable/ic_media_pause" />
 
-		    <TextView
-		        android:id="@+id/timer"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_centerHorizontal="true"
-		        android:layout_centerVertical="true"
-		        android:text="@string/timer"
-		        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/timer"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		    <LinearLayout
-		        android:id="@+id/streakMultiplier"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_below="@id/timer"
-		        android:layout_centerHorizontal="true"
-		        android:paddingTop="20dp" >
+        <LinearLayout
+            android:id="@+id/streakMultiplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timer"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp" >
 
-		        <TextView
-		            android:id="@+id/streak"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/streak"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/streak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/streak"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-		        <TextView
-		            android:id="@+id/multiplier"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:paddingLeft="5dp"
-		            android:text="@string/multiplier"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/multiplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/multiplier"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
 
-		    </LinearLayout>
-
-		    <ImageButton
-		        android:id="@+id/skipButton"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentRight="true"
-		        android:layout_alignParentTop="true"
-		        android:layout_toRightOf="@id/streakMultiplier"
-		        android:contentDescription="@string/skipButton"
-		        android:paddingBottom="20dp"
-		        android:paddingTop="20dp"
-		        android:onClick="skip"
-		        android:src="@android:drawable/ic_media_next" />
-
+        <ImageButton
+            android:id="@+id/skipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/streakMultiplier"
+            android:contentDescription="@string/skipButton"
+            android:onClick="skip"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:src="@android:drawable/ic_media_next" />
     </RelativeLayout>
 
     <TextView
@@ -137,8 +135,8 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/submit"
+            android:onClick="submit"
             android:src="@android:drawable/ic_menu_send" />
-
     </LinearLayout>
 
 </RelativeLayout>

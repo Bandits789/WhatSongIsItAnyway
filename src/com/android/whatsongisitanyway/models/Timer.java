@@ -4,18 +4,12 @@ public class Timer {
 	private final int time;
 	private double time_passed;
 	private boolean done;
-	private int score;
 	private Thread timerThread = null;
 
 	public Timer(int time) {
 		this.time = time;
 		this.done = false;
 		this.time_passed = 0;
-		if (time == 10) {
-			this.score = 50;
-		} else {
-			this.score = 0;
-		}
 	}
 
 	/**
@@ -32,9 +26,6 @@ public class Timer {
 				while (time - time_passed > 0) {
 					double currentTime = (System.currentTimeMillis() / 1000.0);
 					time_passed = currentTime - startTime;
-					if (time == 10) {
-						score = 50 - (int) (50 * (time_passed) / ((double) time));
-					}
 					done = false;
 				}
 				done = true;
@@ -50,7 +41,7 @@ public class Timer {
 	}
 
 	public int getTimeLeft() {
-		return (int) (this.getTime() - this.getTimePassed());
+		return (int) (getTime() - getTimePassed());
 	}
 
 	public int getTime() {
@@ -78,17 +69,15 @@ public class Timer {
 		// TODO: also make sure inside thread
 	}
 
-	public int getScore() {
-		return score;
-	}
-
 	public void reset() {
 		time_passed = 0;
 		done = false;
-		if (time == 10) {
-			this.score = 50;
-		} else {
-			this.score = 0;
-		}
+	}
+
+	/**
+	 * Stops the timer
+	 */
+	public void stop() {
+		time_passed = time;
 	}
 }
