@@ -16,26 +16,43 @@ public class MusicTest {
 		assertTrue(42 == song.getID());
 		assertEquals("do i wanna know", song.getTitle());
 		assertEquals("arctic monkeys", song.getArtist());
+		assertEquals("rock", song.getGenre());
 	}
 
 	@Test
 	public void playCountTest() {
 		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
 				"rock");
-		assertTrue(song.getPlayCount() == 0);
+		assertEquals(0, song.getPlayCount());
 		song.playSong();
 		song.playSong();
-		assertTrue(song.getPlayCount() == 2);
+		assertEquals(2, song.getPlayCount());
+	}
+
+	@Test
+	public void guessingTest() {
+		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
+				"rock");
 
 		// times correct is initially 0
-		assertTrue(song.getTimesCorrect() == 0);
-		// song.guessCorrectly(5);
-		assertTrue(song.getAvgGuessTime() == 5.0);
-		assertTrue(song.getTimesCorrect() == 1);
+		assertEquals(0, song.getTimesCorrect());
+		song.guess(song.getTitle());
+		assertEquals(1, song.getTimesCorrect());
 
-		song.playSong();
-		assertTrue(song.getPlayCount() == 3);
-		// song.guessCorrectly(2);
-		assertTrue(song.getAvgGuessTime() == 3.5);
+		// guess incorrectly
+		song.guess("nope");
+		assertEquals(1, song.getTimesCorrect());
+	}
+
+	@Test
+	public void scoreTest() {
+		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
+				"rock");
+
+		// guess incorrectly
+		assertEquals(0, song.guess("nope"));
+
+		// now it's a function of time
+		assertTrue(song.guess(song.getTitle()) > 0);
 	}
 }

@@ -6,7 +6,7 @@ package com.android.whatsongisitanyway.models;
  */
 public class Music {
 	private final int id;
-	private final String duration;
+	private final String duration; // TODO: random song chunks
 	private final String title;
 	private final String artist;
 	private final String genre;
@@ -15,7 +15,7 @@ public class Music {
 	private int timesCorrect;
 	private float avgGuessTime;
 
-	private final Timer timer;
+	private final Timer timer; // TODO: do something with timer
 	private final int playDuration = 5; // secs
 
 	public Music(int id, String title, String artist, String duration,
@@ -34,7 +34,7 @@ public class Music {
 	 * 
 	 * @return score for the song
 	 */
-	public int getScore() {
+	private int getScore() {
 		// TODO: something to do with timer
 		return 1;
 	}
@@ -95,18 +95,37 @@ public class Music {
 		return genre;
 	}
 
+	/**
+	 * Gets total play count
+	 * 
+	 * @return play count
+	 */
 	public int getPlayCount() {
 		return playCount;
 	}
 
+	/**
+	 * Gets number of times the user guessed the song correctly
+	 * 
+	 * @return times guess correctly
+	 */
 	public int getTimesCorrect() {
 		return timesCorrect;
 	}
 
+	/**
+	 * Gets the average time it took the user to correctly guess the song
+	 * 
+	 * @return average time to correctly guess song
+	 */
 	public float getAvgGuessTime() {
 		return avgGuessTime;
 	}
 
+	/**
+	 * Starts the song's timer and increments the song play count, should be
+	 * called when song is going to be played
+	 */
 	public void playSong() {
 		playCount += 1;
 		timer.run();

@@ -24,11 +24,11 @@ public class Game {
 	private Music currentSong = null;
 	private final Timer timer;
 	private final Resources res;
-	
+
 	// in seconds
 	private final int duration = 30;
 	private final int skipPenalty = 2;
-	
+
 	private int multiplier = 1;
 	private int streak = 0;
 	private int score;
@@ -40,7 +40,7 @@ public class Game {
 	public Game(Resources resources) {
 		currentSongIndex = -1;
 		res = resources;
-		songsList = populateSongs(); 
+		songsList = populateSongs();
 		timer = new Timer(duration);
 	}
 
@@ -49,49 +49,54 @@ public class Game {
 	 * 
 	 * @return the list of Music objects
 	 */
-	
-    private List<Music> populateSongs() {
-        
+
+	private List<Music> populateSongs() {
+
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
 		List<Music> songs = new ArrayList<Music>();
 
 		Field[] fields = R.raw.class.getFields();
-		
+
 		// add the music object to the list
-		// and add song metadata to the music object 
+		// and add song metadata to the music object
 		for (int i = 0; i < fields.length; i++) {
 			try { // to please eclipse
 
-			    // Dummy initializing for now
-			    String title = "0";
-			    String artist = "0";
-			    String genre = "0";
-			    String duration = "0"; 
-			    
-			    int musicID = fields[i].getInt(fields[i]); 
+				// Dummy initializing for now
+				String title = "0";
+				String artist = "0";
+				String genre = "0";
+				String duration = "0";
+
+				int musicID = fields[i].getInt(fields[i]);
 				Log.d("musicID", "id: " + musicID);
 				FileDescriptor fd = res.openRawResourceFd(musicID)
 						.getFileDescriptor();
-			    retriever.setDataSource(fd); 
-//				
-//		        // Get song metadata and store 
-//				title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-//
-//				artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-//	            
-//	            genre = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
-//	            
-//	            duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); 
-//
-	            Music music = new Music(musicID, title, artist, duration, genre); 
-	            
-	            Log.d(" Title:",title+" Artist:"+artist+" Genre:"+genre+" Duration:"+duration); 
+				retriever.setDataSource(fd);
+				//
+				// // Get song metadata and store
+				// title =
+				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+				//
+				// artist =
+				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+				//
+				// genre =
+				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
+				//
+				// duration =
+				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+				//
+				Music music = new Music(musicID, title, artist, duration, genre);
+
+				Log.d(" Title:", title + " Artist:" + artist + " Genre:"
+						+ genre + " Duration:" + duration);
 
 				songs.add(music);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 
 		// randomize!
@@ -141,12 +146,19 @@ public class Game {
 		score += points;
 
 		if (points > 0) {
-			// multiplier = ??
+			multiplier += 1; // TODO: this shouldn't be
 			streak += 1;
 			return score;
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Start game and timer
+	 */
+	public void start() {
+		timer.run();
 	}
 
 	/**
@@ -160,7 +172,7 @@ public class Game {
 	 * Resume the game and the timer
 	 */
 	public void resume() {
-		timer.run();
+		timer.resume();
 	}
 
 	/**
@@ -173,10 +185,21 @@ public class Game {
 	}
 
 	/**
-	 * Resets timer back to zero, doesn't restart it
+	 * Return the score multiplier
+	 * 
+	 * @return multiplier
 	 */
-	public void stopTimer() {
-		timer.stop();
+	public int getMultiplier() {
+		return multiplier;
+	}
+
+	/**
+	 * Return the number of songs the user got in a row
+	 * 
+	 * @return streak
+	 */
+	public int getStreak() {
+		return streak;
 	}
 
 }

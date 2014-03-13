@@ -1,62 +1,83 @@
 package com.android.whatsongisitanyway.models;
 
+/**
+ * ADT representing the timer
+ * 
+ */
 public class Timer {
-	private final int time;
-	private double time_passed;
-	private boolean done;
-	private Thread timerThread = null;
+	private int time;
+	private double startTime;
 
+	private double pauseTime;
+	private double pauseTimeElapsed;
+	private boolean run;
+	private boolean pause;
+
+	/**
+	 * Makes a Timer object, but *does not* start it. To start the Timer, call
+	 * run()
+	 * 
+	 * @param time
+	 *            the amount of time in seconds to run the timer for
+	 */
 	public Timer(int time) {
 		this.time = time;
-		this.done = false;
-		this.time_passed = 0;
+		startTime = 0;
+		pauseTime = 0;
+		pauseTimeElapsed = 0;
+		run = false;
+		pause = false;
 	}
 
 	/**
 	 * Starts the timer inside the timerThread
+	 * 
 	 */
 	public void run() {
-		// THIS MUST ALWAYS BE IN A THREAD
-		// otherwise, it won't return until time is up
-		timerThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				double startTime = System.currentTimeMillis() / 1000.0;
-				while (time - time_passed > 0) {
-					double currentTime = (System.currentTimeMillis() / 1000.0);
-					time_passed = currentTime - startTime;
-					done = false;
-				}
-				done = true;
-				time_passed = (double) time;
-			}
-		});
-
-		timerThread.start();
+		startTime = (System.currentTimeMillis() / 1000.0);
+		run = true;
 	}
 
-	public boolean isDone() {
-		return done;
-	}
-
+	/**
+	 * Gets the amount of time left in seconds
+	 * 
+	 * @return time left
+	 */
 	public int getTimeLeft() {
-		return (int) (getTime() - getTimePassed());
-	}
+		if (run) {
+			if (pause) {
+				pauseTimeElapsed = (System.currentTimeMillis() / 1000.0)
+						- pauseTime;
+			}
+			double currentTime = (System.currentTimeMillis() / 1000.0);
+			double timeElapsed = currentTime - startTime;
 
-	public int getTime() {
+			// time limit - time elapsed + time game was paused
+			int timeLeft = (int) (time - timeElapsed + pauseTimeElapsed);
+
+			// return 0 if timeLeft < 0
+			return timeLeft < 0 ? 0 : timeLeft;
+		}
 		return time;
-	}
-
-	public double getTimePassed() {
-		return time_passed;
 	}
 
 	/**
 	 * Pause the timer
 	 */
 	public void pause() {
-		// TODO: make sure to pause inside the thread
+		if (run) {
+			pause = true;
+			pauseTime = System.currentTimeMillis() / 1000.0;
+		}
+	}
+
+	/**
+	 * Resume the timer from pause
+	 */
+	public void resume() {
+		if (run && pause) {
+			pause = false;
+		}
 	}
 
 	/**
@@ -66,18 +87,9 @@ public class Timer {
 	 *            seconds to decrement by
 	 */
 	public void decrement(int seconds) {
-		// TODO: also make sure inside thread
+		if (run) {
+			time -= seconds;
+		}
 	}
 
-	public void reset() {
-		time_passed = 0;
-		done = false;
-	}
-
-	/**
-	 * Stops the timer
-	 */
-	public void stop() {
-		time_passed = time;
-	}
 }

@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
 	private Thread timerThread = null;
+	private boolean running = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +42,13 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	public void skip(View view) {
-		if (mediaPlayer == null) {
-			game = new Game(getResources());
-			initTimerThread();
-		} else {
+		if (running) {
 			// penalty for skipping
 			game.skipPenalty();
+		} else {
+			running = true;
+			game = new Game(getResources());
+			initTimerThread();
 		}
 
 		goToNextSong();
@@ -64,7 +66,7 @@ public class MainActivity extends Activity {
 				game.pause();
 			} else {
 				mediaPlayer.start();
-				// game.resume();
+				game.resume();
 			}
 		}
 	}
@@ -132,7 +134,7 @@ public class MainActivity extends Activity {
 			// TODO: do something to alert user here...
 			mediaPlayer.release();
 			mediaPlayer = null;
-			game.stopTimer();
+			running = false;
 			textView.setText("What Song Is It Anyway?");
 		}
 	}
@@ -146,23 +148,17 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void run() {
-				game.resume();
-				final TextView timerLabel = (TextView) findViewById(R.id.timer);
+				game.start();
+				TextView timerLabel = (TextView) findViewById(R.id.timer);
 
 				// while we have time left
-				while (game.timeLeft() > 0) {
+				while (running && game.timeLeft() > 0) {
 
-					// update UI on its own thread
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							timerLabel.setText(game.timeLeft() + "");
-						}
-					});
+					updateTimerLabel(timerLabel);
 
-					// to avoid updating too often, sleep for .3 secs
+					// to avoid updating too often, sleep for .2 secs
 					try {
-						Thread.sleep(300);
+						Thread.sleep(200);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -170,14 +166,33 @@ public class MainActivity extends Activity {
 				}
 
 				// TODO: we're done, now what?
-				timerLabel.setText("0");
-				mediaPlayer.pause();
-				game.pause();
+				running = false;
+				updateTimerLabel(timerLabel);
 
+				if (mediaPlayer != null) {
+					mediaPlayer.pause();
+				}
 			}
 		});
 
 		timerThread.start();
+	}
+
+	/**
+	 * Updates the timer label to display the time left on the timer
+	 * 
+	 * @param timerLabel
+	 *            the timer label TextView
+	 */
+	private void updateTimerLabel(final TextView timerLabel) {
+
+		// update UI on its own thread
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				timerLabel.setText(game.timeLeft() + "");
+			}
+		});
 	}
 
 	/**
