@@ -8,10 +8,18 @@ public class Timer {
 	private int time;
 	private double startTime;
 
-	private double pauseTime;
-	private double pauseTimeElapsed;
 	private boolean run;
 	private boolean pause;
+
+	/**
+	 * pauseTime is the time of the user clicking pause, pauseTimeElapsed is the
+	 * current window of time in which pause is being pressed,
+	 * prevPauseTimeElapsed is the sum over all the pause time intervals (if
+	 * user has pressed pause multiple times, we want to add all of those times)
+	 */
+	private double pauseTime;
+	private double pauseTimeElapsed;
+	private double prevPauseTimeElapsed;
 
 	/**
 	 * Makes a Timer object, but *does not* start it. To start the Timer, call
@@ -24,6 +32,7 @@ public class Timer {
 		this.time = time;
 		startTime = 0;
 		pauseTime = 0;
+		prevPauseTimeElapsed = 0;
 		pauseTimeElapsed = 0;
 		run = false;
 		pause = false;
@@ -53,7 +62,7 @@ public class Timer {
 			double timeElapsed = currentTime - startTime;
 
 			// time limit - time elapsed + time game was paused
-			int timeLeft = (int) (time - timeElapsed + pauseTimeElapsed);
+			int timeLeft = (int) (time - timeElapsed + pauseTimeElapsed + prevPauseTimeElapsed);
 
 			// return 0 if timeLeft < 0
 			return timeLeft < 0 ? 0 : timeLeft;
@@ -76,6 +85,8 @@ public class Timer {
 	 */
 	public void resume() {
 		if (run && pause) {
+			prevPauseTimeElapsed += pauseTimeElapsed;
+			pauseTimeElapsed = 0;
 			pause = false;
 		}
 	}

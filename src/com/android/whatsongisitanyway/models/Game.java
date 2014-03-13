@@ -185,6 +185,31 @@ public class Game {
 	}
 
 	/**
+	 * Return the amount of time left on the timer in mm:ss format (unsupported
+	 * for over 59:59)
+	 * 
+	 * @return time left string
+	 */
+	public String timeLeftString() {
+		String time = timer.getTimeLeft() + "";
+		int length = time.length();
+
+		if (time.length() > 2) {
+			// mm:ss
+			time = time.substring(0, time.length() - 2) + ":"
+					+ time.substring(length - 1, length);
+		} else if (time.length() == 2) {
+			// 0:ss
+			time = "0:" + time;
+		} else {
+			// 0:0s
+			time = "0:0" + time;
+		}
+
+		return time;
+	}
+
+	/**
 	 * Return the score multiplier
 	 * 
 	 * @return multiplier

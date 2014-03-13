@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 	private MediaPlayer mediaPlayer = null;
 	private Thread timerThread = null;
 	private boolean running = false;
+	private boolean paused = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,22 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	public void skip(View view) {
-		if (running) {
-			// penalty for skipping
-			game.skipPenalty();
-		} else {
-			running = true;
-			game = new Game(getResources());
-			initTimerThread();
-		}
+		// do nothing if paused
+		if (!paused) {
+			if (running) {
+				// penalty for skipping
+				game.skipPenalty();
+				// multiplier and streak are lost
+				updateUILabel(R.id.streak, "Streak: 0");
+				updateUILabel(R.id.multiplier, "Multiplier: 1");
+			} else {
+				running = true;
+				game = new Game(getResources());
+				initTimerThread();
+			}
 
-		goToNextSong();
+			goToNextSong();
+		}
 	}
 
 	/**
@@ -60,11 +67,13 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	public void pause(View view) {
-		if (mediaPlayer != null) {
-			if (mediaPlayer.isPlaying()) {
+		if (running) {
+			if (!paused) {
+				paused = true;
 				mediaPlayer.pause();
 				game.pause();
 			} else {
+				paused = false;
 				mediaPlayer.start();
 				game.resume();
 			}
@@ -78,15 +87,17 @@ public class MainActivity extends Activity {
 	 */
 	public void submit(View view) {
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
-		TextView scoreLabel = (TextView) findViewById(R.id.score);
 
 		// if the score hasn't changed, it returns 0
 		int score = game.guess(songBox.getText().toString());
-		songBox.setText("");
+		updateUILabel(R.id.songTextbox, "");
 
 		// if they got it right, update score and skip songs
 		if (score > 0) {
-			scoreLabel.setText("Score: " + score);
+			updateUILabel(R.id.score, "Score: " + score);
+			updateUILabel(R.id.streak, "Streak: " + game.getStreak());
+			updateUILabel(R.id.multiplier,
+					"Multiplier: " + game.getMultiplier());
 			goToNextSong();
 		}
 	}
@@ -103,7 +114,7 @@ public class MainActivity extends Activity {
 		if (nextSong != null) {
 			try {
 				// set the new title
-				textView.setText(nextSong.getID());
+				updateUILabel(R.id.title, nextSong.getID() + "");
 
 				// stop old music player
 				if (mediaPlayer != null) {
@@ -135,7 +146,7 @@ public class MainActivity extends Activity {
 			mediaPlayer.release();
 			mediaPlayer = null;
 			running = false;
-			textView.setText("What Song Is It Anyway?");
+			updateUILabel(R.id.title, "What Song Is It Anyway?");
 		}
 	}
 
@@ -149,12 +160,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				game.start();
-				TextView timerLabel = (TextView) findViewById(R.id.timer);
 
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
 
-					updateTimerLabel(timerLabel);
+					updateUILabel(R.id.timer, game.timeLeftString());
 
 					// to avoid updating too often, sleep for .2 secs
 					try {
@@ -167,7 +177,7 @@ public class MainActivity extends Activity {
 
 				// TODO: we're done, now what?
 				running = false;
-				updateTimerLabel(timerLabel);
+				updateUILabel(R.id.timer, "0:00");
 
 				if (mediaPlayer != null) {
 					mediaPlayer.pause();
@@ -179,18 +189,21 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Updates the timer label to display the time left on the timer
+	 * Updates a TextView to some text on the UI thread
 	 * 
-	 * @param timerLabel
-	 *            the timer label TextView
+	 * @param id
+	 *            the id of the TextView to update
+	 * @param text
+	 *            the text to set the TextView to
 	 */
-	private void updateTimerLabel(final TextView timerLabel) {
+	private void updateUILabel(final int id, final String text) {
 
 		// update UI on its own thread
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				timerLabel.setText(game.timeLeft() + "");
+				TextView textView = (TextView) findViewById(id);
+				textView.setText(text);
 			}
 		});
 	}
