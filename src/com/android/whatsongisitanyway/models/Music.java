@@ -2,6 +2,8 @@ package com.android.whatsongisitanyway.models;
 
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Class that represents a music object
  * 
@@ -54,12 +56,18 @@ public class Music {
 	/**
 	 * Guess a song title, get the points for the guess (0 if wrong)
 	 * 
+	 * Uses Apache commons Lang library and the Jaro Winkler Distance algorithm
+	 * for fuzzy matching
+	 * 
 	 * @param guess
 	 *            the string of the title guessed
 	 * @return the score for the guess
 	 */
 	public int guess(String guess) {
 		// TODO: fuzzy matching
+
+		double distance = StringUtils.getJaroWinklerDistance("", "");
+
 		if (guess.equals(title)) {
 			avgGuessTime = (float) ((avgGuessTime * timesCorrect + timer
 					.getTimeLeft()) / (timesCorrect + 1.0));
@@ -67,7 +75,6 @@ public class Music {
 
 			return getScore();
 		}
-
 		return 0;
 	}
 
