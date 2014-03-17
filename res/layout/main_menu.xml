@@ -49,4 +49,16 @@
         android:text="@+string/mainMenuOr"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <ImageButton
+        android:id="@+id/highScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choosePlaylist"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:contentDescription="@+string/mainMenuHighDesc"
+        android:src="@android:drawable/ic_menu_sort_by_size" />
+
 </RelativeLayout>

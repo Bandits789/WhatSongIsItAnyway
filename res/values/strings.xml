@@ -15,5 +15,6 @@
     <string name="mainMenuOr">OR</string>
     <string name="mainMenuPlayDesc">Button to play a game</string>
     <string name="mainMenuChooseDesc">Button to choose a playlist</string>
+    <string name="mainMenuHighDesc">Button to go to the high scores page</string>
 
 </resources>
