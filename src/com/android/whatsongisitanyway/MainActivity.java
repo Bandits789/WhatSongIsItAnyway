@@ -143,8 +143,8 @@ public class MainActivity extends Activity {
 
 				// actually start!
 				mediaPlayer.start();
-				// this doesnt work
-				// mediaPlayer.seekTo(currentSong.getRandomStart());
+				// skip to a random place
+				mediaPlayer.seekTo(currentSong.getRandomStart());
 
 			} catch (Exception e) {
 				e.printStackTrace();
