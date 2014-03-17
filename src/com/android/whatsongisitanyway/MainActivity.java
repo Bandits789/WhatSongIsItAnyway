@@ -17,14 +17,12 @@ public class MainActivity extends Activity {
 	private MediaPlayer mediaPlayer = null;
 	private Music currentSong = null;
 
-	private Thread timerThread = null;
-	private Thread songTimerThread = null;
-
 	private boolean running = false;
 	private boolean paused = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -143,8 +141,8 @@ public class MainActivity extends Activity {
 
 				// actually start!
 				mediaPlayer.start();
-				// this doesnt work
-				// mediaPlayer.seekTo(currentSong.getRandomStart());
+				// skip to a random place
+				mediaPlayer.seekTo(currentSong.getRandomStart());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -166,7 +164,7 @@ public class MainActivity extends Activity {
 	 * 
 	 */
 	private void initTimerThread() {
-		timerThread = new Thread(new Runnable() {
+		Thread timerThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -205,7 +203,7 @@ public class MainActivity extends Activity {
 	 * 
 	 */
 	private void initSongTimerThread() {
-		songTimerThread = new Thread(new Runnable() {
+		Thread songTimerThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {

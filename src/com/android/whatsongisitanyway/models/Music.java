@@ -2,6 +2,8 @@ package com.android.whatsongisitanyway.models;
 
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Class that represents a music object
  * 
@@ -18,7 +20,7 @@ public class Music {
 	private float avgGuessTime;
 
 	private final Timer timer;
-	private final int playDuration = 5; // secs
+	private final int playDuration = 6; // secs
 	// don't play this many seconds from the end
 	private final int secondsFromEnd = 30;
 
@@ -54,12 +56,18 @@ public class Music {
 	/**
 	 * Guess a song title, get the points for the guess (0 if wrong)
 	 * 
+	 * Uses Apache commons Lang library and the Jaro Winkler Distance algorithm
+	 * for fuzzy matching
+	 * 
 	 * @param guess
 	 *            the string of the title guessed
 	 * @return the score for the guess
 	 */
 	public int guess(String guess) {
 		// TODO: fuzzy matching
+
+		double distance = StringUtils.getJaroWinklerDistance("", "");
+
 		if (guess.equals(title)) {
 			avgGuessTime = (float) ((avgGuessTime * timesCorrect + timer
 					.getTimeLeft()) / (timesCorrect + 1.0));
@@ -67,8 +75,14 @@ public class Music {
 
 			return getScore();
 		}
-
 		return 0;
+	}
+
+	public String cleanTitle() {
+		String result = "";
+		String noParens = title.replaceAll("[()]", "");
+
+		return result;
 	}
 
 	/**
@@ -160,7 +174,7 @@ public class Music {
 	/**
 	 * Returns a randomized start time for the song.
 	 * 
-	 * @return the random start time for the song
+	 * @return the random start time for the song in *milliseconds*
 	 */
 	public int getRandomStart() {
 		// this is the range we can select times from
@@ -168,6 +182,6 @@ public class Music {
 		int selectDuration = durationInt - secondsFromEnd - playDuration;
 		int randomStart = new Random().nextInt(selectDuration);
 
-		return randomStart;
+		return randomStart * 1000;
 	}
 }
