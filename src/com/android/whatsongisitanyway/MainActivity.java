@@ -204,7 +204,6 @@ public class MainActivity extends Activity {
 	 */
 	private void initSongTimerThread() {
 		Thread songTimerThread = new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// while we have songs left
