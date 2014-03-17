@@ -64,11 +64,12 @@ public class Music {
 	 * @return the score for the guess
 	 */
 	public int guess(String guess) {
-		// TODO: fuzzy matching
 
-		double distance = StringUtils.getJaroWinklerDistance("", "");
+		String cleanedTitle = cleanTitle();
+		double accuracy = StringUtils.getJaroWinklerDistance(guess,
+				cleanedTitle);
 
-		if (guess.equals(title)) {
+		if (accuracy > 0.9) {
 			avgGuessTime = (float) ((avgGuessTime * timesCorrect + timer
 					.getTimeLeft()) / (timesCorrect + 1.0));
 			timesCorrect += 1;
@@ -79,8 +80,32 @@ public class Music {
 	}
 
 	public String cleanTitle() {
-		String result = "";
-		String noParens = title.replaceAll("[()]", "");
+
+		// Step one: take out all parens and brackets and '
+		String result = title.replaceAll("[\\[\\(\\{\\}\\)\\]\\']", "");
+
+		// If title starts with a number followed by a period, like "2.", take
+		// it out.
+
+		if (Character.isDigit(result.charAt(0))) {
+			result = result.replaceAll("[0-9]+\\.", "");
+			result = result.trim();
+		}
+
+		result = result.toLowerCase();
+
+		int feat = result.indexOf("feat");
+		int ft = result.indexOf("ft");
+
+		if (feat != -1) {
+			result = result.substring(0, feat);
+			result = result.trim();
+		}
+
+		if (ft != -1) {
+			result = result.substring(0, ft);
+			result = result.trim();
+		}
 
 		return result;
 	}
