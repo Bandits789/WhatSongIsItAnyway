@@ -2,8 +2,6 @@ package com.android.whatsongisitanyway.models;
 
 import java.util.Random;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Class that represents a music object
  * 
@@ -20,7 +18,7 @@ public class Music {
 	private float avgGuessTime;
 
 	private final Timer timer;
-	private final int playDuration = 5; // secs
+	private final int playDuration = 6; // secs
 	// don't play this many seconds from the end
 	private final int secondsFromEnd = 30;
 
