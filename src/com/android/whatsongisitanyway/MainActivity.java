@@ -1,11 +1,8 @@
 package com.android.whatsongisitanyway;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
-import com.android.whatsongisitanyway.models.MusicRetriever;
 
 public class MainActivity extends Activity {
 	private Game game;
@@ -33,13 +29,6 @@ public class MainActivity extends Activity {
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
-
-		Log.d("a song ", "SON");
-		MusicRetriever mr = new MusicRetriever(this);
-		List<String> songs = mr.getMusic();
-		for (String song : songs) {
-			Log.d("a song ", song);
-		}
 	}
 
 	@Override
