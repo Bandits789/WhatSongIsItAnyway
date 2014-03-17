@@ -2,6 +2,8 @@ package com.android.whatsongisitanyway.models;
 
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Class that represents a music object
  * 
