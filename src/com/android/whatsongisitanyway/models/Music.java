@@ -167,7 +167,7 @@ public class Music {
 	/**
 	 * Returns a randomized start time for the song.
 	 * 
-	 * @return the random start time for the song
+	 * @return the random start time for the song in *milliseconds*
 	 */
 	public int getRandomStart() {
 		// this is the range we can select times from
@@ -175,6 +175,6 @@ public class Music {
 		int selectDuration = durationInt - secondsFromEnd - playDuration;
 		int randomStart = new Random().nextInt(selectDuration);
 
-		return randomStart;
+		return randomStart * 1000;
 	}
 }
