@@ -122,6 +122,9 @@ public class Game {
 		}
 
 		currentSong = songsList.get(currentSongIndex);
+		// start the timer
+		currentSong.playSong();
+
 		return currentSong;
 	}
 
@@ -142,12 +145,17 @@ public class Game {
 	 * @return the score for the guess
 	 */
 	public int guess(String guess) {
-		int points = currentSong.guess(guess);
+		int points = currentSong.guess(guess) * multiplier;
 		score += points;
 
 		if (points > 0) {
-			multiplier += 1; // TODO: this shouldn't be
+
 			streak += 1;
+
+			// up the multiplier every 2 correct songs
+			if (streak % 2 == 0) {
+				multiplier += 1;
+			}
 			return score;
 		}
 
@@ -166,6 +174,7 @@ public class Game {
 	 */
 	public void pause() {
 		timer.pause();
+		currentSong.pause();
 	}
 
 	/**
@@ -173,6 +182,7 @@ public class Game {
 	 */
 	public void resume() {
 		timer.resume();
+		currentSong.resume();
 	}
 
 	/**

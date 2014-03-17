@@ -15,7 +15,11 @@ import com.android.whatsongisitanyway.models.Music;
 public class MainActivity extends Activity {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
+	private Music currentSong = null;
+
 	private Thread timerThread = null;
+	private Thread songTimerThread = null;
+
 	private boolean running = false;
 	private boolean paused = false;
 
@@ -44,21 +48,23 @@ public class MainActivity extends Activity {
 	 */
 	public void skip(View view) {
 		// do nothing if paused
-		if (!paused) {
-			if (running) {
-				// penalty for skipping
-				game.skipPenalty();
-				// multiplier and streak are lost
-				updateUILabel(R.id.streak, "Streak: 0");
-				updateUILabel(R.id.multiplier, "Multiplier: 1");
-			} else {
-				running = true;
-				game = new Game(getResources());
-				initTimerThread();
-			}
-
-			goToNextSong();
+		if (paused) {
+			return;
 		}
+		if (running) {
+			// penalty for skipping
+			game.skipPenalty();
+			// multiplier and streak are lost
+			updateUILabel(R.id.streak, "Streak: 0");
+			updateUILabel(R.id.multiplier, "Multiplier: 1");
+		} else {
+			running = true;
+			game = new Game(getResources());
+			initTimerThread();
+		}
+
+		goToNextSong();
+
 	}
 
 	/**
@@ -107,14 +113,14 @@ public class MainActivity extends Activity {
 	 * Release the player if we're done.
 	 */
 	public void goToNextSong() {
-		Music nextSong = game.getNextSong();
+		currentSong = game.getNextSong();
 		TextView textView = (TextView) findViewById(R.id.title);
 
 		// if we still have music to play
-		if (nextSong != null) {
+		if (currentSong != null) {
 			try {
 				// set the new title
-				updateUILabel(R.id.title, nextSong.getID() + "");
+				updateUILabel(R.id.title, currentSong.getID() + "");
 
 				// stop old music player
 				if (mediaPlayer != null) {
@@ -123,7 +129,8 @@ public class MainActivity extends Activity {
 
 				// create new music player
 				mediaPlayer = MediaPlayer.create(textView.getContext(),
-						nextSong.getID());
+						currentSong.getID());
+				// go to a different start
 
 				// make sure rest of songs play
 				mediaPlayer
@@ -136,6 +143,8 @@ public class MainActivity extends Activity {
 
 				// actually start!
 				mediaPlayer.start();
+				// this doesnt work
+				// mediaPlayer.seekTo(currentSong.getRandomStart());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -143,8 +152,10 @@ public class MainActivity extends Activity {
 		} else {
 			// we're done!
 			// TODO: do something to alert user here...
-			mediaPlayer.release();
-			mediaPlayer = null;
+			if (mediaPlayer != null) {
+				mediaPlayer.release();
+				mediaPlayer = null;
+			}
 			running = false;
 			updateUILabel(R.id.title, "What Song Is It Anyway?");
 		}
@@ -160,6 +171,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				game.start();
+				initSongTimerThread();
 
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
@@ -186,6 +198,28 @@ public class MainActivity extends Activity {
 		});
 
 		timerThread.start();
+	}
+
+	/**
+	 * Initialize the song timer loop thread
+	 * 
+	 */
+	private void initSongTimerThread() {
+		songTimerThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// while we have songs left
+				while (currentSong != null) {
+					// once the timer runs out, skip
+					if (currentSong.timeLeft() == 0) {
+						goToNextSong();
+					}
+				}
+			}
+		});
+
+		songTimerThread.start();
 	}
 
 	/**

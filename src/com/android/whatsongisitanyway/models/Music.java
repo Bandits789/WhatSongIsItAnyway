@@ -1,12 +1,14 @@
 package com.android.whatsongisitanyway.models;
 
+import java.util.Random;
+
 /**
  * Class that represents a music object
  * 
  */
 public class Music {
 	private final int id;
-	private final String duration; // TODO: random song chunks
+	private final String duration;
 	private final String title;
 	private final String artist;
 	private final String genre;
@@ -15,8 +17,10 @@ public class Music {
 	private int timesCorrect;
 	private float avgGuessTime;
 
-	private final Timer timer; // TODO: do something with timer
+	private final Timer timer;
 	private final int playDuration = 5; // secs
+	// don't play this many seconds from the end
+	private final int secondsFromEnd = 30;
 
 	public Music(int id, String title, String artist, String duration,
 			String genre) {
@@ -35,8 +39,7 @@ public class Music {
 	 * @return score for the song
 	 */
 	private int getScore() {
-		// TODO: something to do with timer
-		return 1;
+		return timer.getTimeLeft() * 5;
 	}
 
 	/**
@@ -124,10 +127,47 @@ public class Music {
 
 	/**
 	 * Starts the song's timer and increments the song play count, should be
-	 * called when song is going to be played
+	 * called when song is going to be played.
 	 */
 	public void playSong() {
 		playCount += 1;
 		timer.run();
+	}
+
+	/**
+	 * Return the amount of time left on the timer
+	 * 
+	 * @return time left in seconds
+	 */
+	public int timeLeft() {
+		return timer.getTimeLeft();
+	}
+
+	/**
+	 * Pause the song and the timer
+	 */
+	public void pause() {
+		timer.pause();
+	}
+
+	/**
+	 * Resume the song and the timer
+	 */
+	public void resume() {
+		timer.resume();
+	}
+
+	/**
+	 * Returns a randomized start time for the song.
+	 * 
+	 * @return the random start time for the song
+	 */
+	public int getRandomStart() {
+		// this is the range we can select times from
+		int durationInt = 100; // TODO: get ints not Strings
+		int selectDuration = durationInt - secondsFromEnd - playDuration;
+		int randomStart = new Random().nextInt(selectDuration);
+
+		return randomStart;
 	}
 }
