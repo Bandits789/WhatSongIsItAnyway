@@ -11,5 +11,9 @@
     <string name="multiplier">Multiplier: 1</string>
     <string name="score">Score: 0</string>
     <string name="submit">Description for the submit button</string>
+    <string name="mainMenuTitle">What song is\nit anyway?</string>
+    <string name="mainMenuOr">OR</string>
+    <string name="mainMenuPlayDesc">Button to play a game</string>
+    <string name="mainMenuChooseDesc">Button to choose a playlist</string>
 
 </resources>
