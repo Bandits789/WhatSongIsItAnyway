@@ -78,6 +78,13 @@ public class Music {
 		return 0;
 	}
 
+	public String cleanTitle() {
+		String result = "";
+		String noParens = title.replaceAll("[()]", "");
+
+		return result;
+	}
+
 	/**
 	 * Gets the music title
 	 * 
