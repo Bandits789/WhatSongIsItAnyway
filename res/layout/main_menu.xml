@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/mainTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:gravity="center_horizontal"
+        android:text="@+string/mainMenuTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp" />
+
+    <ImageButton
+        android:id="@+id/playGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/mainTitle"
+        android:layout_below="@+id/mainTitle"
+        android:layout_marginTop="70dp"
+        android:contentDescription="@+string/mainMenuChooseDesc"
+        android:padding="30dp"
+        android:src="@android:drawable/btn_star_big_on"
+        android:onClick="playButton" />
+
+    <ImageButton
+        android:id="@+id/choosePlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mainTitle"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/gameScoreScore"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@+string/mainMenuPlayDesc"
+        android:padding="34dp"
+        android:src="@android:drawable/stat_notify_sdcard"
+        android:onClick="playlistButton" />
+
+    <TextView
+        android:id="@+id/gameScoreScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playGame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@+string/mainMenuOr"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/highScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choosePlaylist"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:contentDescription="@+string/mainMenuHighDesc"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:onClick="highScoreButton" />
+
+</RelativeLayout>
