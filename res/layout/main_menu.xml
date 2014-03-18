@@ -33,14 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/mainTitle"
         android:layout_alignParentBottom="false"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/gameScoreScore"
         android:layout_marginTop="50dp"
         android:contentDescription="@+string/mainMenuPlayDesc"
         android:padding="34dp"
-        android:src="@android:drawable/stat_notify_sdcard" />
+        android:src="@android:drawable/stat_notify_sdcard"
+        android:onClick="playlistButton" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/gameScoreScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/playGame"
@@ -59,6 +60,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:contentDescription="@+string/mainMenuHighDesc"
-        android:src="@android:drawable/ic_menu_sort_by_size" />
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:onClick="highScoreButton" />
 
 </RelativeLayout>
