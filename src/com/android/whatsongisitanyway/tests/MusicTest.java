@@ -72,6 +72,8 @@ public class MusicTest {
 		song.guess("DO I WANNA TO KNOW"); // close enough - wanna matches
 		assertEquals(3, song.getTimesCorrect());
 		song.guess("DO I WANT TO KNOW");
-		assertEquals(3, song.getTimesCorrect()); // wrong
+		assertEquals(4, song.getTimesCorrect()); // case insensitive
+		song.guess("doi wnana know");
+		assertEquals(5, song.getTimesCorrect());
 	}
 }

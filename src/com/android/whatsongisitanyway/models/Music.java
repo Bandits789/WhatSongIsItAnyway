@@ -66,6 +66,7 @@ public class Music {
 	public int guess(String guess) {
 
 		String cleanedTitle = cleanTitle();
+		guess = guess.toLowerCase();
 		double accuracy = StringUtils.getJaroWinklerDistance(guess,
 				cleanedTitle);
 
