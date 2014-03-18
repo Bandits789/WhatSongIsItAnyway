@@ -1,17 +1,11 @@
 package com.android.whatsongisitanyway.models;
 
-import java.io.FileDescriptor;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import android.content.res.Resources;
-import android.media.MediaMetadataRetriever;
 import android.util.Log;
-
-import com.android.whatsongisitanyway.R;
 
 /**
  * ADT that represents a single game of WSIIA. Has the songs list, and can
@@ -23,7 +17,6 @@ public class Game {
 	private int currentSongIndex;
 	private Music currentSong = null;
 	private final Timer timer;
-	private final Resources res;
 
 	// in seconds
 	private final int duration = 30;
@@ -37,73 +30,14 @@ public class Game {
 	 * Creates a new Game, grabs information about what songs are available to
 	 * be played
 	 */
-	public Game(Resources resources) {
+	public Game(List<Music> songsList) {
 		currentSongIndex = -1;
-		res = resources;
-		songsList = populateSongs();
 		timer = new Timer(duration);
-	}
-
-	/**
-	 * Get the song information and populate the songsList (in random order)
-	 * 
-	 * @return the list of Music objects
-	 */
-
-	private List<Music> populateSongs() {
-
-		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-		List<Music> songs = new ArrayList<Music>();
-
-		Field[] fields = R.raw.class.getFields();
-
-		// add the music object to the list
-		// and add song metadata to the music object
-		for (int i = 0; i < fields.length; i++) {
-			try { // to please eclipse
-
-				// Dummy initializing for now
-				String title = "0";
-				String artist = "0";
-				String genre = "0";
-				String duration = "0";
-
-				int musicID = fields[i].getInt(fields[i]);
-				Log.d("musicID", "id: " + musicID);
-				FileDescriptor fd = res.openRawResourceFd(musicID)
-						.getFileDescriptor();
-				retriever.setDataSource(fd);
-				//
-				// // Get song metadata and store
-				// title =
-				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-				//
-				// artist =
-				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-				//
-				// genre =
-				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
-				//
-				// duration =
-				// retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-				//
-				Music music = new Music(musicID, title, artist, duration, genre);
-
-				Log.d(" Title:", title + " Artist:" + artist + " Genre:"
-						+ genre + " Duration:" + duration);
-
-				songs.add(music);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		// randomize!
+		
+		this.songsList = new ArrayList<Music>(songsList);
+		// shuffle songs
 		long seed = System.nanoTime();
-		Collections.shuffle(songs, new Random(seed));
-
-		return songs;
+		Collections.shuffle(this.songsList, new Random(seed));
 	}
 
 	/**

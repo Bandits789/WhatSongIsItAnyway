@@ -5,9 +5,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -17,10 +20,8 @@ import android.widget.TextView;
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
 
-public class MainActivity extends Activity 
-//implements
-// LoaderManager.LoaderCallbacks<Cursor>
-{
+public class MainActivity extends Activity implements
+		LoaderManager.LoaderCallbacks<Cursor> {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
 	private Music currentSong = null;
@@ -28,9 +29,7 @@ public class MainActivity extends Activity
 	private boolean running = false;
 	private boolean paused = false;
 
-	// The callbacks through which we will interact with the LoaderManager.
-	private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-	List<String> songs = new ArrayList<String>();
+	private final List<Music> songsList = new ArrayList<Music>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +41,8 @@ public class MainActivity extends Activity
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
 
-		// stuff for loading songs
-//		mCallbacks = this;
-//		LoaderManager lm = getLoaderManager();
-//		lm.initLoader(1, null, mCallbacks);
-
-		// Log.d("a song ", "SON");
-		// MusicRetriever mr = new MusicRetriever(this);
-		//
-		// List<String> songs = mr.getMusic();
-		// for (String song : songs) {
-		// Log.d("a song ", song);
-		// }
+		// loading song stuff
+		getLoaderManager().initLoader(1, null, this);
 	}
 
 	@Override
@@ -63,43 +52,33 @@ public class MainActivity extends Activity
 		return true;
 	}
 
-//	@Override
-//	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//		// Create a new CursorLoader with the following query parameters.
-//		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-//
-//		String[] projection = { MediaStore.Audio.Media._ID,
-//				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.TITLE,
-//				MediaStore.Audio.Media.DATA,
-//				MediaStore.Audio.Media.DISPLAY_NAME,
-//				MediaStore.Audio.Media.DURATION,
-//				MediaStore.Audio.Media.ALBUM_ID };
-//
-//		return new CursorLoader(MainActivity.this,
-//				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
-//				selection, null, null);
-//	}
-//
-//	@Override
-//	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-//		while (cursor.moveToNext()) {
-//			songs.add(cursor.getString(0));
-//			songs.add(cursor.getString(1));
-//			songs.add(cursor.getString(2));
-//			songs.add(cursor.getString(3));
-//			songs.add(cursor.getString(4));
-//			System.out.println(cursor.getString(0));
-//			System.out.println(cursor.getString(1));
-//			System.out.println(cursor.getString(2));
-//			System.out.println(cursor.getString(3));
-//			System.out.println(cursor.getString(4));
-//		}
-//	}
-//
-//	@Override
-//	public void onLoaderReset(Loader<Cursor> loader) {
-//		// For whatever reason, the Loader's data is now unavailable.
-//	}
+	@Override
+	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+
+		return new CursorLoader(this,
+				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, selection,
+				null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
+		// load all the shit
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			// location/id, title, artist id, duration, album id
+			songsList.add(new Music(cursor.getInt(1), cursor.getString(8),
+					cursor.getInt(11), cursor.getInt(10), cursor.getInt(13)));
+
+			cursor.moveToNext();
+		}
+
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		// so bad. many sad. wow.
+	}
 
 	/**
 	 * Either starts up media player if it is null, or skips to the next song if
@@ -120,7 +99,7 @@ public class MainActivity extends Activity
 			updateUILabel(R.id.multiplier, "Multiplier: 1");
 		} else {
 			running = true;
-			game = new Game(getResources());
+			game = new Game(songsList);
 			initTimerThread();
 		}
 
