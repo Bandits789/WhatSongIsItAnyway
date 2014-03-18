@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-    <style name="MainTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+    <style name="MainTheme" parent="android:Theme.Black.NoTitleBar.Fullscreen">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:textColor">#FFFFFF</item>
