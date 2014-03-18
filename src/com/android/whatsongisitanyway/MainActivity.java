@@ -1,8 +1,16 @@
 package com.android.whatsongisitanyway;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -12,13 +20,18 @@ import android.widget.TextView;
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+		LoaderManager.LoaderCallbacks<Cursor> {
 	private Game game;
 	private MediaPlayer mediaPlayer = null;
 	private Music currentSong = null;
 
 	private boolean running = false;
 	private boolean paused = false;
+
+	// The callbacks through which we will interact with the LoaderManager.
+	private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+	List<String> songs = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +42,19 @@ public class MainActivity extends Activity {
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
+
+		// stuff for loading songs
+		mCallbacks = this;
+		LoaderManager lm = getLoaderManager();
+		lm.initLoader(1, null, mCallbacks);
+
+		// Log.d("a song ", "SON");
+		// MusicRetriever mr = new MusicRetriever(this);
+		//
+		// List<String> songs = mr.getMusic();
+		// for (String song : songs) {
+		// Log.d("a song ", song);
+		// }
 	}
 
 	@Override
@@ -36,6 +62,44 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		// Create a new CursorLoader with the following query parameters.
+		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+
+		String[] projection = { MediaStore.Audio.Media._ID,
+				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.TITLE,
+				MediaStore.Audio.Media.DATA,
+				MediaStore.Audio.Media.DISPLAY_NAME,
+				MediaStore.Audio.Media.DURATION,
+				MediaStore.Audio.Media.ALBUM_ID };
+
+		return new CursorLoader(MainActivity.this,
+				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
+				selection, null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		while (cursor.moveToNext()) {
+			songs.add(cursor.getString(0));
+			songs.add(cursor.getString(1));
+			songs.add(cursor.getString(2));
+			songs.add(cursor.getString(3));
+			songs.add(cursor.getString(4));
+			System.out.println(cursor.getString(0));
+			System.out.println(cursor.getString(1));
+			System.out.println(cursor.getString(2));
+			System.out.println(cursor.getString(3));
+			System.out.println(cursor.getString(4));
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		// For whatever reason, the Loader's data is now unavailable.
 	}
 
 	/**

@@ -148,10 +148,9 @@ public class Game {
 		int points = currentSong.guess(guess) * multiplier;
 		score += points;
 
+		// they guessed correctly
 		if (points > 0) {
-
 			streak += 1;
-
 			// up the multiplier every 2 correct songs
 			if (streak % 2 == 0) {
 				multiplier += 1;
@@ -159,6 +158,9 @@ public class Game {
 			return score;
 		}
 
+		// they guessed wrong
+		multiplier = 1;
+		streak = 0;
 		return 0;
 	}
 
