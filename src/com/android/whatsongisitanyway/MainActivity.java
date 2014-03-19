@@ -33,7 +33,9 @@ public class MainActivity extends Activity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
+		// loading song stuff
+		getLoaderManager().initLoader(1, null, this);
+				
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -41,8 +43,7 @@ public class MainActivity extends Activity implements
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
 
-		// loading song stuff
-		getLoaderManager().initLoader(1, null, this);
+		
 	}
 
 	@Override
