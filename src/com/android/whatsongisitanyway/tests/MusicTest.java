@@ -11,18 +11,17 @@ public class MusicTest {
 
 	@Test
 	public void songInfoTest() {
-		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
-				"rock");
-		assertTrue(42 == song.getID());
+		Music song = new Music(42, "do i wanna know", 12345, 2, 3);
+		assertEquals(42, song.getID());
 		assertEquals("do i wanna know", song.getTitle());
-		assertEquals("arctic monkeys", song.getArtist());
-		assertEquals("rock", song.getGenre());
+		assertEquals(12345, song.getDuration());
+		assertEquals(2, song.getArtist());
+		assertEquals(3, song.getAlbum());
 	}
 
 	@Test
 	public void playCountTest() {
-		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
-				"rock");
+		Music song = new Music(42, "do i wanna know", 12345, 2, 3);
 		assertEquals(0, song.getPlayCount());
 		song.playSong();
 		song.playSong();
@@ -31,8 +30,7 @@ public class MusicTest {
 
 	@Test
 	public void guessingTest() {
-		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
-				"rock");
+		Music song = new Music(42, "do i wanna know", 12345, 2, 3);
 
 		// times correct is initially 0
 		assertEquals(0, song.getTimesCorrect());
@@ -46,8 +44,7 @@ public class MusicTest {
 
 	@Test
 	public void scoreTest() {
-		Music song = new Music(42, "do i wanna know", "arctic monkeys", "180",
-				"rock");
+		Music song = new Music(42, "do i wanna know", 12345, 2, 3);
 
 		// guess incorrectly
 		assertEquals(0, song.guess("nope"));
@@ -61,7 +58,7 @@ public class MusicTest {
 		Music song = new Music(
 				42,
 				"3''4{52}2. D(O I WA)NNA K[noW FE]]At{UR}IN}G. SAFWERASDFWER'' [] ",
-				"arctic monkeys", "180", "rock");
+				12345, 1, 2);
 		assertEquals(0, song.getTimesCorrect());
 		song.guess("awerwafasdf");
 		assertEquals(0, song.getTimesCorrect());

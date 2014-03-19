@@ -10,10 +10,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Music {
 	private final int id;
-	private final String duration;
 	private final String title;
-	private final String artist;
-	private final String genre;
+	private final int duration;
+	private final int artistID;
+	private final int albumID;
 
 	private int playCount;
 	private int timesCorrect;
@@ -24,13 +24,12 @@ public class Music {
 	// don't play this many seconds from the end
 	private final int secondsFromEnd = 30;
 
-	public Music(int id, String title, String artist, String duration,
-			String genre) {
+	public Music(int id, String title, int duration, int artistID, int albumID) {
 		this.id = id;
 		this.title = title;
-		this.artist = artist;
 		this.duration = duration;
-		this.genre = genre;
+		this.artistID = artistID;
+		this.albumID = albumID;
 
 		timer = new Timer(playDuration);
 	}
@@ -121,21 +120,30 @@ public class Music {
 	}
 
 	/**
-	 * Gets the music artist
+	 * Gets the music duration
 	 * 
-	 * @return the name of the artist
+	 * @return the duration of the music
 	 */
-	public String getArtist() {
-		return artist;
+	public int getDuration() {
+		return duration;
 	}
 
 	/**
-	 * Gets the music genre
+	 * Gets the music artist id
 	 * 
-	 * @return the genre of the music
+	 * @return the id of the artist
 	 */
-	public String getGenre() {
-		return genre;
+	public int getArtist() {
+		return artistID;
+	}
+
+	/**
+	 * Gets the album id
+	 * 
+	 * @return the id of the album
+	 */
+	public int getAlbum() {
+		return albumID;
 	}
 
 	/**
@@ -204,8 +212,7 @@ public class Music {
 	 */
 	public int getRandomStart() {
 		// this is the range we can select times from
-		int durationInt = 100; // TODO: get ints not Strings
-		int selectDuration = durationInt - secondsFromEnd - playDuration;
+		int selectDuration = duration - secondsFromEnd - playDuration;
 		int randomStart = new Random().nextInt(selectDuration);
 
 		return randomStart * 1000;
