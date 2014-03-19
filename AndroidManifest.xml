@@ -16,17 +16,6 @@
         <activity
             android:name="com.android.whatsongisitanyway.MainMenuActivity"
             android:label="@string/app_name" >
-            <!--  <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
-        </activity>
-        
-        <activity
-            android:name="com.android.whatsongisitanyway.MainActivity"
-            android:label="@string/app_name" >
-            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +24,31 @@
         </activity>
         
         <activity
+            android:name="com.android.whatsongisitanyway.MainActivity"
+            android:label="@string/app_name" >
+            
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        
+        <activity
             android:name="com.android.whatsongisitanyway.GameScoreActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity
+            android:name="com.android.whatsongisitanyway.StatsActivity"
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity
+            android:name="com.android.whatsongisitanyway.HighScoreActivity"
+            android:label="@string/app_name">
+        </activity>
+        
     </application>
 
 </manifest>

@@ -8,10 +8,16 @@ import android.view.View;
 
 public class GameScoreActivity extends Activity {
 	
+	//TODO: Do not let player press the back button to go back into the game.
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_score);
+	}
+	
+	@Override
+	public void onBackPressed() {
 	}
 	
 	@Override
@@ -27,7 +33,7 @@ public class GameScoreActivity extends Activity {
 	 * @param view
 	 */
 	public void statsButton (View view) {
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, StatsActivity.class);
 		startActivity(intent);
 	}
 	
@@ -37,7 +43,7 @@ public class GameScoreActivity extends Activity {
 	 * @param view
 	 */
 	public void highScoreButton (View view) {
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, HighScoreActivity.class);
 		startActivity(intent);
 	}
 

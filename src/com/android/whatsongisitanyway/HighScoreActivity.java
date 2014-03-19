@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-public class MainMenuActivity extends Activity {
+public class HighScoreActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_menu);
+		setContentView(R.layout.high_scores);
 	}
 	
 	@Override
 	public void onBackPressed() {
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -26,32 +26,21 @@ public class MainMenuActivity extends Activity {
 	}
 	
 	/**
-	 * Button listener that opens the Main activity when pressed
+	 * Button listener that opens the stats menu when pressed
 	 * 
 	 * @param view
 	 */
-	public void playButton (View view) {
-		Intent intent = new Intent(this, MainActivity.class);
+	public void statsButton (View view) {
+		Intent intent = new Intent(this, StatsActivity.class);
 		startActivity(intent);
 	}
 	
-	/**
-	 *  Button listener that opens the playlist menu when pressed
+	 /** Button listener that opens the main menu when pressed
 	 * 
 	 * @param view
 	 */
-	public void playlistButton (View view) {
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
-	}
-	
-	/**
-	 * Button listener that opens the high Score menu when pressed
-	 * 
-	 * @param view
-	 */
-	public void highScoreButton (View view) {
-		Intent intent = new Intent(this, HighScoreActivity.class);
+	public void mainMenuButton (View view) {
+		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
 

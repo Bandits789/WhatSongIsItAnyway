@@ -19,7 +19,28 @@
     <string name="gameScoreTitle">Your\n     Score:</string>
     <string name="gameScoreScore">0</string>
     <string name="gameScoreMessage">Nice Try!</string>
-    <string name="gameScoreStatsButton">This is the button used to the statistics screen</string>
-    <string name="gameScoreHighScoreButton">This is the button used to get to the high score screen</string>
+    <string name="statsButton">This is the button used to the statistics screen</string>
+    <string name="highScoreButton">This is the button used to get to the high score screen</string>
+    <string name="statsVertBar">This is a vertical separator</string>
+    <string name="statsMainTitle">You Got:</string>
+    <string name="stats1Label">Avg. Song Correct:</string>
+    <string name="stats1Val">0</string>
+    <string name="stats2Label">Fastest Guess:</string>
+    <string name="stats2Val">0</string>
+    <string name="stats3Label">Most Skipped:</string>
+    <string name="stats3Val">0</string>
+    <string name="stats4Label">Most Guessed:</string>
+    <string name="stats4Val">0</string>
+    <string name="mainMenuButton">This button takes you to the main menu</string>
+    <string name="high1">Highest score</string>
+    <string name="high1Val">0</string>
+    <string name="high2">Second-highest score</string>
+    <string name="high2Val">0</string>
+    <string name="high3">Third-highest score</string>
+    <string name="high3Val">0</string>
+    <string name="high4">Fourth-highest score</string>
+    <string name="high4Val">0</string>
+    <string name="high5">Fifth-highest score</string>
+    <string name="high5Val">0</string>
 
 </resources>

@@ -9,59 +9,146 @@
         android:layout_height="wrap_content" >
 
         <ImageButton
-            android:id="@+id/imageButton1"
+            android:id="@+id/statsHighScoreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".495"
+            android:contentDescription="@string/highScoreButton"
+            android:onClick="highScoreButton"
             android:src="@android:drawable/ic_menu_upload" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/statsVerticalDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_weight=".01"
+            android:contentDescription="@string/statsVertBar"
             android:scaleType="center"
-            android:src="@android:drawable/dialog_holo_dark_frame" />
+            android:src="@drawable/black_vert_bar" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/statsStatsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".495"
+            android:contentDescription="@string/statsButton"
             android:src="@android:drawable/ic_menu_sort_alphabetically" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/stats1Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/statsMainTitle"
+        android:layout_below="@+id/statsMainTitle"
+        android:layout_marginTop="16dp"
+        android:text="@string/stats1Label"
+        android:textSize="25sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/stats1Val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/stats1Label"
+        android:layout_toRightOf="@+id/stats1Label"
+        android:paddingLeft="5dp"
+        android:text="@string/stats1Val"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/stats2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stats1Label"
+        android:layout_below="@+id/stats1Label"
+        android:layout_marginTop="20dp"
+        android:text="@string/stats2Label"
+        android:textSize="25sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/stats2Val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/stats2Label"
+        android:layout_toRightOf="@id/stats2Label"
+        android:paddingLeft="5dp"
+        android:text="@string/stats2Val"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/stats3Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/stats2Label"
+        android:layout_below="@id/stats2Label"
+        android:layout_marginTop="20dp"
+        android:text="@string/stats3Label"
+        android:textSize="25sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/stats3Val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/stats3Label"
+        android:layout_toRightOf="@id/stats3Label"
+        android:paddingLeft="5dp"
+        android:text="@string/stats3Val"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/stats4Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stats3Label"
+        android:layout_below="@id/stats3Label"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/stats4Label"
+        android:textSize="25sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/stats4Val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stats4Label"
+        android:layout_toRightOf="@+id/stats4Label"
+        android:paddingLeft="5dp"
+        android:text="@string/stats4Val"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/statsMainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/navigationButtons"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="You Got:"
+        android:layout_marginTop="23dp"
+        android:text="@string/statsMainTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50sp" />
+        android:textSize="60sp"
+        android:typeface="sans" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <ImageButton
+        android:id="@+id/statsMainMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="16dp"
-        android:text="Average Song Correct:"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:paddingLeft="5dp"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="15sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:contentDescription="@string/mainMenuButton"
+        android:onClick="mainMenuButton"
+        android:padding="20dp"
+        android:src="@android:drawable/sym_def_app_icon" />
 
 </RelativeLayout>
