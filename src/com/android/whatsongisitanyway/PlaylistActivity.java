@@ -5,18 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageButton;
 
-public class HighScoreActivity extends Activity {
-	
+public class PlaylistActivity extends Activity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.high_scores);
-		
-		final ImageButton highButton = (ImageButton) findViewById(R.id.highHighScoreButton);
-		highButton.setEnabled(false);
+		setContentView(R.layout.playlist);
 	}
 	
 	@Override
@@ -30,17 +26,7 @@ public class HighScoreActivity extends Activity {
 		return true;
 	}
 	
-	/**
-	 * Button listener that opens the stats menu when pressed
-	 * 
-	 * @param view
-	 */
-	public void statsButton (View view) {
-		Intent intent = new Intent(this, StatsActivity.class);
-		startActivity(intent);
-	}
-	
-	 /** Button listener that opens the main menu when pressed
+	/** Button listener that opens the main menu when pressed
 	 * 
 	 * @param view
 	 */
@@ -48,5 +34,5 @@ public class HighScoreActivity extends Activity {
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
-
+	
 }

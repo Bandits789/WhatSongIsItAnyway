@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/mainTitle"
         android:layout_below="@+id/mainTitle"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:contentDescription="@+string/mainMenuChooseDesc"
+        android:onClick="playButton"
         android:padding="30dp"
-        android:src="@android:drawable/btn_star_big_on"
-        android:onClick="playButton" />
+        android:src="@android:drawable/btn_star_big_on" />
 
     <ImageButton
         android:id="@+id/choosePlaylist"
