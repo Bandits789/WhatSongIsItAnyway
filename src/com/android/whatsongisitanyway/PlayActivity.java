@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -42,6 +43,7 @@ public class PlayActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// make a new media player
 		mediaPlayer = new MediaPlayer();
 
 		// add enter listener
@@ -197,11 +199,7 @@ public class PlayActivity extends Activity implements
 			}
 		} else {
 			// we're done!
-			// TODO: do something to alert user here...
-			running = false;
-			if (mediaPlayer.isPlaying()) {
-				mediaPlayer.pause();
-			}
+			gameOver();
 		}
 	}
 
@@ -231,12 +229,8 @@ public class PlayActivity extends Activity implements
 
 				}
 
-				// TODO: we're done, now what?
-				running = false;
-				updateUILabel(R.id.timer, "0:00");
-				if (mediaPlayer.isPlaying()) {
-					mediaPlayer.pause();
-				}
+				// we ran out of time
+				gameOver();
 			}
 		});
 
@@ -282,6 +276,21 @@ public class PlayActivity extends Activity implements
 				textView.setText(text);
 			}
 		});
+	}
+
+	/**
+	 * Release the media player and go to the score screen
+	 */
+	private void gameOver() {
+		// TODO: save the score
+		running = false;
+		if (mediaPlayer.isPlaying()) {
+			mediaPlayer.release();
+		}
+
+		// Go to the score screen
+		Intent intent = new Intent(PlayActivity.this, HighScoreActivity.class);
+		startActivity(intent);
 	}
 
 	/**
