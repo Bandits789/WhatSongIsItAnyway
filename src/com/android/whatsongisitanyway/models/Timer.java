@@ -9,8 +9,8 @@ public class Timer {
 	private int time;
 	private double startTime;
 
-	private boolean run;
-	private boolean pause;
+	private boolean running;
+	private boolean paused;
 
 	/**
 	 * pauseTime is the time of the user clicking pause, pauseTimeElapsed is the
@@ -35,8 +35,8 @@ public class Timer {
 		pauseTime = 0;
 		prevPauseTimeElapsed = 0;
 		pauseTimeElapsed = 0;
-		run = false;
-		pause = false;
+		running = false;
+		paused = false;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class Timer {
 	 */
 	public void run() {
 		startTime = (System.currentTimeMillis() / 1000.0);
-		run = true;
+		running = true;
 	}
 
 	/**
@@ -54,8 +54,8 @@ public class Timer {
 	 * @return time left
 	 */
 	public int getTimeLeft() {
-		if (run) {
-			if (pause) {
+		if (running) {
+			if (paused) {
 				pauseTimeElapsed = (System.currentTimeMillis() / 1000.0)
 						- pauseTime;
 			}
@@ -75,8 +75,8 @@ public class Timer {
 	 * Pause the timer
 	 */
 	public void pause() {
-		if (run) {
-			pause = true;
+		if (running) {
+			paused = true;
 			pauseTime = System.currentTimeMillis() / 1000.0;
 		}
 	}
@@ -85,10 +85,10 @@ public class Timer {
 	 * Resume the timer from pause
 	 */
 	public void resume() {
-		if (run && pause) {
+		if (running && paused) {
 			prevPauseTimeElapsed += pauseTimeElapsed;
 			pauseTimeElapsed = 0;
-			pause = false;
+			paused = false;
 		}
 	}
 
@@ -99,7 +99,7 @@ public class Timer {
 	 *            seconds to decrement by
 	 */
 	public void decrement(int seconds) {
-		if (run) {
+		if (running) {
 			time -= seconds;
 		}
 	}

@@ -66,6 +66,7 @@ public class PlayActivity extends Activity implements
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+		// only get things that are music
 		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
 		// path, title, duration, artist, album, size
@@ -123,6 +124,7 @@ public class PlayActivity extends Activity implements
 			updateUILabel(R.id.streak, "Streak: 0");
 			updateUILabel(R.id.multiplier, "Multiplier: 1");
 		} else {
+			// start the game!
 			running = true;
 			game = new Game(songsList);
 			initTimerThread();
@@ -140,10 +142,12 @@ public class PlayActivity extends Activity implements
 	public void pause(View view) {
 		if (running) {
 			if (!paused) {
+				// if running and not paused, pause it
 				paused = true;
 				mediaPlayer.pause();
 				game.pause();
 			} else {
+				// if running and paused, resume it
 				paused = false;
 				mediaPlayer.start();
 				game.resume();
@@ -224,7 +228,6 @@ public class PlayActivity extends Activity implements
 
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
-
 					updateUILabel(R.id.timer, game.timeLeftString());
 
 					// to avoid updating too often, sleep for .2 secs
