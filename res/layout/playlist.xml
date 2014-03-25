@@ -18,7 +18,7 @@
         android:id="@+id/playlistPlaylistList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/playlistTitle"
+        android:layout_above="@+id/playlistMainMenuButton"
         android:layout_below="@+id/playlistTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
