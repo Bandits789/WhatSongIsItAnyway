@@ -13,7 +13,7 @@ public class MusicTest {
 	public void songInfoTest() {
 		Music song = new Music("here", "do i wanna know", 12345,
 				"arctic monkeys", "AM", 10000);
-		assertEquals("here", song.getID());
+		assertEquals("here", song.getPath());
 		assertEquals("do i wanna know", song.getTitle());
 		assertEquals(12345, song.getDuration());
 		assertEquals("arctic monkeys", song.getArtist());

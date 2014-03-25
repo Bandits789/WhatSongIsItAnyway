@@ -8,9 +8,9 @@ import java.util.Random;
 import android.util.Log;
 
 /**
- * ADT that represents a single game of WSIIA. Has the songs list, and can
- * switch to the next song. Plays music from /res/raw (eventually sdcard)
- * 
+ * ADT that represents a single game of WSIIA. Stores the song list, and has
+ * skipping, guessing, and scoring functionality. Has a timer for the whole
+ * game.
  */
 public class Game {
 	private final List<Music> songsList;
@@ -29,6 +29,9 @@ public class Game {
 	/**
 	 * Creates a new Game, grabs information about what songs are available to
 	 * be played
+	 * 
+	 * @param songsList
+	 *            the list of Music objects from the sdcard
 	 */
 	public Game(List<Music> songsList) {
 		currentSongIndex = -1;

@@ -5,11 +5,11 @@ import java.util.Random;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Class that represents a music object
- * 
+ * Class that represents a music object. Has guessing, skipping, and scoring
+ * functionality. Has a timer for each song.
  */
 public class Music {
-	private final String id;
+	private final String path;
 	private final String title;
 	private final int duration; // milliseconds
 	private final String artist;
@@ -21,8 +21,8 @@ public class Music {
 	private float avgGuessTime;
 
 	private final Timer timer;
-	private final int playDuration = 6; // secs
-	// don't play this many seconds from the end
+	private final int playDuration = 10; // secs
+	// don't play this many milliseconds from the end
 	private final int msecondsFromEnd = 30 * 1000;
 
 	/**
@@ -43,7 +43,7 @@ public class Music {
 	 */
 	public Music(String id, String title, int duration, String artist,
 			String album, int size) {
-		this.id = id;
+		this.path = id;
 		this.title = title;
 		this.duration = duration;
 		this.artist = artist;
@@ -63,12 +63,12 @@ public class Music {
 	}
 
 	/**
-	 * ID is the location of the music
+	 * Gets the path to the location of the music
 	 * 
-	 * @return the id of the music
+	 * @return the path to the music
 	 */
-	public String getID() {
-		return id;
+	public String getPath() {
+		return path;
 	}
 
 	/**
@@ -98,6 +98,12 @@ public class Music {
 		return 0;
 	}
 
+	/**
+	 * Cleans the song title into something easier to type (ie. without feat...
+	 * or song track numbers)
+	 * 
+	 * @return the cleaned song title
+	 */
 	public String cleanTitle() {
 
 		// Step one: take out all parens and brackets and '

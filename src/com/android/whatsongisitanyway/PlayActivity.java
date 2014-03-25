@@ -24,6 +24,11 @@ import android.widget.TextView;
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
 
+/**
+ * This is the activity where the game actually lies. This makes a music player,
+ * and allows user guessing of each song played. It goes to the score screen
+ * after either we run out of songs or the game timer runs out of time.
+ */
 public class PlayActivity extends Activity implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	private Game game;
@@ -63,6 +68,7 @@ public class PlayActivity extends Activity implements
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
+		// path, title, duration, artist, album, size
 		String[] projection = { MediaStore.Audio.Media.DATA,
 				MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DURATION,
 				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.ALBUM,
@@ -82,7 +88,7 @@ public class PlayActivity extends Activity implements
 
 			// if longer than a minute, add it
 			if (duration > 60 * 1000) {
-				// location/id, title, duration, artist id, album id, size
+				// path, title, duration, artist, album, size
 				songsList.add(new Music(cursor.getString(0), cursor
 						.getString(1), duration, cursor.getString(3), cursor
 						.getString(4), cursor.getInt(5)));
@@ -183,8 +189,8 @@ public class PlayActivity extends Activity implements
 					mediaPlayer.reset();
 				}
 
-				File file = new File(currentSong.getID());
-				Log.d("filename is ", currentSong.getID());
+				File file = new File(currentSong.getPath());
+				Log.d("filename is ", currentSong.getPath());
 				FileInputStream fis = new FileInputStream(file);
 				mediaPlayer.setDataSource(fis.getFD());
 				fis.close();
@@ -204,8 +210,9 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Initialize the timer loop thread
-	 * 
+	 * Initialize the timer loop thread. It keeps track of the game's timer,
+	 * updating the timer label and then quitting the game when the timer runs
+	 * out.
 	 */
 	private void initTimerThread() {
 		Thread timerThread = new Thread(new Runnable() {
@@ -238,8 +245,8 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Initialize the song timer loop thread
-	 * 
+	 * Initialize the song timer loop thread. It will keep track of each song's
+	 * timer and skip when that runs out.
 	 */
 	private void initSongTimerThread() {
 		Thread songTimerThread = new Thread(new Runnable() {
