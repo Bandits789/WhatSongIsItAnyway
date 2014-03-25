@@ -31,7 +31,7 @@ public class MainMenuActivity extends Activity {
 	 * @param view
 	 */
 	public void playButton (View view) {
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, PlayActivity.class);
 		startActivity(intent);
 	}
 	

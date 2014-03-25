@@ -9,11 +9,12 @@ import org.apache.commons.lang3.StringUtils;
  * 
  */
 public class Music {
-	private final int id;
+	private final String id;
 	private final String title;
-	private final int duration;
-	private final int artistID;
-	private final int albumID;
+	private final int duration; // milliseconds
+	private final String artist;
+	private final String album;
+	private final int size;
 
 	private int playCount;
 	private int timesCorrect;
@@ -22,14 +23,32 @@ public class Music {
 	private final Timer timer;
 	private final int playDuration = 6; // secs
 	// don't play this many seconds from the end
-	private final int secondsFromEnd = 30;
+	private final int msecondsFromEnd = 30 * 1000;
 
-	public Music(int id, String title, int duration, int artistID, int albumID) {
+	/**
+	 * Make a new Music object
+	 * 
+	 * @param id
+	 *            the path to the song location
+	 * @param title
+	 *            title of the song
+	 * @param duration
+	 *            in milliseconds
+	 * @param artist
+	 *            artist of the song (could be unknown)
+	 * @param album
+	 *            album of the song (could be unknown)
+	 * @param size
+	 *            size of the file, in bytes
+	 */
+	public Music(String id, String title, int duration, String artist,
+			String album, int size) {
 		this.id = id;
 		this.title = title;
 		this.duration = duration;
-		this.artistID = artistID;
-		this.albumID = albumID;
+		this.artist = artist;
+		this.album = album;
+		this.size = size;
 
 		timer = new Timer(playDuration);
 	}
@@ -44,11 +63,11 @@ public class Music {
 	}
 
 	/**
-	 * ID is the location of the music (currently R.raw.<something>)
+	 * ID is the location of the music
 	 * 
 	 * @return the id of the music
 	 */
-	public int getID() {
+	public String getID() {
 		return id;
 	}
 
@@ -129,21 +148,30 @@ public class Music {
 	}
 
 	/**
-	 * Gets the music artist id
+	 * Gets the music artist
 	 * 
-	 * @return the id of the artist
+	 * @return the artist of the song
 	 */
-	public int getArtist() {
-		return artistID;
+	public String getArtist() {
+		return artist;
 	}
 
 	/**
-	 * Gets the album id
+	 * Gets the album
 	 * 
-	 * @return the id of the album
+	 * @return the album of the song
 	 */
-	public int getAlbum() {
-		return albumID;
+	public String getAlbum() {
+		return album;
+	}
+
+	/**
+	 * Gets the size of the song in bytes
+	 * 
+	 * @return the size of the song
+	 */
+	public int getSize() {
+		return size;
 	}
 
 	/**
@@ -208,13 +236,13 @@ public class Music {
 	/**
 	 * Returns a randomized start time for the song.
 	 * 
-	 * @return the random start time for the song in *milliseconds*
+	 * @return the random start time for the song in milliseconds
 	 */
 	public int getRandomStart() {
 		// this is the range we can select times from
-		int selectDuration = duration - secondsFromEnd - playDuration;
+		int selectDuration = duration - msecondsFromEnd - (playDuration * 1000);
 		int randomStart = new Random().nextInt(selectDuration);
 
-		return randomStart * 1000;
+		return randomStart;
 	}
 }

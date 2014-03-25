@@ -1,5 +1,7 @@
 package com.android.whatsongisitanyway;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -20,10 +23,10 @@ import android.widget.TextView;
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
 
-public class MainActivity extends Activity implements
+public class PlayActivity extends Activity implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	private Game game;
-	private MediaPlayer mediaPlayer = null;
+	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
 
 	private boolean running = false;
@@ -35,15 +38,16 @@ public class MainActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// loading song stuff
 		getLoaderManager().initLoader(1, null, this);
-				
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		mediaPlayer = new MediaPlayer();
 
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
 
-		
 	}
 
 	@Override
@@ -57,9 +61,14 @@ public class MainActivity extends Activity implements
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
+		String[] projection = { MediaStore.Audio.Media.DATA,
+				MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DURATION,
+				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.ALBUM,
+				MediaStore.Audio.Media.SIZE };
+
 		return new CursorLoader(this,
-				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, selection,
-				null, null);
+				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
+				selection, null, null);
 	}
 
 	@Override
@@ -67,9 +76,15 @@ public class MainActivity extends Activity implements
 		// load all the shit
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			// location/id, title, artist id, duration, album id
-			songsList.add(new Music(cursor.getInt(1), cursor.getString(8),
-					cursor.getInt(11), cursor.getInt(10), cursor.getInt(13)));
+			int duration = cursor.getInt(2);
+
+			// if longer than a minute, add it
+			if (duration > 60 * 1000) {
+				// location/id, title, duration, artist id, album id, size
+				songsList.add(new Music(cursor.getString(0), cursor
+						.getString(1), duration, cursor.getString(3), cursor
+						.getString(4), cursor.getInt(5)));
+			}
 
 			cursor.moveToNext();
 		}
@@ -92,6 +107,7 @@ public class MainActivity extends Activity implements
 		if (paused) {
 			return;
 		}
+
 		if (running) {
 			// penalty for skipping
 			game.skipPenalty();
@@ -155,36 +171,25 @@ public class MainActivity extends Activity implements
 	 */
 	public void goToNextSong() {
 		currentSong = game.getNextSong();
-		TextView textView = (TextView) findViewById(R.id.title);
 
 		// if we still have music to play
-		if (currentSong != null) {
+		if (currentSong != null && running) {
 			try {
-				// set the new title
-				updateUILabel(R.id.title, currentSong.getID() + "");
 
-				// stop old music player
-				if (mediaPlayer != null) {
+				if (mediaPlayer.isPlaying()) {
 					mediaPlayer.stop();
+					mediaPlayer.reset();
 				}
 
-				// create new music player
-				mediaPlayer = MediaPlayer.create(textView.getContext(),
-						currentSong.getID());
-				// go to a different start
-
-				// make sure rest of songs play
-				mediaPlayer
-						.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-							@Override
-							public void onCompletion(MediaPlayer mediaPlayer) {
-								goToNextSong();
-							}
-						});
+				File file = new File(currentSong.getID());
+				Log.d("filename is ", currentSong.getID());
+				FileInputStream fis = new FileInputStream(file);
+				mediaPlayer.setDataSource(fis.getFD());
+				fis.close();
 
 				// actually start!
+				mediaPlayer.prepare();
 				mediaPlayer.start();
-				// skip to a random place
 				mediaPlayer.seekTo(currentSong.getRandomStart());
 
 			} catch (Exception e) {
@@ -193,12 +198,10 @@ public class MainActivity extends Activity implements
 		} else {
 			// we're done!
 			// TODO: do something to alert user here...
-			if (mediaPlayer != null) {
-				mediaPlayer.release();
-				mediaPlayer = null;
-			}
 			running = false;
-			updateUILabel(R.id.title, "What Song Is It Anyway?");
+			if (mediaPlayer.isPlaying()) {
+				mediaPlayer.pause();
+			}
 		}
 	}
 
@@ -231,8 +234,7 @@ public class MainActivity extends Activity implements
 				// TODO: we're done, now what?
 				running = false;
 				updateUILabel(R.id.timer, "0:00");
-
-				if (mediaPlayer != null) {
+				if (mediaPlayer.isPlaying()) {
 					mediaPlayer.pause();
 				}
 			}
@@ -250,7 +252,7 @@ public class MainActivity extends Activity implements
 			@Override
 			public void run() {
 				// while we have songs left
-				while (currentSong != null) {
+				while (currentSong != null && running) {
 					// once the timer runs out, skip
 					if (currentSong.timeLeft() == 0) {
 						goToNextSong();
