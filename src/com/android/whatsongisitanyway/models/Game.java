@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import android.util.Log;
+import android.content.Context;
+
+import com.android.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
  * ADT that represents a single game of WSIIA. Stores the song list, and has
@@ -17,6 +19,10 @@ public class Game {
 	private int currentSongIndex;
 	private Music currentSong = null;
 	private final Timer timer;
+
+	private final GameDatabaseHelper dbHelper;
+	private int songsCorrect;
+	private int totalGuessTime;
 
 	// in seconds
 	private final int duration = 30;
@@ -32,15 +38,21 @@ public class Game {
 	 * 
 	 * @param songsList
 	 *            the list of Music objects from the sdcard
+	 * @param context
+	 *            the Context the game is in
 	 */
-	public Game(List<Music> songsList) {
+	public Game(List<Music> songsList, Context context) {
 		currentSongIndex = -1;
 		timer = new Timer(duration);
-		
+		dbHelper = new GameDatabaseHelper(context);
+
 		this.songsList = new ArrayList<Music>(songsList);
 		// shuffle songs
 		long seed = System.nanoTime();
 		Collections.shuffle(this.songsList, new Random(seed));
+
+		songsCorrect = 0;
+		totalGuessTime = 0;
 	}
 
 	/**
@@ -51,7 +63,6 @@ public class Game {
 	public Music getNextSong() {
 		// we're going to the next song
 		++currentSongIndex;
-		Log.d(" Next song", "index:" + currentSongIndex);
 
 		// make sure there are still songs available
 		if (currentSongIndex >= songsList.size()) {
@@ -88,6 +99,9 @@ public class Game {
 		// they guessed correctly
 		if (points > 0) {
 			streak += 1;
+			totalGuessTime += currentSong.timeGuessedIn();
+			++songsCorrect;
+
 			// up the multiplier every 2 correct songs
 			if (streak % 2 == 0) {
 				multiplier += 1;
@@ -176,4 +190,14 @@ public class Game {
 		return streak;
 	}
 
+	/**
+	 * End the game, write the recent game and overall stats into the database
+	 */
+	public void endGame() {
+		// so database. very sql. wow.
+		dbHelper.insertGameStats(score, totalGuessTime, songsCorrect,
+				currentSongIndex + 1);
+		dbHelper.updateOverallStats(score, totalGuessTime, songsCorrect,
+				currentSongIndex + 1);
+	}
 }

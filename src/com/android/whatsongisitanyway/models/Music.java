@@ -16,11 +16,8 @@ public class Music {
 	private final String album;
 	private final int size;
 
-	private int playCount;
-	private int timesCorrect;
-	private float avgGuessTime;
-
 	private final Timer timer;
+	private int timeGuessedIn;
 	private final int playDuration = 10; // secs
 	// don't play this many milliseconds from the end
 	private final int msecondsFromEnd = 30 * 1000;
@@ -50,6 +47,7 @@ public class Music {
 		this.album = album;
 		this.size = size;
 
+		timeGuessedIn = playDuration;
 		timer = new Timer(playDuration);
 	}
 
@@ -89,12 +87,10 @@ public class Music {
 				cleanedTitle);
 
 		if (accuracy > 0.9) {
-			avgGuessTime = (float) ((avgGuessTime * timesCorrect + timer
-					.getTimeLeft()) / (timesCorrect + 1.0));
-			timesCorrect += 1;
-
+			timeGuessedIn = playDuration - timer.getTimeLeft();
 			return getScore();
 		}
+
 		return 0;
 	}
 
@@ -181,38 +177,10 @@ public class Music {
 	}
 
 	/**
-	 * Gets total play count
-	 * 
-	 * @return play count
-	 */
-	public int getPlayCount() {
-		return playCount;
-	}
-
-	/**
-	 * Gets number of times the user guessed the song correctly
-	 * 
-	 * @return times guess correctly
-	 */
-	public int getTimesCorrect() {
-		return timesCorrect;
-	}
-
-	/**
-	 * Gets the average time it took the user to correctly guess the song
-	 * 
-	 * @return average time to correctly guess song
-	 */
-	public float getAvgGuessTime() {
-		return avgGuessTime;
-	}
-
-	/**
 	 * Starts the song's timer and increments the song play count, should be
 	 * called when song is going to be played.
 	 */
 	public void playSong() {
-		playCount += 1;
 		timer.run();
 	}
 
@@ -237,6 +205,16 @@ public class Music {
 	 */
 	public void resume() {
 		timer.resume();
+	}
+
+	/**
+	 * Gets the time the song was guessed in (or the total duration of the clip
+	 * if the song wasn't guessed correctly)
+	 * 
+	 * @return the time the song was guessed in
+	 */
+	public int timeGuessedIn() {
+		return timeGuessedIn;
 	}
 
 	/**

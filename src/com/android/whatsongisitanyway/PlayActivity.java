@@ -14,7 +14,6 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -126,7 +125,7 @@ public class PlayActivity extends Activity implements
 		} else {
 			// start the game!
 			running = true;
-			game = new Game(songsList);
+			game = new Game(songsList, this);
 			initTimerThread();
 		}
 
@@ -194,7 +193,6 @@ public class PlayActivity extends Activity implements
 				}
 
 				File file = new File(currentSong.getPath());
-				Log.d("filename is ", currentSong.getPath());
 				FileInputStream fis = new FileInputStream(file);
 				mediaPlayer.setDataSource(fis.getFD());
 				fis.close();
@@ -292,14 +290,16 @@ public class PlayActivity extends Activity implements
 	 * Release the media player and go to the score screen
 	 */
 	private void gameOver() {
-		// TODO: save the score
 		running = false;
 		if (mediaPlayer.isPlaying()) {
+			mediaPlayer.stop();
 			mediaPlayer.release();
 		}
 
+		game.endGame();
+
 		// Go to the score screen
-		Intent intent = new Intent(PlayActivity.this, HighScoreActivity.class);
+		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class);
 		startActivity(intent);
 	}
 
