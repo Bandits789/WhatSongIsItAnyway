@@ -10,30 +10,14 @@
 
         <ImageButton
             android:id="@+id/statsHighScoreButton"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".495"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/highScoreButton"
             android:onClick="highScoreButton"
-            android:src="@android:drawable/ic_menu_upload" />
-
-        <ImageView
-            android:id="@+id/statsVerticalDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight=".01"
-            android:contentDescription="@string/statsVertBar"
-            android:scaleType="center"
-            android:src="@drawable/black_vert_bar" />
-
-        <ImageButton
-            android:id="@+id/statsStatsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".495"
-            android:contentDescription="@string/statsButton"
-            android:src="@android:drawable/ic_menu_sort_alphabetically" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/stats" />
 
     </LinearLayout>
 
@@ -133,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/navigationButtons"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="0dp"
         android:text="@string/statsMainTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="60sp"
@@ -145,10 +129,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="100dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/mainMenuButton"
+        android:maxHeight="50dp"
         android:onClick="mainMenuButton"
-        android:padding="20dp"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_menu" />
 
 </RelativeLayout>

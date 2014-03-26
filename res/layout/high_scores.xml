@@ -9,32 +9,14 @@
         android:layout_height="wrap_content" >
 
         <ImageButton
-            android:id="@+id/highHighScoreButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".495"
-            android:contentDescription="@string/highScoreButton"
-            android:src="@android:drawable/ic_menu_upload" />
-
-        <ImageView
-            android:id="@+id/highVerticalDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight=".01"
-            android:contentDescription="@string/statsVertBar"
-            android:scaleType="center"
-            android:src="@drawable/black_vert_bar" />
-
-        <ImageButton
             android:id="@+id/highStatsButton"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".495"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/statsButton"
             android:onClick="statsButton"
-            android:src="@android:drawable/ic_menu_sort_alphabetically" />
-
+            android:scaleType="fitCenter"
+            android:src="@drawable/high_scores" />
     </LinearLayout>
 
     <ImageButton
@@ -43,22 +25,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="100dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/mainMenuButton"
+        android:maxHeight="50dp"
         android:onClick="mainMenuButton"
-        android:padding="20dp"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_menu" />
 
     <ImageView
         android:id="@+id/high2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/high1"
-        android:layout_below="@+id/high1"
+        android:layout_alignRight="@+id/high1wrapper"
+        android:layout_below="@+id/high1Val"
         android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/dummySpace"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/high2"
-        android:padding="10dp"
-        android:src="@android:drawable/checkbox_off_background" />
+        android:maxWidth="40dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/number2" />
 
     <ImageView
         android:id="@+id/high3"
@@ -67,9 +58,12 @@
         android:layout_alignLeft="@+id/high2"
         android:layout_below="@+id/high2"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/high3"
-        android:padding="10dp"
-        android:src="@android:drawable/checkbox_off_background" />
+        android:maxWidth="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/number3" />
 
     <ImageView
         android:id="@+id/high4"
@@ -78,9 +72,13 @@
         android:layout_alignLeft="@+id/high3"
         android:layout_below="@+id/high3"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/high4"
-        android:padding="10dp"
-        android:src="@android:drawable/checkbox_off_background" />
+        android:maxWidth="40dp"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/number4" />
 
     <ImageView
         android:id="@+id/high5"
@@ -89,27 +87,18 @@
         android:layout_alignLeft="@+id/high4"
         android:layout_below="@+id/high4"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/high5"
-        android:padding="10dp"
-        android:src="@android:drawable/checkbox_off_background" />
-
-    <ImageView
-        android:id="@+id/high1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/navigationButtons"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_toLeftOf="@+id/statsMainMenuButton"
-        android:contentDescription="@string/high1"
-        android:padding="10dp"
-        android:src="@android:drawable/checkbox_off_background" />
+        android:maxWidth="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/number5" />
 
     <TextView
         android:id="@+id/high1Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/high1"
+        android:layout_alignBottom="@+id/high1wrapper"
         android:layout_centerHorizontal="true"
         android:text="@string/high1Val"
         android:textSize="30sp" />
@@ -149,5 +138,40 @@
         android:layout_centerHorizontal="true"
         android:text="@string/high2Val"
         android:textSize="30sp" />
+
+    <RelativeLayout
+        android:id="@+id/dummySpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="29dp" >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/high1wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dummySpace"
+        android:layout_below="@id/navigationButtons"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_toLeftOf="@id/dummySpace"
+        android:background="@android:color/transparent" >
+
+        <ImageView
+            android:id="@+id/high1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/high1"
+            android:maxWidth="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/number1" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

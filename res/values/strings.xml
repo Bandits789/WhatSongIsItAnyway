@@ -11,7 +11,7 @@
     <string name="multiplier">Multiplier: 1</string>
     <string name="score">Score: 0</string>
     <string name="submit">Description for the submit button</string>
-    <string name="mainMenuTitle">What song is\nit anyway?</string>
+    <string name="mainMenuTitle">What song is it anyway?</string>
     <string name="mainMenuOr">OR</string>
     <string name="mainMenuPlayDesc">Button to play a game</string>
     <string name="mainMenuChooseDesc">Button to choose a playlist</string>
@@ -42,7 +42,6 @@
     <string name="high4Val">0</string>
     <string name="high5">Fifth-highest score</string>
     <string name="high5Val">0</string>
-    <string name="mainTitle">What Song is it Anyway?</string>
     <string name="playlistTitle">Choose a\n    Playlist</string>
 
 </resources>
