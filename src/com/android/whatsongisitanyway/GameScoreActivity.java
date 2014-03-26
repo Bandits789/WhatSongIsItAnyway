@@ -22,7 +22,7 @@ public class GameScoreActivity extends Activity {
 
 		// score, avgGuessTime, accuracy, songsPlayed
 		float[] stats = getIntent().getExtras().getFloatArray("stats");
-		TextView score = (TextView) findViewById(R.id.gameScoreScore);
+		TextView score = (TextView) findViewById(R.id.or);
 		score.setText((int) stats[0] + "");
 		// TODO: set the rest of the things
 	}

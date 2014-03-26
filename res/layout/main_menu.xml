@@ -3,50 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/mainTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:gravity="center_horizontal"
-        android:text="@+string/mainMenuTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="40sp" />
-
     <ImageButton
         android:id="@+id/playGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/mainTitle"
+        android:layout_above="@id/or"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/mainTitle"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@+string/mainMenuChooseDesc"
+        android:maxWidth="150dp"
         android:onClick="playButton"
-        android:padding="30dp"
-        android:src="@android:drawable/btn_star_big_on" />
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/play" />
 
     <ImageButton
         android:id="@+id/choosePlaylist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/mainTitle"
-        android:layout_alignParentBottom="false"
-        android:layout_below="@+id/gameScoreScore"
-        android:layout_marginTop="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/or"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@+string/mainMenuPlayDesc"
-        android:padding="34dp"
-        android:src="@android:drawable/stat_notify_sdcard"
-        android:onClick="playlistButton" />
+        android:maxWidth="150dp"
+        android:onClick="playlistButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/playlist" />
 
     <TextView
-        android:id="@+id/gameScoreScore"
+        android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/playGame"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
         android:text="@+string/mainMenuOr"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -54,13 +52,26 @@
         android:id="@+id/highScores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/choosePlaylist"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/choosePlaylist"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@+string/mainMenuHighDesc"
-        android:src="@android:drawable/ic_menu_sort_by_size"
-        android:onClick="highScoreButton" />
+        android:maxWidth="250dp"
+        android:onClick="highScoreButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/high_score" />
+
+    <ImageView
+        android:id="@+id/mainTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@android:string/mainTitle"
+        android:src="@drawable/title" />
 
 </RelativeLayout>

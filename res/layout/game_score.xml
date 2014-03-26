@@ -14,7 +14,7 @@
         android:textSize="50sp" />
 
     <TextView
-        android:id="@+id/gameScoreScore"
+        android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gameScoreTitle"
@@ -28,7 +28,7 @@
         android:id="@+id/gameScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreScore"
+        android:layout_below="@id/or"
         android:layout_centerHorizontal="true"
         android:text="@string/gameScoreMessage"
         android:textAppearance="?android:attr/textAppearanceLarge"

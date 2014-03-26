@@ -45,7 +45,7 @@ public class PlayActivity extends Activity implements
 		getLoaderManager().initLoader(1, null, this);
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.play_activity);
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
