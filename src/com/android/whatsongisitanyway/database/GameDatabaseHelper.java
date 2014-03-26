@@ -11,7 +11,7 @@ import com.android.whatsongisitanyway.database.GameDatabase.OverallData;
 
 /**
  * Bridges the gap between code and sqlite, helps with important things such as
- * creation and deletion of the database
+ * creation and deletion of the database, and updating the game and stat info
  */
 public class GameDatabaseHelper extends SQLiteOpenHelper {
 	// If you change the database schema, you must increment the database
@@ -72,28 +72,23 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 * 
 	 * @param score
 	 *            score of the most recent game
-	 * @param totalGuessTime
-	 *            total amount of time spent guessing in the most recent game
-	 * @param songsCorrect
-	 *            number of songs guessed correctly in the most recent game
+	 * @param averageGuessTime
+	 *            average amount of time to guess the song
+	 * @param accuracy
+	 *            accuracy of guessing in the most recent game
 	 * @param songsPlayed
 	 *            songs played until end of most recent game
 	 */
-	public void insertGameStats(int score, int totalGuessTime,
-			int songsCorrect, int songsPlayed) {
+	public void insertGameStats(int score, float averageGuessTime,
+			float accuracy, int songsPlayed) {
 		// gets the data repository in write mode
 		SQLiteDatabase db = getWritableDatabase();
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
 		values.put(GameData.COLUMN_NAME_SCORE, score);
-		if (songsCorrect != 0) {
-			values.put(GameData.COLUMN_NAME_AVG_GUESS_TIME, totalGuessTime
-					/ songsCorrect);
-		} else {
-			values.put(GameData.COLUMN_NAME_AVG_GUESS_TIME, 0);
-		}
-		values.put(GameData.COLUMN_NAME_ACCURACY, songsCorrect / songsPlayed);
+		values.put(GameData.COLUMN_NAME_AVG_GUESS_TIME, averageGuessTime);
+		values.put(GameData.COLUMN_NAME_ACCURACY, accuracy);
 		values.put(GameData.COLUMN_NAME_SONGS_PLAYED, songsPlayed);
 
 		// insert the new row!
@@ -105,15 +100,15 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 * 
 	 * @param score
 	 *            score of the most recent game
-	 * @param totalGuessTime
-	 *            total amount of time spent guessing in the most recent game
-	 * @param songsCorrect
-	 *            number of songs guessed correctly in the most recent game
+	 * @param averageGuessTime
+	 *            average amount of time to guess the song
+	 * @param accuracy
+	 *            accuracy of guessing in the most recent game
 	 * @param songsPlayed
 	 *            songs played until end of most recent game
 	 */
-	public void updateOverallStats(int score, int totalGuessTime,
-			int songsCorrect, int songsPlayed) {
+	public void updateOverallStats(int score, float averageGuessTime,
+			float accuracy, int songsPlayed) {
 		// gets the data repository in read mode
 		SQLiteDatabase db = getReadableDatabase();
 
@@ -130,8 +125,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// get all the values
 		cursor.moveToFirst();
 		if (cursor.isAfterLast()) {
-			initialOverallStats(score, totalGuessTime, songsCorrect,
-					songsPlayed);
+			initialOverallStats(score, averageGuessTime, accuracy, songsPlayed);
 			return;
 		}
 		float id = cursor.getInt(0);
@@ -142,9 +136,11 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 
 		// find new values
 		int newSongsPlayed = oldSongsPlayed + songsPlayed;
-		float newAccuracy = (oldAccuracy * oldSongsPlayed + songsCorrect)
+		float newAccuracy = (oldAccuracy * oldSongsPlayed + accuracy
+				* songsPlayed)
 				/ newSongsPlayed;
-		float newAvgGuessTime = (float) ((oldAvgGuessTime * oldGamesPlayed + totalGuessTime) / newSongsPlayed);
+		float newAvgGuessTime = (float) ((oldAvgGuessTime * oldGamesPlayed + averageGuessTime
+				* songsPlayed) / newSongsPlayed);
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
@@ -166,28 +162,23 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 * 
 	 * @param score
 	 *            score of the most recent game
-	 * @param totalGuessTime
-	 *            total amount of time spent guessing in the most recent game
-	 * @param songsCorrect
-	 *            number of songs guessed correctly in the most recent game
+	 * @param averageGuessTime
+	 *            average amount of time to guess the song
+	 * @param accuracy
+	 *            accuracy of guessing in the most recent game
 	 * @param songsPlayed
 	 *            songs played until end of most recent game
 	 */
-	private void initialOverallStats(int score, int totalGuessTime,
-			int songsCorrect, int songsPlayed) {
+	private void initialOverallStats(int score, float averageGuessTime,
+			float accuracy, int songsPlayed) {
 		// gets the data repository in write mode
 		SQLiteDatabase db = getWritableDatabase();
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
-		values.put(OverallData.COLUMN_NAME_ACCURACY, songsCorrect / songsPlayed);
-		if (songsCorrect != 0) {
-			values.put(OverallData.COLUMN_NAME_AVG_GUESS_TIME, totalGuessTime
-					/ songsCorrect);
-		} else {
-			values.put(OverallData.COLUMN_NAME_AVG_GUESS_TIME, 0);
-		}
-		values.put(OverallData.COLUMN_NAME_ACCURACY, songsCorrect / songsPlayed);
+		values.put(OverallData.COLUMN_NAME_ACCURACY, accuracy);
+		values.put(OverallData.COLUMN_NAME_AVG_GUESS_TIME, averageGuessTime);
+		values.put(OverallData.COLUMN_NAME_GAMES_PLAYED, 1);
 		values.put(OverallData.COLUMN_NAME_SONGS_PLAYED, songsPlayed);
 
 		// insert the new row!

@@ -191,13 +191,57 @@ public class Game {
 	}
 
 	/**
-	 * End the game, write the recent game and overall stats into the database
+	 * Gets the number of songs played in the game
+	 * 
+	 * @return number of songs played
 	 */
-	public void endGame() {
+	private int getSongsPlayed() {
+		return currentSongIndex + 1;
+	}
+
+	/**
+	 * Gets the accuracy (songs guessed / songs played)
+	 * 
+	 * @return accuracy for the game
+	 */
+	private float getAccuracy() {
+		// if nothing was played
+		if (getSongsPlayed() == 0) {
+			return 0;
+		}
+		return songsCorrect / getSongsPlayed();
+	}
+
+	/**
+	 * Gets the average amount of time to guess the song (only applicable for
+	 * songs guessed right)
+	 * 
+	 * @return average guess time for the game
+	 */
+	private float getAvgGuessTime() {
+		// avoid dividing by zero
+		if (songsCorrect == 0) {
+			return 0;
+		}
+		return totalGuessTime / songsCorrect;
+	}
+
+	/**
+	 * End the game, write the recent game and overall stats into the database
+	 * 
+	 * @return float array of the stats (score, avgGuessTime, accuracy,
+	 *         songsPlayed)
+	 */
+	public float[] endGame() {
 		// so database. very sql. wow.
-		dbHelper.insertGameStats(score, totalGuessTime, songsCorrect,
-				currentSongIndex + 1);
-		dbHelper.updateOverallStats(score, totalGuessTime, songsCorrect,
-				currentSongIndex + 1);
+		dbHelper.insertGameStats(score, getAvgGuessTime(), getAccuracy(),
+				getSongsPlayed());
+		dbHelper.updateOverallStats(score, getAvgGuessTime(), getAccuracy(),
+				getSongsPlayed());
+
+		float[] stats = { score, getAvgGuessTime(), getAccuracy(),
+				getSongsPlayed() };
+
+		return stats;
 	}
 }

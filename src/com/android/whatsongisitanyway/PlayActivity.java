@@ -296,10 +296,11 @@ public class PlayActivity extends Activity implements
 			mediaPlayer.release();
 		}
 
-		game.endGame();
+		float[] stats = game.endGame();
 
 		// Go to the score screen
-		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class);
+		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
+				.putExtra("stats", stats);
 		startActivity(intent);
 	}
 
