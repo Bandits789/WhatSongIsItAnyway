@@ -239,7 +239,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// order by highest score
 		String orderBy = GameData.COLUMN_NAME_SCORE + " DESC";
 
-		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+		Cursor cursor = db.query(GameData.TABLE_NAME, projection, null,
 				null, null, null, orderBy);
 
 		int[] scores = new int[numScores];
