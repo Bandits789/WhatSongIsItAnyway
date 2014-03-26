@@ -55,6 +55,10 @@ public class PlayActivity extends Activity implements
 		songBox.setOnEditorActionListener(submitListener);
 
 	}
+	
+	@Override
+	public void onBackPressed() {
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -295,13 +299,30 @@ public class PlayActivity extends Activity implements
 			mediaPlayer.stop();
 			mediaPlayer.release();
 		}
-
-		float[] stats = game.endGame();
-
-		// Go to the score screen
-		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
-				.putExtra("stats", stats);
-		startActivity(intent);
+		
+		try {
+			float[] stats = game.endGame();
+	
+			// Go to the score screen
+			Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
+					.putExtra("stats", stats);
+			
+			startActivity(intent);
+		} catch (NullPointerException e) {
+			// TODO: Catch this nullpointer IDK what yall want to do in this event.
+			
+			// Go to the score screen
+			Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class);
+			
+			startActivity(intent);
+		}
+	}
+	
+	/**
+	 * Called when the player clicks on the Give Up button.
+	 */
+	public void giveUp(View view) {
+		this.gameOver();
 	}
 
 	/**

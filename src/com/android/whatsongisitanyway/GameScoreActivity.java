@@ -19,12 +19,18 @@ public class GameScoreActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_score);
-
-		// score, avgGuessTime, accuracy, songsPlayed
-		float[] stats = getIntent().getExtras().getFloatArray("stats");
-		TextView score = (TextView) findViewById(R.id.or);
-		score.setText((int) stats[0] + "");
-		// TODO: set the rest of the things
+		
+		try {
+			// score, avgGuessTime, accuracy, songsPlayed
+			float[] stats = getIntent().getExtras().getFloatArray("stats");
+			TextView score = (TextView) findViewById(R.id.gameScoreScore);
+			score.setText((int) stats[0] + "");
+			// TODO: set the rest of the things
+		} catch (NullPointerException e) {
+			TextView score = (TextView) findViewById(R.id.gameScoreScore);
+			score.setText("You Quit");
+			// TODO: what to do in event of quitting game
+		}
 	}
 	
 	@Override

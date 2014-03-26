@@ -140,4 +140,19 @@
             android:src="@android:drawable/ic_menu_send" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/playGiveUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:maxWidth="200dp"
+        android:scaleType="fitCenter"
+        android:onClick="giveUp"
+        android:contentDescription="@string/giveUpButton"
+        android:src="@drawable/give_up" />
+
 </RelativeLayout>

@@ -42,6 +42,7 @@
     <string name="high4Val">0</string>
     <string name="high5">Fifth-highest score</string>
     <string name="high5Val">0</string>
+    <string name="giveUpButton">Give up the game and quit</string>
     <string name="playlistTitle">Choose a\n    Playlist</string>
 
 </resources>
