@@ -23,13 +23,13 @@
     <string name="highScoreButton">This is the button used to get to the high score screen</string>
     <string name="statsVertBar">This is a vertical separator</string>
     <string name="statsMainTitle">You Got:</string>
-    <string name="stats1Label">Avg. Song Correct:</string>
+    <string name="stats1Label">Accuracy:</string>
     <string name="stats1Val">0</string>
-    <string name="stats2Label">Fastest Guess:</string>
+    <string name="stats2Label">Avg. Songs Correct:</string>
     <string name="stats2Val">0</string>
-    <string name="stats3Label">Most Skipped:</string>
+    <string name="stats3Label">Games Played:</string>
     <string name="stats3Val">0</string>
-    <string name="stats4Label">Most Guessed:</string>
+    <string name="stats4Label">Songs Played:</string>
     <string name="stats4Val">0</string>
     <string name="mainMenuButton">This button takes you to the main menu</string>
     <string name="high1">Highest score</string>

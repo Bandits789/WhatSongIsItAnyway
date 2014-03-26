@@ -185,4 +185,74 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		db.insert(OverallData.TABLE_NAME, null, values);
 	}
 
+	/**
+	 * Gets the overall stats in a float array
+	 * 
+	 * @return a float array of accuracy, avgGuessTime, gamesPlayed, songsPlayed
+	 */
+	public float[] getOverallStats() {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = {
+				OverallData.COLUMN_NAME_ACCURACY,
+				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
+				OverallData.COLUMN_NAME_GAMES_PLAYED,
+				OverallData.COLUMN_NAME_SONGS_PLAYED };
+
+		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+				null, null, null, null);
+
+		// get all the values
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()) {
+			// nothing to show yet!
+			float[] nothing = { 0, 0, 0, 0 };
+			return nothing;
+		}
+
+		float accuracy = cursor.getFloat(0);
+		float avgGuessTime = cursor.getFloat(1);
+		int gamesPlayed = cursor.getInt(2);
+		int songsPlayed = cursor.getInt(3);
+
+		float[] stats = { accuracy, avgGuessTime, gamesPlayed, songsPlayed };
+
+		return stats;
+	}
+
+	/**
+	 * Gets the top high scores in descending order
+	 * 
+	 * @param numScores
+	 *            the number of high scores to retrieve
+	 * @return an int array of the specified number of highest scores in
+	 *         descending order
+	 */
+	public int[] getHighScores(int numScores) {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = { GameData.COLUMN_NAME_SCORE };
+		// order by highest score
+		String orderBy = GameData.COLUMN_NAME_SCORE + " DESC";
+
+		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+				null, null, null, orderBy);
+
+		int[] scores = new int[numScores];
+
+		// get all the values we can, rest are zeroes by default
+		cursor.moveToFirst();
+		for (int i = 0; i < numScores; ++i) {
+			if (!cursor.isAfterLast()) {
+				scores[i] = cursor.getInt(0);
+			}
+		}
+
+		return scores;
+	}
+
 }

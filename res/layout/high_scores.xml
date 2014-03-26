@@ -115,7 +115,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@string/high2Val"
+        android:id="@+id/high2Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/high2"
@@ -133,7 +133,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/high4Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/high4"

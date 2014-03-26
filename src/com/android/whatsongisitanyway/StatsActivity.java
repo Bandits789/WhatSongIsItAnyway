@@ -6,7 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.android.whatsongisitanyway.database.GameDatabaseHelper;
+
+/**
+ * Activity that displays overall game stats (accuracy, avgGuessTime,
+ * gamesPlayed, songsPlayed)
+ */
 public class StatsActivity extends Activity {
 	
 	@Override
@@ -17,6 +24,22 @@ public class StatsActivity extends Activity {
 		
 		final ImageButton statsButton = (ImageButton) findViewById(R.id.statsStatsButton);
 		statsButton.setEnabled(false);
+
+		// get stats from database
+		GameDatabaseHelper dbHelper = new GameDatabaseHelper(this);
+		// accuracy, avgGuessTime, gamesPlayed, songsPlayed
+		float[] stats = dbHelper.getOverallStats();
+
+		// set all the labels
+		TextView accuracy = (TextView) findViewById(R.id.stats1Val);
+		TextView avgGuessTime = (TextView) findViewById(R.id.stats2Val);
+		TextView gamesPlayed = (TextView) findViewById(R.id.stats3Val);
+		TextView songsPlayed = (TextView) findViewById(R.id.stats4Val);
+
+		accuracy.setText(stats[0] + "");
+		avgGuessTime.setText(stats[1] + "");
+		gamesPlayed.setText((int) stats[2] + "");
+		songsPlayed.setText((int) stats[3] + "");
 	}
 	
 	@Override
