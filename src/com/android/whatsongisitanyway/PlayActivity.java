@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.whatsongisitanyway.models.Game;
@@ -34,6 +35,7 @@ public class PlayActivity extends Activity implements
 	private Game game;
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
+	private ProgressBar timerBar; 
 
 	private boolean running = false;
 	private boolean paused = false;
@@ -54,6 +56,12 @@ public class PlayActivity extends Activity implements
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
+		
+		//set the progress bar to see time left
+		timerBar = (ProgressBar)findViewById(R.id.scoreBar);
+		//set max of timer to be max of game duration
+		timerBar.setMax(game.getDuration());
+		timerBar.setProgress(0); 
 		
 	}
 	
@@ -227,7 +235,7 @@ public class PlayActivity extends Activity implements
 			gameOver();
 		}
 	}
-
+	
 	/**
 	 * Initialize the timer loop thread. It keeps track of the game's timer,
 	 * updating the timer label and then quitting the game when the timer runs
@@ -244,6 +252,8 @@ public class PlayActivity extends Activity implements
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
 					updateUILabel(R.id.timer, game.timeLeftString());
+					//update timer bar for progress
+					timerBar.setProgress(timerBar.getMax() - game.timeLeft()); 
 
 					// to avoid updating too often, sleep for .2 secs
 					try {

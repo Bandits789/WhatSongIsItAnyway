@@ -146,6 +146,14 @@ public class Game {
 	public int timeLeft() {
 		return timer.getTimeLeft();
 	}
+	
+	/**
+	 * Return the duration of the game (max time) 
+	 * @return duration in seconds
+	 */
+	public int getDuration() { 
+	    return duration; 
+	}
 
 	/**
 	 * Return the amount of time left on the timer in mm:ss format (unsupported
