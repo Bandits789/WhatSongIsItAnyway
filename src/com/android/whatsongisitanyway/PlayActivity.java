@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.whatsongisitanyway.models.Game;
@@ -53,7 +54,7 @@ public class PlayActivity extends Activity implements
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
-
+		
 	}
 	
 	@Override
@@ -136,27 +137,39 @@ public class PlayActivity extends Activity implements
 		goToNextSong();
 
 	}
-
+	
 	/**
 	 * Pauses/resumes song play
 	 * 
 	 * @param view
 	 */
 	public void pause(View view) {
-		if (running) {
-			if (!paused) {
-				// if running and not paused, pause it
-				paused = true;
-				mediaPlayer.pause();
-				game.pause();
-			} else {
-				// if running and paused, resume it
-				paused = false;
-				mediaPlayer.start();
-				game.resume();
-			}
-		}
+	    if (running) {
+            if (!paused) {
+                // if running and not paused, pause it
+                paused = true;
+                mediaPlayer.pause();
+                game.pause();
+                int request = 1;
+                int result = 2;
+                // When paused, go to resume button
+                Intent intent = new Intent(PlayActivity.this, ResumeActivity.class);
+                startActivityForResult(intent, request);
+            } 
+        }
 	}
+	
+	/**
+	 * This resumes the current game from the resume button
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	    if (resultCode == RESULT_OK) {
+	        paused = false;
+	        mediaPlayer.start();
+	        game.resume(); 
+	    }
+	} 
 
 	/**
 	 * Submits the guess to the game, updates the score
@@ -338,5 +351,6 @@ public class PlayActivity extends Activity implements
 			return true;
 		}
 	};
+
 
 }

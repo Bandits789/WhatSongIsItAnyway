@@ -56,6 +56,11 @@
             android:label="@string/app_name">
         </activity>
         
+        <activity
+            android:name="com.android.whatsongisitanyway.ResumeActivity"
+            android:label="@string/app_name">
+        </activity>
+        
     </application>
 
 </manifest>

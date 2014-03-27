@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
@@ -27,7 +28,7 @@
         android:paddingTop="0dp"
         tools:context=".PlayActivity" >
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +38,6 @@
             android:adjustViewBounds="false"
             android:contentDescription="@string/pauseButton"
             android:cropToPadding="false"
-            android:onClick="pause"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:scaleType="center"
@@ -48,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/timer"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30sp" />
 
@@ -64,7 +63,6 @@
                 android:id="@+id/streak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/streak"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -72,11 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/multiplier"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/skipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +81,6 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/streakMultiplier"
             android:contentDescription="@string/skipButton"
-            android:onClick="skip"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:src="@android:drawable/ic_media_next" />
@@ -96,7 +92,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/controls"
         android:layout_centerHorizontal="true"
-        android:text="@string/score"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ProgressBar
@@ -116,27 +111,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/scoreBar"
         android:layout_centerHorizontal="true" >
-
+        
         <EditText
             android:id="@+id/songTextbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textNoSuggestions" >
+            android:ems="10" >
 
             <requestFocus />
         </EditText>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/submit"
-            android:onClick="submit"
             android:src="@android:drawable/ic_menu_send" />
     </LinearLayout>
 
@@ -150,8 +143,30 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/giveUpButton"
         android:maxWidth="200dp"
-        android:onClick="giveUp"
         android:scaleType="fitCenter"
         android:src="@drawable/give_up" />
     
+    
+    <!-- Translucent pause overlay -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#98888888" >
+
+        <ImageButton
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="false"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/resumeButton"
+            android:cropToPadding="false"
+            android:onClick="resume"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_media_play" />
+    </RelativeLayout>
+    
+
 </RelativeLayout>
