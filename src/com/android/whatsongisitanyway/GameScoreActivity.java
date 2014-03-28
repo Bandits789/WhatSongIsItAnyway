@@ -13,23 +13,19 @@ import android.widget.TextView;
  */
 public class GameScoreActivity extends Activity {
 	
-	//TODO: Do not let player press the back button to go back into the game.
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_score);
 		
-		try {
-			// score, avgGuessTime, accuracy, songsPlayed
-			float[] stats = getIntent().getExtras().getFloatArray("stats");
-			TextView score = (TextView) findViewById(R.id.gameScoreScore);
+		// score, avgGuessTime, accuracy, songsPlayed
+		float[] stats = getIntent().getExtras().getFloatArray("stats");
+		TextView score = (TextView) findViewById(R.id.gameScoreScore);
+		
+		if ((int) stats[0] != -1) {
 			score.setText((int) stats[0] + "");
-			// TODO: set the rest of the things
-		} catch (NullPointerException e) {
-			TextView score = (TextView) findViewById(R.id.gameScoreScore);
-			score.setText("You Quit");
-			// TODO: what to do in event of quitting game
+		} else {
+			score.setText("You gave up!");
 		}
 	}
 	

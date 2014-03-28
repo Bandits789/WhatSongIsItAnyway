@@ -18,6 +18,7 @@
     </style>
     
     <style name="MainTheme" parent="android:Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@null</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:textColor">#FFFFFF</item>

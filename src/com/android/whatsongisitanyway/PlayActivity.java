@@ -18,7 +18,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class PlayActivity extends Activity implements
 	private Game game;
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
-	private ProgressBar timerBar; 
+	private ProgressBar timerBar;
 
 	private boolean running = false;
 	private boolean paused = false;
@@ -59,10 +58,6 @@ public class PlayActivity extends Activity implements
 		
 		//set the progress bar to see time left
 		timerBar = (ProgressBar)findViewById(R.id.scoreBar);
-		//set max of timer to be max of game duration
-		timerBar.setMax(game.getDuration());
-		timerBar.setProgress(0); 
-		
 	}
 	
 	@Override
@@ -140,6 +135,9 @@ public class PlayActivity extends Activity implements
 			running = true;
 			game = new Game(songsList, this);
 			initTimerThread();
+			//set max of timer to be max of game duration
+			timerBar.setMax(1 - game.getDuration());
+			timerBar.setProgress(0); 
 		}
 
 		goToNextSong();
@@ -323,29 +321,33 @@ public class PlayActivity extends Activity implements
 			mediaPlayer.release();
 		}
 		
-		try {
-			float[] stats = game.endGame();
-	
-			// Go to the score screen
-			Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
-					.putExtra("stats", stats);
-			
-			startActivity(intent);
-		} catch (NullPointerException e) {
-			// TODO: Catch this nullpointer IDK what yall want to do in this event.
-			
-			// Go to the score screen
-			Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class);
-			
-			startActivity(intent);
-		}
+		float[] stats = game.endGame();
+
+		// Go to the score screen
+		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
+				.putExtra("stats", stats);
+		
+		startActivity(intent);
 	}
 	
 	/**
 	 * Called when the player clicks on the Give Up button.
 	 */
 	public void giveUp(View view) {
-		this.gameOver();
+		//running = false;
+		if (game != null) {
+			mediaPlayer.pause();
+			mediaPlayer.release();
+            game.pause();
+		}
+		
+		float[] stat = {-1};
+		
+		// Go to the score screen
+		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
+				.putExtra("stats",  stat);
+		
+		startActivity(intent);
 	}
 
 	/**

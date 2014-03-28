@@ -32,11 +32,11 @@ public class HighScoreActivity extends Activity {
 		TextView high4 = (TextView) findViewById(R.id.high4Val);
 		TextView high5 = (TextView) findViewById(R.id.high5Val);
 
-		high1.setText(scores[0]);
-		high2.setText(scores[1]);
-		high3.setText(scores[2]);
-		high4.setText(scores[3]);
-		high5.setText(scores[4]);
+		high1.setText(String.valueOf(scores[0]));
+		high2.setText(String.valueOf(scores[1]));
+		high3.setText(String.valueOf(scores[2]));
+		high4.setText(String.valueOf(scores[3]));
+		high5.setText(String.valueOf(scores[4]));
 	}
 	
 	@Override
