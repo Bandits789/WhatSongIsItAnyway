@@ -13,7 +13,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -135,9 +137,25 @@ public class PlayActivity extends Activity implements
 			running = true;
 			game = new Game(songsList, this);
 			initTimerThread();
+			
 			//set max of timer to be max of game duration
 			timerBar.setMax(1 - game.getDuration());
 			timerBar.setProgress(0); 
+			
+			long timerDuration = 2*60*1000; // 2 min in milliseconds 
+			        
+			// Use countdown timer to update progress bar 
+            CountDownTimer mCountdownTimer = new CountDownTimer(timerDuration,1000) {
+                @Override
+                public void onFinish() {
+                    Log.d("countdown timer is", "finished");
+                }
+
+                @Override
+                public void onTick(long millisUntilDone) {
+                    timerBar.setProgress((int) millisUntilDone/1000); 
+                } 
+            }.start(); 
 		}
 
 		goToNextSong();
@@ -157,7 +175,6 @@ public class PlayActivity extends Activity implements
                 mediaPlayer.pause();
                 game.pause();
                 int request = 1;
-                int result = 2;
                 // When paused, go to resume button
                 Intent intent = new Intent(PlayActivity.this, ResumeActivity.class);
                 startActivityForResult(intent, request);
@@ -251,8 +268,9 @@ public class PlayActivity extends Activity implements
 				while (running && game.timeLeft() > 0) {
 					updateUILabel(R.id.timer, game.timeLeftString());
 					//update timer bar for progress
-					timerBar.setProgress(timerBar.getMax() - game.timeLeft()); 
-
+					//timerBar.setProgress(game.timeLeft()); 
+					//Log.d("time left", ":" + game.timeLeft()); 
+					
 					// to avoid updating too often, sleep for .2 secs
 					try {
 						Thread.sleep(200);

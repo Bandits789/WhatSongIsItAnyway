@@ -119,8 +119,6 @@
             android:layout_marginTop="13dp"
             android:layout_weight="1"
             android:ems="10" >
-
-            <requestFocus />
         </EditText>
 
         <ImageView
@@ -152,13 +150,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#98888888" >
+        android:background="#88666666" >
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="132dp"
             android:adjustViewBounds="false"
             android:background="@android:color/transparent"
             android:contentDescription="@string/resumeButton"
@@ -166,6 +165,7 @@
             android:onClick="resume"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_media_play" />
+
     </RelativeLayout>
     
 
