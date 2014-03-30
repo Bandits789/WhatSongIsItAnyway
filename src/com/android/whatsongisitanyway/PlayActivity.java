@@ -139,23 +139,9 @@ public class PlayActivity extends Activity implements
 			initTimerThread();
 			
 			//set max of timer to be max of game duration
-			timerBar.setMax(1 - game.getDuration());
+			timerBar.setMax(game.getDuration());
 			timerBar.setProgress(0); 
 			
-			long timerDuration = 2*60*1000; // 2 min in milliseconds 
-			        
-			// Use countdown timer to update progress bar 
-            CountDownTimer mCountdownTimer = new CountDownTimer(timerDuration,1000) {
-                @Override
-                public void onFinish() {
-                    Log.d("countdown timer is", "finished");
-                }
-
-                @Override
-                public void onTick(long millisUntilDone) {
-                    timerBar.setProgress((int) millisUntilDone/1000); 
-                } 
-            }.start(); 
 		}
 
 		goToNextSong();
@@ -268,7 +254,7 @@ public class PlayActivity extends Activity implements
 				while (running && game.timeLeft() > 0) {
 					updateUILabel(R.id.timer, game.timeLeftString());
 					//update timer bar for progress
-					//timerBar.setProgress(game.timeLeft()); 
+					timerBar.setProgress(game.timeLeft()); 
 					//Log.d("time left", ":" + game.timeLeft()); 
 					
 					// to avoid updating too often, sleep for .2 secs
