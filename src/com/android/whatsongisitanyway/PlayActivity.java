@@ -262,7 +262,6 @@ public class PlayActivity extends Activity implements
 					updateUILabel(R.id.timer, game.timeLeftString());
 					//update timer bar for progress
 					timerBar.setProgress(game.timeLeft()); 
-					//Log.d("time left", ":" + game.timeLeft()); 
 					
 					// to avoid updating too often, sleep for .2 secs
 					try {
