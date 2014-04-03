@@ -155,4 +155,26 @@
         android:scaleType="fitCenter"
         android:src="@drawable/give_up" />
     
+    <RelativeLayout
+        android:id="@+id/resumeOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88666666" >
+
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="132dp"
+            android:adjustViewBounds="false"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/resumeButton"
+            android:cropToPadding="false"
+            android:onClick="resume"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_media_play" />
+
+    </RelativeLayout>
+    
 </RelativeLayout>

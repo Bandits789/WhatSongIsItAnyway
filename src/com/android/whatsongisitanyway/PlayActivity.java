@@ -35,6 +35,7 @@ public class PlayActivity extends Activity implements
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
 	private ProgressBar timerBar;
+	private View resumeView; 
 
 	private boolean running = false;
 	private boolean paused = false;
@@ -48,6 +49,10 @@ public class PlayActivity extends Activity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_activity);
+		
+		// First set the overlay view to be invisible
+		resumeView = findViewById(R.id.resumeOverlay); 
+		resumeView.setVisibility(View.INVISIBLE);
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
@@ -158,26 +163,25 @@ public class PlayActivity extends Activity implements
                 paused = true;
                 mediaPlayer.pause();
                 game.pause();
-                int request = 1;
-                // When paused, go to resume button
-                Intent intent = new Intent(PlayActivity.this, ResumeActivity.class);
-                startActivityForResult(intent, request);
+                // hide play view and show resume overlay
+                resumeView.setVisibility(View.VISIBLE); 
             } 
         }
 	}
 	
-	/**
-	 * This resumes the current game from the resume button
-	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-	    if (resultCode == RESULT_OK) {
-	        paused = false;
-	        mediaPlayer.start();
-	        game.resume(); 
-	    }
-	} 
-
+	/** 
+     * Button listener for resume button to resume game 
+     * @param View
+     */
+    public void resume(View view) {
+        //hide resume view
+        resumeView.setVisibility(View.INVISIBLE); 
+        //resume game
+        paused = false;
+        mediaPlayer.start();
+        game.resume(); 
+    }
+	
 	/**
 	 * Submits the guess to the game, updates the score
 	 * 
@@ -192,6 +196,9 @@ public class PlayActivity extends Activity implements
 
 		// if they got it right, update score and skip songs
 		if (score > 0) {
+		    //empty text box
+		    songBox.setText("");
+		    //update scores
 			updateUILabel(R.id.score, "Score: " + score);
 			updateUILabel(R.id.streak, "Streak: " + game.getStreak());
 			updateUILabel(R.id.multiplier,
@@ -253,7 +260,6 @@ public class PlayActivity extends Activity implements
 					updateUILabel(R.id.timer, game.timeLeftString());
 					//update timer bar for progress
 					timerBar.setProgress(game.timeLeft()); 
-					//Log.d("time left", ":" + game.timeLeft()); 
 					
 					// to avoid updating too often, sleep for .2 secs
 					try {
