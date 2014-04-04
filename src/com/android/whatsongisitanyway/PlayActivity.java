@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.whatsongisitanyway.database.GameDatabaseHelper;
 import com.android.whatsongisitanyway.models.Game;
 import com.android.whatsongisitanyway.models.Music;
 
@@ -40,6 +41,9 @@ public class PlayActivity extends Activity implements
 	private boolean running = false;
 	private boolean paused = false;
 
+	private GameDatabaseHelper dbHelper;
+	private int[] settings;
+
 	private final List<Music> songsList = new ArrayList<Music>();
 
 	@Override
@@ -49,6 +53,10 @@ public class PlayActivity extends Activity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_activity);
+
+		// get settings
+		dbHelper = new GameDatabaseHelper(this);
+		settings = dbHelper.getSettings();
 		
 		// First set the overlay view to be invisible
 		resumeView = findViewById(R.id.resumeOverlay); 
@@ -96,6 +104,8 @@ public class PlayActivity extends Activity implements
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
 		// load all the shit
 		cursor.moveToFirst();
+		int songDuration = settings[1];
+
 		while (!cursor.isAfterLast()) {
 			int duration = cursor.getInt(2);
 
@@ -104,7 +114,7 @@ public class PlayActivity extends Activity implements
 				// path, title, duration, artist, album, size
 				songsList.add(new Music(cursor.getString(0), cursor
 						.getString(1), duration, cursor.getString(3), cursor
-						.getString(4), cursor.getInt(5)));
+						.getString(4), cursor.getInt(5), songDuration));
 			}
 
 			cursor.moveToNext();
@@ -138,7 +148,8 @@ public class PlayActivity extends Activity implements
 		} else {
 			// start the game!
 			running = true;
-			game = new Game(songsList, this);
+			int gameDuration = settings[0];
+			game = new Game(songsList, this, gameDuration);
 			initTimerThread();
 			
 			//set max of timer to be max of game duration

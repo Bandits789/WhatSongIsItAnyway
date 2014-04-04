@@ -14,8 +14,8 @@ public class GameTest {
 	@Test
 	public void guessingTest() {
 		Music song = new Music("here", "do i wanna know", 12345,
-				"arctic monkeys", "AM", 10000);
-		Game game = new Game(Arrays.asList(song), null);
+				"arctic monkeys", "AM", 10000, 10);
+		Game game = new Game(Arrays.asList(song), null, 60);
 		game.getNextSong();
 
 		// starting out
@@ -40,8 +40,8 @@ public class GameTest {
 	@Test
 	public void skippingTest() {
 		Music song = new Music("here", "do i wanna know", 12345,
-				"arctic monkeys", "AM", 10000);
-		Game game = new Game(Arrays.asList(song), null);
+				"arctic monkeys", "AM", 10000, 10);
+		Game game = new Game(Arrays.asList(song), null, 60);
 		game.getNextSong();
 
 		// starting out

@@ -25,7 +25,7 @@ public class Game {
 	private int totalGuessTime;
 
 	// in seconds
-	private final int duration = 2 * 60;
+	private final int duration;
 	private final int skipPenalty = 2;
 
 	private int multiplier = 1;
@@ -40,11 +40,15 @@ public class Game {
 	 *            the list of Music objects from the sdcard
 	 * @param context
 	 *            the Context the game is in
+	 * @param duration
+	 *            the duration of the game
 	 */
-	public Game(List<Music> songsList, Context context) {
+	public Game(List<Music> songsList, Context context, int duration) {
 		currentSongIndex = -1;
 		timer = new Timer(duration);
 		dbHelper = new GameDatabaseHelper(context);
+
+		this.duration = duration;
 
 		this.songsList = new ArrayList<Music>(songsList);
 		// shuffle songs
