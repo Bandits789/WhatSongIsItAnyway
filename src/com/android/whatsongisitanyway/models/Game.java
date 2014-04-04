@@ -173,7 +173,7 @@ public class Game {
 		int time = timer.getTimeLeft();
 		String timeString = "";
 		int seconds = time % 60;
-		int minutes = time - seconds;
+		int minutes = (time - seconds) / 60;
 
 		timeString += minutes + ":";
 

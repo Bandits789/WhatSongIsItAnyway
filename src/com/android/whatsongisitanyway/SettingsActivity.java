@@ -39,7 +39,7 @@ public class SettingsActivity extends Activity {
 		songSec.setMinValue(1);
 
 		int seconds = settings[0] % 60;
-		int minutes = settings[0] - seconds;
+		int minutes = (settings[0] - seconds) / 60;
 
 		gameSec.setValue(seconds);
 		gameMins.setValue(minutes);
