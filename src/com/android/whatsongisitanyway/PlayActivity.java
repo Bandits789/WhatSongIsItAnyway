@@ -14,7 +14,6 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -213,17 +212,17 @@ public class PlayActivity extends Activity implements
 		int score = game.guess(songBox.getText().toString());
 		updateUILabel(R.id.songTextbox, "");
 
-		// if they got it right, update score and skip songs
+		// if they got it right, skip to the next song
 		if (score > 0) {
-			// empty text box
-			songBox.setText("");
-			// update scores
-			updateUILabel(R.id.score, "Score: " + score);
-			updateUILabel(R.id.streak, "Streak: " + game.getStreak());
-			updateUILabel(R.id.multiplier,
-					"Multiplier: " + game.getMultiplier());
 			goToNextSong();
 		}
+
+		// empty text box
+		songBox.setText("");
+		// update scores
+		updateUILabel(R.id.score, "Score: " + score);
+		updateUILabel(R.id.streak, "Streak: " + game.getStreak());
+		updateUILabel(R.id.multiplier, "Multiplier: " + game.getMultiplier());
 	}
 
 	/**
