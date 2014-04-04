@@ -17,7 +17,8 @@
         android:theme="@style/MainTheme" >
         <activity
             android:name="com.android.whatsongisitanyway.MainMenuActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,32 +28,32 @@
         
         <activity
             android:name="com.android.whatsongisitanyway.PlayActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity
             android:name="com.android.whatsongisitanyway.GameScoreActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity
             android:name="com.android.whatsongisitanyway.StatsActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity
             android:name="com.android.whatsongisitanyway.HighScoreActivity"
-            android:label="@string/app_name">
-        </activity>
-        
-        <activity
-            android:name="com.android.whatsongisitanyway.PlaylistActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity
             android:name="com.android.whatsongisitanyway.SettingsActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         
     </application>

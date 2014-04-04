@@ -142,12 +142,38 @@
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:contentDescription="@string/submit"
+            android:maxHeight="50dp"
+            android:maxWidth="50dp"
             android:onClick="submit"
-            android:src="@android:drawable/ic_menu_send" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/submit" />
+
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/resumeOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80222222" >
+
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="132dp"
+            android:adjustViewBounds="false"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/resumeButton"
+            android:onClick="resume"
+            android:scaleType="fitCenter"
+            android:src="@drawable/resume" />
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/playGiveUpButton"
@@ -162,25 +188,5 @@
         android:onClick="giveUp"
         android:scaleType="fitCenter"
         android:src="@drawable/give_up" />
-
-    <RelativeLayout
-        android:id="@+id/resumeOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80222222" >
-
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="132dp"
-            android:adjustViewBounds="false"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/resumeButton"
-            android:onClick="resume"
-            android:scaleType="fitCenter"
-            android:src="@drawable/resume" />
-    </RelativeLayout>
 
 </RelativeLayout>
