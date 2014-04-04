@@ -150,13 +150,14 @@ public class Game {
 	public int timeLeft() {
 		return timer.getTimeLeft();
 	}
-	
+
 	/**
-	 * Return the duration of the game (max time) 
+	 * Return the duration of the game (max time)
+	 * 
 	 * @return duration in seconds
 	 */
-	public int getDuration() { 
-	    return duration; 
+	public int getDuration() {
+		return duration;
 	}
 
 	/**
@@ -166,22 +167,20 @@ public class Game {
 	 * @return time left string
 	 */
 	public String timeLeftString() {
-		String time = timer.getTimeLeft() + "";
-		int length = time.length();
+		int time = timer.getTimeLeft();
+		String timeString = "";
+		int seconds = time % 60;
+		int minutes = time - seconds;
 
-		if (time.length() > 2) {
-			// mm:ss
-			time = time.substring(0, time.length() - 2) + ":"
-					+ time.substring(length - 1, length);
-		} else if (time.length() == 2) {
-			// 0:ss
-			time = "0:" + time;
+		timeString += minutes + ":";
+
+		if (seconds < 10) {
+			timeString += "0" + seconds;
 		} else {
-			// 0:0s
-			time = "0:0" + time;
+			timeString += seconds;
 		}
 
-		return time;
+		return timeString;
 	}
 
 	/**
