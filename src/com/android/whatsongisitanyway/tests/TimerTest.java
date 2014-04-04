@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import com.android.whatsongisitanyway.models.Timer;
 
+/**
+ * Tests the timer running, pausing, and decrementing time. Warning: these tests
+ * take a while
+ */
 public class TimerTest {
 
 	@Test
