@@ -1,6 +1,5 @@
 package com.android.whatsongisitanyway;
 
-import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,9 +24,26 @@ public class SettingsActivity extends Activity {
 
 		// get settings
 		dbHelper = new GameDatabaseHelper(this);
+		// [gameDuration, songDuration]
 		settings = dbHelper.getSettings();
 
-		NumberPicker gameSec = (NumberPicker) findViewById();
+		// set defaults and max values
+		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
+		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
+		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
+
+		gameSec.setMaxValue(60);
+		gameSec.setMinValue(1);
+		gameMins.setMaxValue(9);
+		songSec.setMaxValue(20);
+		songSec.setMinValue(1);
+
+		int seconds = settings[0] % 60;
+		int minutes = settings[0] - seconds;
+
+		gameSec.setValue(seconds);
+		gameMins.setValue(minutes);
+		songSec.setValue(settings[1]);
 	}
 	
 	@Override
@@ -48,10 +64,15 @@ public class SettingsActivity extends Activity {
 	 * @param view
 	 */
 	public void saveButton(View view) {
-		int gameDuration = 0;
-		int songDuration = 0;
+		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
+		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
+		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
 
-		// dbHelper.updateSettings(gameDuration, songDuration);
+		// get everything in secs
+		int gameDuration = gameSec.getValue() + gameMins.getValue() * 60;
+		int songDuration = songSec.getValue();
+
+		dbHelper.updateSettings(gameDuration, songDuration);
 
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
