@@ -12,7 +12,7 @@ public class MusicTest {
 	@Test
 	public void songInfoTest() {
 		Music song = new Music("here", "do i wanna know", 12345,
-				"arctic monkeys", "AM", 10000);
+				"arctic monkeys", "AM", 10000, 10);
 		assertEquals("here", song.getPath());
 		assertEquals("do i wanna know", song.getTitle());
 		assertEquals(12345, song.getDuration());
@@ -25,7 +25,7 @@ public class MusicTest {
 	public void scoreTest() {
 
 		Music song = new Music("here", "do i wanna know", 12345,
-				"arctic monkeys", "AM", 10000);
+				"arctic monkeys", "AM", 10000, 10);
 
 		// guess incorrectly
 		assertEquals(0, song.guess("nope"));
@@ -39,7 +39,7 @@ public class MusicTest {
 		Music song = new Music(
 				"here",
 				"3''4{52}2. D(O I WA)NNA K[noW FE]]At{UR}IN}G. SAFWERASDFWER'' [] ",
-				12345, "arctic monkeys", "AM", 10000);
+				12345, "arctic monkeys", "AM", 10000, 10);
 
 		assertEquals(0, song.guess("awerwafasdf"));
 		// case insensitive
