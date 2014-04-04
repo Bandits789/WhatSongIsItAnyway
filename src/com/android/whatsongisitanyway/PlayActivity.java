@@ -215,12 +215,12 @@ public class PlayActivity extends Activity implements
 		// if they got it right, skip to the next song
 		if (score > 0) {
 			goToNextSong();
+			updateUILabel(R.id.score, "Score: " + score);
 		}
 
 		// empty text box
 		songBox.setText("");
 		// update scores
-		updateUILabel(R.id.score, "Score: " + score);
 		updateUILabel(R.id.streak, "Streak: " + game.getStreak());
 		updateUILabel(R.id.multiplier, "Multiplier: " + game.getMultiplier());
 	}
