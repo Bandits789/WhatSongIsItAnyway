@@ -145,6 +145,9 @@ public class PlayActivity extends Activity implements
 			// multiplier and streak are lost
 			updateUILabel(R.id.streak, "Streak: 0");
 			updateUILabel(R.id.multiplier, "Multiplier: 1");
+
+			// empty text box
+			updateUILabel(R.id.songTextbox, "");
 		}
 
 		goToNextSong();
