@@ -91,7 +91,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// columns we want
 		String[] projection = { SettingsData._ID };
 
-		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+		Cursor cursor = db.query(SettingsData.TABLE_NAME, projection, null,
 				null, null, null, null);
 
 		// get all the values
@@ -109,11 +109,11 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, gameDuration);
 		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, songDuration);
 
-		String selection = OverallData._ID + " LIKE ?";
+		String selection = SettingsData._ID + " LIKE ?";
 		String[] selectionArgs = { String.valueOf(id) };
 
 		// update!
-		db.update(OverallData.TABLE_NAME, values, selection, selectionArgs);
+		db.update(SettingsData.TABLE_NAME, values, selection, selectionArgs);
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		String[] projection = { SettingsData.COLUMN_NAME_GAME_DURATION,
 				SettingsData.COLUMN_NAME_SONG_DURATION };
 
-		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+		Cursor cursor = db.query(SettingsData.TABLE_NAME, projection, null,
 				null, null, null, null);
 
 		// get all the values
