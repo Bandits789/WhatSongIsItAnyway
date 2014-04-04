@@ -23,7 +23,7 @@
         android:src="@drawable/play" />
 
     <ImageButton
-        android:id="@+id/choosePlaylist"
+        android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -34,7 +34,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="@+string/mainMenuPlayDesc"
         android:maxWidth="150dp"
-        android:onClick="playlistButton"
+        android:onClick="settingsButton"
         android:scaleType="fitCenter"
         android:src="@drawable/playlist" />
 
@@ -46,14 +46,15 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
         android:text="@+string/mainMenuOr"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="italic" />
 
     <ImageButton
         android:id="@+id/highScores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/choosePlaylist"
+        android:layout_below="@+id/settings"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:adjustViewBounds="true"
