@@ -23,7 +23,7 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:typeface">monospace</item>
-        <item name="android:background">#2C6ED1</item>
+        <item name="android:background">#2A38A1</item>
     </style>
 
 </resources>
