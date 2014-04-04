@@ -8,10 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="60dp"
         android:text="@+string/gameScoreTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:typeface="monospace" />
 
     <TextView
         android:id="@+id/gameScoreScore"
@@ -22,7 +24,8 @@
         android:text="@string/gameScoreScore"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFF00"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/gameScoreText"
@@ -32,7 +35,8 @@
         android:layout_centerHorizontal="true"
         android:text="@string/gameScoreMessage"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/gameScoreStatsButton"
@@ -44,7 +48,7 @@
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/statsButton"
-        android:maxHeight="50dp"
+        android:maxHeight="60dp"
         android:onClick="statsButton"
         android:scaleType="fitCenter"
         android:src="@drawable/to_stats" />
@@ -59,12 +63,13 @@
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/highScoreButton"
+        android:maxHeight="60dp"
         android:onClick="highScoreButton"
         android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_upload" />
+        android:src="@drawable/to_high_scores" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/settingsSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/gameScoreHighScoreButton"
@@ -73,7 +78,7 @@
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/mainMenuButton"
-        android:maxHeight="50dp"
+        android:maxHeight="60dp"
         android:onClick="mainMenuButton"
         android:scaleType="fitCenter"
         android:src="@drawable/to_menu" />

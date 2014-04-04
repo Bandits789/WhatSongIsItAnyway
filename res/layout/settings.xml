@@ -2,6 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
+    <NumberPicker
+        android:id="@+id/settingsGameSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsSongSec"
+        android:layout_alignLeft="@+id/settingsSongSec"
+        android:layout_marginBottom="79dp" />
+
+    <NumberPicker
+        android:id="@+id/settingsGameMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/settingsGameSec"
+        android:layout_marginLeft="64dp" />
+
+    <NumberPicker
+        android:id="@+id/settingsSongSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="197dp"
+        android:layout_marginRight="64dp" />
+
+    <ImageButton
+        android:id="@+id/settingsSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="93dp"
+        android:onClick="saveButton"
+        android:src="@android:drawable/ic_menu_save" />
 
 </RelativeLayout>

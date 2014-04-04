@@ -40,8 +40,8 @@ public class MainMenuActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void playlistButton (View view) {
-		Intent intent = new Intent(this, PlaylistActivity.class);
+	public void settingsButton (View view) {
+		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
 	}
 	
