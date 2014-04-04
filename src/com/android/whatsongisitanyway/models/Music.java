@@ -90,7 +90,7 @@ public class Music {
 		double accuracy = StringUtils.getJaroWinklerDistance(guess,
 				cleanedTitle);
 
-		if (accuracy > 0.9) {
+		if (accuracy > 0.8) {
 			timeGuessedIn = playDuration - timer.getTimeLeft();
 			return getScore();
 		}
