@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.android.whatsongisitanyway.database.GameDatabase.GameData;
 import com.android.whatsongisitanyway.database.GameDatabase.OverallData;
+import com.android.whatsongisitanyway.database.GameDatabase.SettingsData;
 
 /**
  * Bridges the gap between code and sqlite, helps with important things such as
@@ -47,24 +48,72 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 				+ OverallData.COLUMN_NAME_ACCURACY + " FLOAT,"
 				+ OverallData.COLUMN_NAME_AVG_GUESS_TIME + " FLOAT,"
 				+ OverallData.COLUMN_NAME_GAMES_PLAYED + " INTEGER,"
-				+ GameData.COLUMN_NAME_SONGS_PLAYED + " INTEGER)";
+				+ OverallData.COLUMN_NAME_SONGS_PLAYED + " INTEGER)";
+
+		// and then settings table
+		String createSettings = "CREATE TABLE " + SettingsData.TABLE_NAME
+				+ " (" + SettingsData._ID + " INTEGER PRIMARY KEY,"
+				+ SettingsData.COLUMN_NAME_GAME_DURATION + " INTEGER,"
+				+ SettingsData.COLUMN_NAME_SONG_DURATION + " INTEGER)";
 
 		db.execSQL(createGames);
 		db.execSQL(createOverall);
+		db.execSQL(createSettings);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// This database is only a cache for data, so its upgrade policy
-		// is to simply to discard the data and start over
+		// is to simply to discard the data and startgs over
 		db.execSQL("DROP TABLE IF EXISTS " + OverallData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + GameData.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + SettingsData.TABLE_NAME);
 		onCreate(db);
 	}
 
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onUpgrade(db, oldVersion, newVersion);
+	}
+
+	/**
+	 * Update the settings
+	 * 
+	 * @param gameDuration
+	 *            how long should the game play for (seconds)
+	 * @param songDuration
+	 *            how long should the songs play for (seconds)
+	 */
+	public void updateSettings(int gameDuration, int songDuration) {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = { SettingsData._ID };
+
+		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+				null, null, null, null);
+
+		// get all the values
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()) {
+			initialSettings();
+			return;
+		}
+
+		// get id
+		float id = cursor.getInt(0);
+
+		// create a new map of values, where column names are the keys
+		ContentValues values = new ContentValues();
+		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, gameDuration);
+		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, songDuration);
+
+		String selection = OverallData._ID + " LIKE ?";
+		String[] selectionArgs = { String.valueOf(id) };
+
+		// update!
+		db.update(OverallData.TABLE_NAME, values, selection, selectionArgs);
 	}
 
 	/**
@@ -186,6 +235,23 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * Initially when there are no settings, insert the default settings (2mins
+	 * for game, 10 secs for song)
+	 */
+	private void initialSettings() {
+		// gets the data repository in write mode
+		SQLiteDatabase db = getWritableDatabase();
+
+		// create a new map of values, where column names are the keys
+		ContentValues values = new ContentValues();
+		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, 2 * 60);
+		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, 10);
+
+		// insert the new row!
+		db.insert(SettingsData.TABLE_NAME, null, values);
+	}
+
+	/**
 	 * Gets the overall stats in a float array
 	 * 
 	 * @return a float array of accuracy, avgGuessTime, gamesPlayed, songsPlayed
@@ -195,8 +261,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = getReadableDatabase();
 
 		// columns we want
-		String[] projection = {
-				OverallData.COLUMN_NAME_ACCURACY,
+		String[] projection = { OverallData.COLUMN_NAME_ACCURACY,
 				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
 				OverallData.COLUMN_NAME_GAMES_PLAYED,
 				OverallData.COLUMN_NAME_SONGS_PLAYED };
@@ -223,6 +288,39 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * Gets the settings, set them to default if the table doesn't exist
+	 * 
+	 * @return an int array of gameDuration, songDuration
+	 */
+	public int[] getSettings() {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = { SettingsData.COLUMN_NAME_GAME_DURATION,
+				SettingsData.COLUMN_NAME_SONG_DURATION };
+
+		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
+				null, null, null, null);
+
+		// get all the values
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()) {
+			// insert defaults
+			initialSettings();
+			int[] defaultSettings = { 2 * 60, 10 };
+			return defaultSettings;
+		}
+
+		int gameDuration = cursor.getInt(0);
+		int songDuration = cursor.getInt(1);
+
+		int[] settings = { gameDuration, songDuration };
+
+		return settings;
+	}
+
+	/**
 	 * Gets the top high scores in descending order
 	 * 
 	 * @param numScores
@@ -239,8 +337,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// order by highest score
 		String orderBy = GameData.COLUMN_NAME_SCORE + " DESC";
 
-		Cursor cursor = db.query(GameData.TABLE_NAME, projection, null,
-				null, null, null, orderBy);
+		Cursor cursor = db.query(GameData.TABLE_NAME, projection, null, null,
+				null, null, orderBy);
 
 		int[] scores = new int[numScores];
 

@@ -33,4 +33,13 @@ public final class GameDatabase {
 		public static final String COLUMN_NAME_SCORE = "score";
 		public static final String COLUMN_NAME_SONGS_PLAYED = "songsplayed";
 	}
+
+	/**
+	 * Settings table. Has all the user settings
+	 */
+	public static abstract class SettingsData implements BaseColumns {
+		public static final String TABLE_NAME = "settings";
+		public static final String COLUMN_NAME_GAME_DURATION = "gameduration";
+		public static final String COLUMN_NAME_SONG_DURATION = "songduration";
+	}
 }
