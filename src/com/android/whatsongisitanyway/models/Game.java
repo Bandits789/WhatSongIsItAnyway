@@ -223,7 +223,7 @@ public class Game {
 		if (getSongsPlayed() == 0) {
 			return 0;
 		}
-		return songsCorrect / getSongsPlayed();
+		return songsCorrect / (float) getSongsPlayed();
 	}
 
 	/**
@@ -237,7 +237,7 @@ public class Game {
 		if (songsCorrect == 0) {
 			return 0;
 		}
-		return totalGuessTime / songsCorrect;
+		return totalGuessTime / (float) songsCorrect;
 	}
 
 	/**
