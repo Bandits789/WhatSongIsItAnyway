@@ -59,5 +59,14 @@ public class GameScoreActivity extends Activity {
 		Intent intent = new Intent(this, HighScoreActivity.class);
 		startActivity(intent);
 	}
+	
+	/** Button listener that opens the main menu when pressed
+	 * 
+	 * @param view
+	 */
+	public void mainMenuButton (View view) {
+		Intent intent = new Intent(this, MainMenuActivity.class);
+		startActivity(intent);
+	}
 
 }

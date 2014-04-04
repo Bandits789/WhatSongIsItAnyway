@@ -41,13 +41,13 @@
         android:layout_below="@id/gameScoreText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/statsButton"
-        android:paddingBottom="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:paddingTop="20dp"
-        android:src="@android:drawable/ic_menu_sort_alphabetically"
-        android:onClick="statsButton" />
+        android:maxHeight="50dp"
+        android:onClick="statsButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/to_stats" />
 
     <ImageButton
         android:id="@+id/gameScoreHighScoreButton"
@@ -56,12 +56,26 @@
         android:layout_below="@id/gameScoreStatsButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/highScoreButton"
-        android:paddingBottom="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:paddingTop="20dp"
-        android:src="@android:drawable/ic_menu_upload"
-        android:onClick="highScoreButton" />
+        android:onClick="highScoreButton"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_menu_upload" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gameScoreHighScoreButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/mainMenuButton"
+        android:maxHeight="50dp"
+        android:onClick="mainMenuButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/to_menu" />
 
 </RelativeLayout>
