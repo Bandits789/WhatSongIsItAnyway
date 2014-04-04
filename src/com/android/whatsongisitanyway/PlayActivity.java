@@ -60,7 +60,7 @@ public class PlayActivity extends Activity implements
 		
 		// First set the overlay view to be invisible
 		resumeView = findViewById(R.id.resumeOverlay); 
-		resumeView.setVisibility(View.INVISIBLE);
+		resumeView.setVisibility(View.VISIBLE);
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
