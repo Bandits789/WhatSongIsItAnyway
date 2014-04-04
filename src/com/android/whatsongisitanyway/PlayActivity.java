@@ -61,7 +61,7 @@ public class PlayActivity extends Activity implements
 
 		// First set the overlay view to be invisible
 		resumeView = findViewById(R.id.resumeOverlay);
-		resumeView.setVisibility(View.INVISIBLE);
+		resumeView.setVisibility(View.VISIBLE);
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
@@ -72,6 +72,8 @@ public class PlayActivity extends Activity implements
 
 		// set the progress bar to see time left
 		timerBar = (ProgressBar) findViewById(R.id.scoreBar);
+
+		startGame();
 	}
 
 	@Override
@@ -146,21 +148,28 @@ public class PlayActivity extends Activity implements
 			// multiplier and streak are lost
 			updateUILabel(R.id.streak, "Streak: 0");
 			updateUILabel(R.id.multiplier, "Multiplier: 1");
-		} else {
-			// start the game!
-			running = true;
-			int gameDuration = settings[0];
-			game = new Game(songsList, this, gameDuration);
-			initTimerThread();
-
-			// set max of timer to be max of game duration
-			timerBar.setMax(game.getDuration());
-			timerBar.setProgress(0);
-
 		}
 
 		goToNextSong();
+	}
 
+	/**
+	 * Starts the game - makes a game object and inits the timerBar, but
+	 * everything is paused
+	 */
+	private void startGame() {
+		// we start out paused but running
+		running = true;
+		paused = true;
+
+		int gameDuration = settings[0];
+		game = new Game(songsList, this, gameDuration);
+		game.pause();
+		initTimerThread();
+
+		// set max of timer to be max of game duration
+		timerBar.setMax(game.getDuration());
+		timerBar.setProgress(0);
 	}
 
 	/**
@@ -340,19 +349,13 @@ public class PlayActivity extends Activity implements
 		if (mediaPlayer != null) {
 			mediaPlayer.release();
 		}
-		
-		float[] stats = {0, 0, 0, 0};
-		
-		Log.w("FUCK", stats + "");
-		
-		if (game != null) {
-			stats = game.endGame();
-		}
+
+		float[] stats = game.endGame();
 
 		// Go to the score screen
 		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
 				.putExtra("stats", stats);
-		
+
 		startActivity(intent);
 	}
 
