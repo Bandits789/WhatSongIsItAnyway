@@ -131,7 +131,9 @@ public class Game {
 	 */
 	public void pause() {
 		timer.pause();
-		currentSong.pause();
+		if (currentSong != null) {
+			currentSong.pause();
+		}
 	}
 
 	/**
@@ -139,8 +141,9 @@ public class Game {
 	 */
 	public void resume() {
 		timer.resume();
-		currentSong.resume();
-	}
+		if (currentSong != null) {
+			currentSong.resume();
+		}	}
 
 	/**
 	 * Return the amount of time left on the timer

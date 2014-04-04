@@ -72,8 +72,6 @@ public class PlayActivity extends Activity implements
 
 		// set the progress bar to see time left
 		timerBar = (ProgressBar) findViewById(R.id.scoreBar);
-
-		startGame();
 	}
 
 	@Override
@@ -154,25 +152,6 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Starts the game - makes a game object and inits the timerBar, but
-	 * everything is paused
-	 */
-	private void startGame() {
-		// we start out paused but running
-		running = true;
-		paused = true;
-
-		int gameDuration = settings[0];
-		game = new Game(songsList, this, gameDuration);
-		game.pause();
-		initTimerThread();
-
-		// set max of timer to be max of game duration
-		timerBar.setMax(game.getDuration());
-		timerBar.setProgress(0);
-	}
-
-	/**
 	 * Pauses/resumes song play
 	 * 
 	 * @param view
@@ -196,12 +175,30 @@ public class PlayActivity extends Activity implements
 	 * @param View
 	 */
 	public void resume(View view) {
-		// hide resume view
-		resumeView.setVisibility(View.INVISIBLE);
-		// resume game
-		paused = false;
-		mediaPlayer.start();
-		game.resume();
+		if (running) {
+			// hide resume view
+			resumeView.setVisibility(View.INVISIBLE);
+			// resume game
+			paused = false;
+			mediaPlayer.start();
+			game.resume();
+		} else {
+			// start the game!
+			running = true;
+
+			int gameDuration = settings[0];
+			game = new Game(songsList, this, gameDuration);
+			initTimerThread();
+
+			// set max of timer to be max of game duration
+			timerBar.setMax(game.getDuration());
+			timerBar.setProgress(0);
+
+			// remove pause overlay
+			resumeView.setVisibility(View.INVISIBLE);
+			goToNextSong();
+
+		}
 	}
 
 	/**
@@ -350,7 +347,11 @@ public class PlayActivity extends Activity implements
 			mediaPlayer.release();
 		}
 
-		float[] stats = game.endGame();
+		float[] stats = { 0, 0, 0, 0 };
+
+		if (game != null) {
+			stats = game.endGame();
+		}
 
 		// Go to the score screen
 		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
