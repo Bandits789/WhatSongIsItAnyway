@@ -1,10 +1,12 @@
 package com.android.whatsongisitanyway;
 
+import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.NumberPicker;
 
 import com.android.whatsongisitanyway.database.GameDatabaseHelper;
 
@@ -24,6 +26,8 @@ public class SettingsActivity extends Activity {
 		// get settings
 		dbHelper = new GameDatabaseHelper(this);
 		settings = dbHelper.getSettings();
+
+		NumberPicker gameSec = (NumberPicker) findViewById();
 	}
 	
 	@Override
@@ -37,7 +41,18 @@ public class SettingsActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * On click on the save button, save the settings to the database and go
+	 * back to main menu
+	 * 
+	 * @param view
+	 */
 	public void saveButton(View view) {
+		int gameDuration = 0;
+		int songDuration = 0;
+
+		// dbHelper.updateSettings(gameDuration, songDuration);
+
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
