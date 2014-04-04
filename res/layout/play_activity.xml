@@ -3,10 +3,6 @@
     android:id="@+id/main_layout"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PlayActivity" >
 
     <TextView
@@ -14,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:maxLines="2"
         android:text="@string/title"
         android:textSize="20sp"
@@ -24,6 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingTop="0dp"
         tools:context=".PlayActivity" >
 
@@ -34,14 +33,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/streakMultiplier"
-            android:adjustViewBounds="false"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/pauseButton"
-            android:cropToPadding="false"
             android:onClick="pause"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:scaleType="center"
-            android:src="@android:drawable/ic_media_pause" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/pause" />
 
         <TextView
             android:id="@+id/timer"
@@ -58,12 +57,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timer"
             android:layout_centerHorizontal="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:paddingTop="20dp" >
 
             <TextView
                 android:id="@+id/streak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="thin"
                 android:text="@string/streak"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -71,10 +73,20 @@
                 android:id="@+id/multiplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="thin"
                 android:paddingLeft="5dp"
                 android:text="@string/multiplier"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/streakMultiplier"
+            android:layout_centerHorizontal="true"
+            android:text="@string/score"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageButton
             android:id="@+id/skipButton"
@@ -83,21 +95,15 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/streakMultiplier"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/skipButton"
             android:onClick="skip"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:src="@android:drawable/ic_media_next" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/skip" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/controls"
-        android:layout_centerHorizontal="true"
-        android:text="@string/score"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ProgressBar
         android:id="@+id/scoreBar"
@@ -106,10 +112,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/score"
+        android:layout_below="@id/controls"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp" 
-        android:progressDrawable="@drawable/progress_bar"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="22dp"
+        android:progressDrawable="@drawable/progress_bar" />
 
     <LinearLayout
         android:id="@+id/dataEntry"
@@ -145,7 +153,7 @@
         android:id="@+id/playGiveUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dataEntry"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
@@ -154,27 +162,25 @@
         android:onClick="giveUp"
         android:scaleType="fitCenter"
         android:src="@drawable/give_up" />
-    
+
     <RelativeLayout
         android:id="@+id/resumeOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#88666666" >
+        android:background="#80222222" >
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="132dp"
             android:adjustViewBounds="false"
             android:background="@android:color/transparent"
             android:contentDescription="@string/resumeButton"
-            android:cropToPadding="false"
             android:onClick="resume"
             android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_media_play" />
-
+            android:src="@drawable/resume" />
     </RelativeLayout>
-    
+
 </RelativeLayout>

@@ -18,7 +18,7 @@ public class Music {
 
 	private final Timer timer;
 	private int timeGuessedIn;
-	private final int playDuration = 10; // secs
+	private final int playDuration; // secs
 	// don't play this many milliseconds from the end
 	private final int msecondsFromEnd = 30 * 1000;
 
@@ -37,15 +37,18 @@ public class Music {
 	 *            album of the song (could be unknown)
 	 * @param size
 	 *            size of the file, in bytes
+	 * @param playDuration
+	 *            duration of the song clip (in seconds)
 	 */
 	public Music(String id, String title, int duration, String artist,
-			String album, int size) {
+			String album, int size, int playDuration) {
 		this.path = id;
 		this.title = title;
 		this.duration = duration;
 		this.artist = artist;
 		this.album = album;
 		this.size = size;
+		this.playDuration = playDuration;
 
 		timeGuessedIn = playDuration;
 		timer = new Timer(playDuration);
