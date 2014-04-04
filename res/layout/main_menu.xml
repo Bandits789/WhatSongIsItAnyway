@@ -36,7 +36,7 @@
         android:maxWidth="150dp"
         android:onClick="settingsButton"
         android:scaleType="fitCenter"
-        android:src="@drawable/playlist" />
+        android:src="@drawable/settings" />
 
     <TextView
         android:id="@+id/or"

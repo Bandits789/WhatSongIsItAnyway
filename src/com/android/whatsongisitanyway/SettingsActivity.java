@@ -26,7 +26,7 @@ public class SettingsActivity extends Activity {
 		dbHelper = new GameDatabaseHelper(this);
 		settings = dbHelper.getSettings();
 
-		NumberPicker gameSec = (NumberPicker) findViewById();
+		//NumberPicker gameSec = (NumberPicker) findViewById();
 	}
 	
 	@Override

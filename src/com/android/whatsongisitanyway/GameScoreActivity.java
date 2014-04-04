@@ -55,8 +55,8 @@ public class GameScoreActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void highScoreButton (View view) {
-		Intent intent = new Intent(this, HighScoreActivity.class);
+	public void playAgainButton (View view) {
+		Intent intent = new Intent(this, PlayActivity.class);
 		startActivity(intent);
 	}
 	

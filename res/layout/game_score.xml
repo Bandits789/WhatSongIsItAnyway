@@ -54,7 +54,7 @@
         android:src="@drawable/to_stats" />
 
     <ImageButton
-        android:id="@+id/gameScoreHighScoreButton"
+        android:id="@+id/gameScorePlayAgainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gameScoreStatsButton"
@@ -64,7 +64,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/highScoreButton"
         android:maxHeight="60dp"
-        android:onClick="highScoreButton"
+        android:onClick="playAgainButton"
         android:scaleType="fitCenter"
         android:src="@drawable/to_high_scores" />
 
@@ -72,7 +72,7 @@
         android:id="@+id/settingsSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gameScoreHighScoreButton"
+        android:layout_below="@+id/gameScorePlayAgainButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
         android:adjustViewBounds="true"
