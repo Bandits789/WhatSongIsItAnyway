@@ -1,5 +1,6 @@
 package com.android.whatsongisitanyway.models;
 
+import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
@@ -85,7 +86,7 @@ public class Music {
 	public int guess(String guess) {
 
 		String cleanedTitle = cleanTitle();
-		guess = guess.toLowerCase();
+		guess = guess.toLowerCase(Locale.getDefault());
 		double accuracy = StringUtils.getJaroWinklerDistance(guess,
 				cleanedTitle);
 
@@ -103,7 +104,7 @@ public class Music {
 	 * 
 	 * @return the cleaned song title
 	 */
-	public String cleanTitle() {
+	private String cleanTitle() {
 
 		// Step one: take out all parens and brackets and '
 		String result = title.replaceAll("[\\[\\(\\{\\}\\)\\]\\']", "");
@@ -116,7 +117,7 @@ public class Music {
 			result = result.trim();
 		}
 
-		result = result.toLowerCase();
+		result = result.toLowerCase(Locale.getDefault());
 
 		int feat = result.indexOf("feat");
 		int ft = result.indexOf("ft");

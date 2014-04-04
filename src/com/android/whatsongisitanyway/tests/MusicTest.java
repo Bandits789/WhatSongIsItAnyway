@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import com.android.whatsongisitanyway.models.Music;
 
+/**
+ * Tests basic song getters, scoring, and fuzzy matching (timing stuff left up
+ * to TimerTest)
+ */
 public class MusicTest {
 
 	@Test
@@ -23,7 +27,6 @@ public class MusicTest {
 
 	@Test
 	public void scoreTest() {
-
 		Music song = new Music("here", "do i wanna know", 12345,
 				"arctic monkeys", "AM", 10000, 10);
 

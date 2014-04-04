@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+/**
+ * The first screen the user sees - navigates to settings, high scores, and
+ * playing activities
+ */
 public class MainMenuActivity extends Activity {
 	
 	@Override
