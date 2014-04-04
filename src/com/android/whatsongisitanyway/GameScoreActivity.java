@@ -21,12 +21,6 @@ public class GameScoreActivity extends Activity {
 		// score, avgGuessTime, accuracy, songsPlayed
 		float[] stats = getIntent().getExtras().getFloatArray("stats");
 		TextView score = (TextView) findViewById(R.id.gameScoreScore);
-		
-		if ((int) stats[0] != -1) {
-			score.setText((int) stats[0] + "");
-		} else {
-			score.setText("You gave up!");
-		}
 	}
 	
 	@Override

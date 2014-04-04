@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:text="@+string/gameScoreTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="50sp"
@@ -42,7 +42,7 @@
         android:id="@+id/gameScoreStatsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreText"
+        android:layout_below="@+id/gameScoreReplayButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
@@ -54,25 +54,25 @@
         android:src="@drawable/to_stats" />
 
     <ImageButton
-        android:id="@+id/gameScorePlayAgainButton"
+        android:id="@+id/gameScoreReplayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreStatsButton"
+        android:layout_below="@id/gameScoreText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/highScoreButton"
-        android:maxHeight="60dp"
+        android:maxHeight="80dp"
         android:onClick="playAgainButton"
         android:scaleType="fitCenter"
-        android:src="@drawable/to_high_scores" />
+        android:src="@drawable/to_replay" />
 
     <ImageButton
-        android:id="@+id/settingsSaveButton"
+        android:id="@+id/gameScoreMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gameScorePlayAgainButton"
+        android:layout_below="@+id/gameScoreStatsButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
         android:adjustViewBounds="true"

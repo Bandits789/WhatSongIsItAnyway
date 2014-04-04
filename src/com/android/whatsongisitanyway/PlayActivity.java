@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -36,7 +37,7 @@ public class PlayActivity extends Activity implements
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
 	private ProgressBar timerBar;
-	private View resumeView; 
+	private View resumeView;
 
 	private boolean running = false;
 	private boolean paused = false;
@@ -57,9 +58,9 @@ public class PlayActivity extends Activity implements
 		// get settings
 		dbHelper = new GameDatabaseHelper(this);
 		settings = dbHelper.getSettings();
-		
+
 		// First set the overlay view to be invisible
-		resumeView = findViewById(R.id.resumeOverlay); 
+		resumeView = findViewById(R.id.resumeOverlay);
 		resumeView.setVisibility(View.INVISIBLE);
 
 		// make a new media player
@@ -68,11 +69,11 @@ public class PlayActivity extends Activity implements
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
-		
-		//set the progress bar to see time left
-		timerBar = (ProgressBar)findViewById(R.id.scoreBar);
+
+		// set the progress bar to see time left
+		timerBar = (ProgressBar) findViewById(R.id.scoreBar);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 	}
@@ -151,48 +152,49 @@ public class PlayActivity extends Activity implements
 			int gameDuration = settings[0];
 			game = new Game(songsList, this, gameDuration);
 			initTimerThread();
-			
-			//set max of timer to be max of game duration
+
+			// set max of timer to be max of game duration
 			timerBar.setMax(game.getDuration());
-			timerBar.setProgress(0); 
-			
+			timerBar.setProgress(0);
+
 		}
 
 		goToNextSong();
 
 	}
-	
+
 	/**
 	 * Pauses/resumes song play
 	 * 
 	 * @param view
 	 */
 	public void pause(View view) {
-	    if (running) {
-            if (!paused) {
-                // if running and not paused, pause it
-                paused = true;
-                mediaPlayer.pause();
-                game.pause();
-                // hide play view and show resume overlay
-                resumeView.setVisibility(View.VISIBLE); 
-            } 
-        }
+		if (running) {
+			if (!paused) {
+				// if running and not paused, pause it
+				paused = true;
+				mediaPlayer.pause();
+				game.pause();
+				// hide play view and show resume overlay
+				resumeView.setVisibility(View.VISIBLE);
+			}
+		}
 	}
-	
-	/** 
-     * Button listener for resume button to resume game 
-     * @param View
-     */
-    public void resume(View view) {
-        //hide resume view
-        resumeView.setVisibility(View.INVISIBLE); 
-        //resume game
-        paused = false;
-        mediaPlayer.start();
-        game.resume(); 
-    }
-	
+
+	/**
+	 * Button listener for resume button to resume game
+	 * 
+	 * @param View
+	 */
+	public void resume(View view) {
+		// hide resume view
+		resumeView.setVisibility(View.INVISIBLE);
+		// resume game
+		paused = false;
+		mediaPlayer.start();
+		game.resume();
+	}
+
 	/**
 	 * Submits the guess to the game, updates the score
 	 * 
@@ -207,9 +209,9 @@ public class PlayActivity extends Activity implements
 
 		// if they got it right, update score and skip songs
 		if (score > 0) {
-		    //empty text box
-		    songBox.setText("");
-		    //update scores
+			// empty text box
+			songBox.setText("");
+			// update scores
 			updateUILabel(R.id.score, "Score: " + score);
 			updateUILabel(R.id.streak, "Streak: " + game.getStreak());
 			updateUILabel(R.id.multiplier,
@@ -252,7 +254,7 @@ public class PlayActivity extends Activity implements
 			gameOver();
 		}
 	}
-	
+
 	/**
 	 * Initialize the timer loop thread. It keeps track of the game's timer,
 	 * updating the timer label and then quitting the game when the timer runs
@@ -269,9 +271,9 @@ public class PlayActivity extends Activity implements
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
 					updateUILabel(R.id.timer, game.timeLeftString());
-					//update timer bar for progress
-					timerBar.setProgress(game.timeLeft()); 
-					
+					// update timer bar for progress
+					timerBar.setProgress(game.timeLeft());
+
 					// to avoid updating too often, sleep for .2 secs
 					try {
 						Thread.sleep(200);
@@ -335,12 +337,17 @@ public class PlayActivity extends Activity implements
 	 */
 	private void gameOver() {
 		running = false;
-		if (mediaPlayer.isPlaying()) {
-			mediaPlayer.stop();
+		if (mediaPlayer != null) {
 			mediaPlayer.release();
 		}
 		
-		float[] stats = game.endGame();
+		float[] stats = {0, 0, 0, 0};
+		
+		Log.w("FUCK", stats + "");
+		
+		if (game != null) {
+			stats = game.endGame();
+		}
 
 		// Go to the score screen
 		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
@@ -348,25 +355,12 @@ public class PlayActivity extends Activity implements
 		
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * Called when the player clicks on the Give Up button.
 	 */
 	public void giveUp(View view) {
-		//running = false;
-		if (game != null) {
-			mediaPlayer.pause();
-			mediaPlayer.release();
-            game.pause();
-		}
-		
-		float[] stat = {-1};
-		
-		// Go to the score screen
-		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
-				.putExtra("stats",  stat);
-		
-		startActivity(intent);
+		gameOver();
 	}
 
 	/**
@@ -382,6 +376,5 @@ public class PlayActivity extends Activity implements
 			return true;
 		}
 	};
-
 
 }
