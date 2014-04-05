@@ -65,13 +65,13 @@ public class Game {
 	 * @return the next Music to play or null
 	 */
 	public Music getNextSong() {
-		// we're going to the next song
-		++currentSongIndex;
-
 		// make sure there are still songs available
-		if (currentSongIndex >= songsList.size()) {
+		if (currentSongIndex >= songsList.size() - 1) {
 			return null;
 		}
+
+		// we're going to the next song
+		++currentSongIndex;
 
 		currentSong = songsList.get(currentSongIndex);
 		// start the timer

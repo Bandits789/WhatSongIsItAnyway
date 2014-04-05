@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.android.whatsongisitanyway.database.GameDatabase.GameData;
 import com.android.whatsongisitanyway.database.GameDatabase.OverallData;
@@ -106,13 +105,11 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, gameDuration);
 		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, songDuration);
 
-		String selection = SettingsData._ID + " LIKE ?";
+		String selection = SettingsData._ID + " = ?";
 		String[] selectionArgs = { String.valueOf(id) };
 
 		// update!
-		int rows = db.update(SettingsData.TABLE_NAME, values, selection,
-				selectionArgs);
-		Log.d("rows affected with settings update", rows + "");
+		db.update(SettingsData.TABLE_NAME, values, selection, selectionArgs);
 	}
 
 	/**
@@ -173,7 +170,6 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// get all the values
 		cursor.moveToFirst();
 		if (cursor.isAfterLast()) {
-			Log.d("stats first time", "yes");
 			initialOverallStats(score, averageGuessTime, accuracy, songsPlayed);
 			return;
 		}
@@ -188,7 +184,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		float newAccuracy = (oldAccuracy * oldSongsPlayed + accuracy
 				* songsPlayed)
 				/ (float) newSongsPlayed;
-		float newAvgGuessTime = (float) (oldAvgGuessTime * oldGamesPlayed + averageGuessTime
+		float newAvgGuessTime = (oldAvgGuessTime * oldGamesPlayed + averageGuessTime
 				* songsPlayed)
 				/ (float) newSongsPlayed;
 
@@ -199,13 +195,11 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(OverallData.COLUMN_NAME_GAMES_PLAYED, oldGamesPlayed + 1);
 		values.put(OverallData.COLUMN_NAME_SONGS_PLAYED, newSongsPlayed);
 
-		String selection = OverallData._ID + " LIKE ?";
+		String selection = OverallData._ID + " = ?";
 		String[] selectionArgs = { String.valueOf(id) };
 
 		// update!
-		int rows = db.update(OverallData.TABLE_NAME, values, selection,
-				selectionArgs);
-		Log.d("rows affected with stats update", rows + "");
+		db.update(OverallData.TABLE_NAME, values, selection, selectionArgs);
 	}
 
 	/**
@@ -242,7 +236,6 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 * for game, 10 secs for song)
 	 */
 	private void initialSettings() {
-		Log.d("settings first time", "yes");
 		// gets the data repository in write mode
 		SQLiteDatabase db = getWritableDatabase();
 
