@@ -25,7 +25,8 @@
     <string name="statsMainTitle">You Got:</string>
     <string name="stats1Label">Accuracy:</string>
     <string name="stats1Val">0</string>
-    <string name="stats2Label">Avg. Songs Correct:</string>
+    <string name="stats2Label">Avg. Guess:</string>
+    <string name="stats2Label2">s</string>
     <string name="stats2Val">0</string>
     <string name="stats3Label">Games Played:</string>
     <string name="stats3Val">0</string>

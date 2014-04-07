@@ -22,17 +22,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/stats1Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/statsMainTitle"
-        android:layout_below="@+id/statsMainTitle"
-        android:layout_marginTop="16dp"
-        android:text="@+string/stats1Label"
-        android:textSize="25sp"
-        android:typeface="sans" />
-
-    <TextView
         android:id="@+id/stats1Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +30,8 @@
         android:paddingLeft="5dp"
         android:text="@string/stats1Val"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/stats2Label"
@@ -50,6 +40,7 @@
         android:layout_alignLeft="@+id/stats1Label"
         android:layout_below="@+id/stats1Label"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-thin"
         android:text="@string/stats2Label"
         android:textSize="25sp"
         android:typeface="sans" />
@@ -63,7 +54,8 @@
         android:paddingLeft="5dp"
         android:text="@string/stats2Val"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/stats3Label"
@@ -72,6 +64,7 @@
         android:layout_alignLeft="@+id/stats2Label"
         android:layout_below="@+id/stats2Label"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-thin"
         android:text="@string/stats3Label"
         android:textSize="25sp"
         android:typeface="sans" />
@@ -85,7 +78,8 @@
         android:paddingLeft="5dp"
         android:text="@string/stats3Val"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/stats4Label"
@@ -96,6 +90,7 @@
         android:layout_centerVertical="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-thin"
         android:text="@string/stats4Label"
         android:textSize="25sp"
         android:typeface="sans" />
@@ -109,7 +104,8 @@
         android:paddingLeft="5dp"
         android:text="@string/stats4Val"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/statsMainTitle"
@@ -138,5 +134,30 @@
         android:onClick="mainMenuButton"
         android:scaleType="fitCenter"
         android:src="@drawable/main_menu" />
+
+    <TextView
+        android:id="@+id/stats1Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/statsMainTitle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="@+string/stats1Label"
+        android:textSize="25sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stats2Val"
+        android:layout_toRightOf="@+id/stats2Val"
+        android:paddingLeft="5dp"
+        android:text="@string/stats2Label2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp"
+        android:typeface="sans" />
 
 </RelativeLayout>
