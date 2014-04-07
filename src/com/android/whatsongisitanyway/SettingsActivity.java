@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
 
@@ -34,6 +36,18 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
+		
+		LinearLayout gameSecLin = (LinearLayout) gameSec;
+		
+		View upButton = gameSecLin.getChildAt(0);
+        //upButton.setBackgroundResource(R.drawable.up_button);
+
+        EditText edDate = (EditText) gameSecLin.getChildAt(1);
+        //edDate.setTextSize(17);
+        //edDate.setBackgroundResource(R.drawable.number_box);
+
+        View downButton = gameSecLin.getChildAt(2);
+        //downButton.setBackgroundResource(R.drawable.down_button);
 
 		gameSec.setMaxValue(59);
 		gameMins.setMaxValue(9);

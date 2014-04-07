@@ -4,26 +4,26 @@
     	android:state_window_focused="false"
     	android:state_enabled="true"
        
-       android:drawable="@drawable/edit_picker_notselected" />
+       android:drawable="@android:color/transparent" />
     ﻿<item
     	android:state_window_focused="false"
     	android:state_enabled="false"
        
-       android:drawable="@drawable/edit_picker_notselected" />
+       android:drawable="@android:color/transparent" />
     <item
     	android:state_pressed="true"
-    	android:drawable="@drawable/edit_picker_pressed" />
+    	android:drawable="@android:color/transparent" />
     <item
     	android:state_focused="true"
     	android:state_enabled="true"
        
-       android:drawable="@drawable/edit_picker_selected" />
+       android:drawable="@android:color/transparent" />
     <item
     	android:state_enabled="true"
-    	android:drawable="@drawable/edit_picker_notselected" />
+    	android:drawable="@android:color/transparent" />
     <item
     	android:state_focused="true"
-    	android:drawable="@drawable/edit_picker_notselected" />
+    	android:drawable="@android:color/transparent" />
     <item
-    	android:drawable="@drawable/edit_picker_notselected" />
+    	android:drawable="@android:color/transparent" />
 </selector>

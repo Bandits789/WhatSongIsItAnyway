@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.android.whatsongisitanyway.R;
+
 public class NumberPicker {
     private Object picker;
     private Class<?> classPicker;
