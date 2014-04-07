@@ -136,7 +136,8 @@
             android:background="@drawable/enter_text"
             android:ems="10"
             android:inputType="textNoSuggestions"
-            android:paddingLeft="10dp" >
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
 
             <requestFocus />
         </EditText>

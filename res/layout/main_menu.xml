@@ -3,7 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ImageView
+        android:id="@+id/mainTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@+string/mainMenuTitle"
+        android:src="@drawable/title" />
+
+    <ImageButton
+        android:id="@+id/playGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mainMenuMiscButtons"
+        android:layout_below="@+id/mainTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="@+string/mainMenuChooseDesc"
+        android:maxWidth="230dp"
+        android:onClick="playButton"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/play" />
+
     <LinearLayout
+        android:id="@+id/mainMenuMiscButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -37,32 +66,6 @@
             android:paddingLeft="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/high_score" />
-
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/mainTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@+string/mainMenuTitle"
-        android:src="@drawable/title" />
-
-    <ImageButton
-        android:id="@+id/playGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@+string/mainMenuChooseDesc"
-        android:maxWidth="300dp"
-        android:onClick="playButton"
-        android:padding="0dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/play" />
 
 </RelativeLayout>
