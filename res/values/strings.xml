@@ -12,7 +12,6 @@
     <string name="score">Score: 0</string>
     <string name="submit">Description for the submit button</string>
     <string name="mainMenuTitle">What song is it anyway?</string>
-    <string name="mainMenuOr">OR</string>
     <string name="mainMenuPlayDesc">Button to play a game</string>
     <string name="mainMenuChooseDesc">Button to choose a playlist</string>
     <string name="mainMenuHighDesc">Button to go to the high scores page</string>
