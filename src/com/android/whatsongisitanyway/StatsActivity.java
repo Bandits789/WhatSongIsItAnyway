@@ -1,5 +1,7 @@
 package com.android.whatsongisitanyway;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,8 +34,13 @@ public class StatsActivity extends Activity {
 		TextView gamesPlayed = (TextView) findViewById(R.id.stats3Val);
 		TextView songsPlayed = (TextView) findViewById(R.id.stats4Val);
 
-		accuracy.setText(stats[0] + "");
-		avgGuessTime.setText(stats[1] + "");
+		String roundedAccuracy = String.format(Locale.getDefault(), "%.3g%n",
+				stats[0]);
+		String roundedGuessTime = String.format(Locale.getDefault(), "%.3g%n",
+				stats[1]);
+
+		accuracy.setText(roundedAccuracy);
+		avgGuessTime.setText(roundedGuessTime);
 		gamesPlayed.setText((int) stats[2] + "");
 		songsPlayed.setText((int) stats[3] + "");
 	}

@@ -344,6 +344,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		for (int i = 0; i < numScores; ++i) {
 			if (!cursor.isAfterLast()) {
 				scores[i] = cursor.getInt(0);
+				cursor.moveToNext();
 			}
 		}
 
