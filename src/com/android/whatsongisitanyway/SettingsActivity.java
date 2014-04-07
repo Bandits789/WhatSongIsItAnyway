@@ -33,10 +33,10 @@ public class SettingsActivity extends Activity {
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
 
 		gameSec.setMaxValue(59);
-		gameSec.setMinValue(1);
 		gameMins.setMaxValue(9);
 		gameMins.setMinValue(1);
 		songSec.setMaxValue(20);
+		songSec.setMinValue(1);
 
 		int seconds = settings[0] % 60;
 		int minutes = (settings[0] - seconds) / 60;
