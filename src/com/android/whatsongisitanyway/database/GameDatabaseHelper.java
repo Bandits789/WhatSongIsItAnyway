@@ -217,7 +217,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 */
 	private void initialOverallStats(int score, float averageGuessTime,
 			float accuracy, int songsPlayed) {
-		// gets the data repository in write mode
+		// gets the  data repository in write mode
 		SQLiteDatabase db = getWritableDatabase();
 
 		// create a new map of values, where column names are the keys
