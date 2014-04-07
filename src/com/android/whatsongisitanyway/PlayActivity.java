@@ -78,6 +78,12 @@ public class PlayActivity extends Activity implements
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+		pause(null);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
