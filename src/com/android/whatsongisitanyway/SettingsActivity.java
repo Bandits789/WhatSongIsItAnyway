@@ -38,7 +38,7 @@ public class SettingsActivity extends Activity {
 		gameSec.setMaxValue(59);
 		gameMins.setMaxValue(9);
 		gameMins.setMinValue(1);
-		songSec.setMaxValue(20);
+		songSec.setMaxValue(30);
 		songSec.setMinValue(1);
 
 		// make secs look like 00 not 0
