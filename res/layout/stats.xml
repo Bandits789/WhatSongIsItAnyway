@@ -25,6 +25,7 @@
         android:id="@+id/stats1Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stats1Label"
         android:layout_alignBottom="@+id/stats1Label"
         android:layout_toRightOf="@+id/stats1Label"
         android:paddingLeft="5dp"
