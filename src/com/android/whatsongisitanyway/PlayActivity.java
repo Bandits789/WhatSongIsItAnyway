@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -14,6 +15,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -228,8 +230,9 @@ public class PlayActivity extends Activity implements
 		// if they got it right, skip to the next song
 		if (points > 0) {
 			// show the score!
-			Toast toast = new Toast(this);
-			toast.setText("+" + points);
+			Toast toast = Toast.makeText(this, "+" + points, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
 
 			score += points;
 			goToNextSong();
