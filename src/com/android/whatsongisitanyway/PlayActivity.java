@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.whatsongisitanyway.database.GameDatabaseHelper;
 import com.android.whatsongisitanyway.models.Game;
@@ -35,8 +36,7 @@ public class PlayActivity extends Activity implements
 	private Game game;
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
-	private ProgressBar timerBar;
-	private View resumeView;
+	private int score = 0;
 
 	private boolean running = false;
 	private boolean paused = false;
@@ -58,19 +58,12 @@ public class PlayActivity extends Activity implements
 		dbHelper = new GameDatabaseHelper(this);
 		settings = dbHelper.getSettings();
 
-		// First set the overlay view to be invisible
-		resumeView = findViewById(R.id.resumeOverlay);
-		resumeView.setVisibility(View.VISIBLE);
-
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
 
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
-
-		// set the progress bar to see time left
-		timerBar = (ProgressBar) findViewById(R.id.scoreBar);
 	}
 
 	@Override
@@ -126,11 +119,37 @@ public class PlayActivity extends Activity implements
 			cursor.moveToNext();
 		}
 
+		// start!
+		startGame();
+
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		// so bad. many sad. wow.
+	}
+
+	/**
+	 * Starts the game! Makes a game, starts timer, plays music.
+	 */
+	private void startGame() {
+		running = true;
+
+		// make a new game (duration is from saved settings)
+		int gameDuration = settings[0];
+		game = new Game(songsList, this, gameDuration);
+
+		// set max of timer to be max of game duration
+		ProgressBar timerBar = (ProgressBar) findViewById(R.id.scoreBar);
+		timerBar.setMax(game.getDuration());
+		timerBar.setProgress(0);
+
+		// remove pause overlay
+		setPauseOverlay(false);
+
+		// start timer and play the first song
+		initTimerThread();
+		goToNextSong();
 	}
 
 	/**
@@ -172,7 +191,7 @@ public class PlayActivity extends Activity implements
 				mediaPlayer.pause();
 				game.pause();
 				// hide play view and show resume overlay
-				resumeView.setVisibility(View.VISIBLE);
+				setPauseOverlay(true);
 			}
 		}
 	}
@@ -185,27 +204,12 @@ public class PlayActivity extends Activity implements
 	public void resume(View view) {
 		if (running) {
 			// hide resume view
-			resumeView.setVisibility(View.INVISIBLE);
+			setPauseOverlay(false);
+
 			// resume game
 			paused = false;
 			mediaPlayer.start();
 			game.resume();
-		} else {
-			// start the game!
-			running = true;
-
-			int gameDuration = settings[0];
-			game = new Game(songsList, this, gameDuration);
-			initTimerThread();
-
-			// set max of timer to be max of game duration
-			timerBar.setMax(game.getDuration());
-			timerBar.setProgress(0);
-
-			// remove pause overlay
-			resumeView.setVisibility(View.INVISIBLE);
-			goToNextSong();
-
 		}
 	}
 
@@ -218,11 +222,16 @@ public class PlayActivity extends Activity implements
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 
 		// if the score hasn't changed, it returns 0
-		int score = game.guess(songBox.getText().toString());
+		int points = game.guess(songBox.getText().toString());
 		updateUILabel(R.id.songTextbox, "");
 
 		// if they got it right, skip to the next song
-		if (score > 0) {
+		if (points > 0) {
+			// show the score!
+			Toast toast = new Toast(this);
+			toast.setText("+" + points);
+
+			score += points;
 			goToNextSong();
 			updateUILabel(R.id.score, "Score: " + score);
 		}
@@ -284,9 +293,7 @@ public class PlayActivity extends Activity implements
 
 				// while we have time left
 				while (running && game.timeLeft() > 0) {
-					updateUILabel(R.id.timer, game.timeLeftString());
-					// update timer bar for progress
-					timerBar.setProgress(game.timeLeft());
+					updateProgress(game.timeLeftString(), game.timeLeft());
 
 					// to avoid updating too often, sleep for .2 secs
 					try {
@@ -344,6 +351,50 @@ public class PlayActivity extends Activity implements
 				textView.setText(text);
 			}
 		});
+	}
+
+	/**
+	 * Updates the progress bar and timer label in the UI thread
+	 * 
+	 * @param timeString
+	 *            the amount of time left as a string (mm:ss)
+	 * @param progress
+	 *            the amount of time left in seconds
+	 */
+	private void updateProgress(final String timeString, final int progress) {
+		// update UI on its own thread
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				TextView timer = (TextView) findViewById(R.id.timer);
+				timer.setText(timeString);
+				ProgressBar timerBar = (ProgressBar) findViewById(R.id.scoreBar);
+				timerBar.setProgress(progress);
+			}
+		});
+	}
+
+	/**
+	 * Set the pause overlay screen visible or not on its own UI thread
+	 * 
+	 * @param visible
+	 *            true for visible, false for invisible
+	 */
+	private void setPauseOverlay(final boolean visible) {
+		// update UI on its own thread
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				View resumeView = findViewById(R.id.resumeOverlay);
+
+				if (visible) {
+					resumeView.setVisibility(View.VISIBLE);
+				} else {
+					resumeView.setVisibility(View.INVISIBLE);
+				}
+			}
+		});
+
 	}
 
 	/**

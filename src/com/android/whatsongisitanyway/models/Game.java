@@ -110,7 +110,7 @@ public class Game {
 			if (streak % 2 == 0) {
 				multiplier += 1;
 			}
-			return score;
+			return points;
 		}
 
 		// they guessed wrong
