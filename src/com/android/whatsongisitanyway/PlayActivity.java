@@ -64,9 +64,6 @@ public class PlayActivity extends Activity implements
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnEditorActionListener(submitListener);
-
-		// start!
-		startGame();
 	}
 
 	@Override
@@ -121,6 +118,9 @@ public class PlayActivity extends Activity implements
 
 			cursor.moveToNext();
 		}
+
+		// start!
+		startGame();
 
 	}
 
