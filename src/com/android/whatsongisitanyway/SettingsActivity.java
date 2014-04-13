@@ -6,9 +6,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
@@ -38,72 +41,102 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
 
-		// sets images for the up buttons in the number pickers and removes
-		// long click ability
-		View upButton = gameSec.getChildAt(0);
-		upButton.setLongClickable(false);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        LayoutParams params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        upButton = gameMins.getChildAt(0);
-        upButton.setLongClickable(false);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        upButton = songSec.getChildAt(0);
-        upButton.setLongClickable(false);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        // sets the settings for the edittexts in the number pickers
-        EditText edText = (EditText) gameSec.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        edText = (EditText) gameMins.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        edText = (EditText) songSec.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        // sets images for the down buttons in the number pickers
-        View downButton = gameSec.getChildAt(2);
-        downButton.setLongClickable(false);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        downButton = gameMins.getChildAt(2);
-        downButton.setLongClickable(false);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        downButton = songSec.getChildAt(2);
-        downButton.setLongClickable(false);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
+		// sets the layout settings for the edittexts in the number pickers
+		final EditText edText = (EditText) gameSec.getChildAt(1);
+		edText.setBackgroundResource(R.drawable.number_box);
+		edText.setTextColor(Color.parseColor("#FFFFFF"));
+		LayoutParams params = edText.getLayoutParams();
+		params.height = LayoutParams.WRAP_CONTENT;
+		params.width = LayoutParams.WRAP_CONTENT;
+
+		// creates a view change listener because the width is not created until
+		// onCreate has finished
+		ViewTreeObserver vto = edText.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+				// immediately removes the listener to prevent redrawing
+				edText.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+				// gets the views
+				NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
+				NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
+				NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
+
+				// Gets the scaled width and height
+				int TEXT_WIDTH = edText.getMeasuredWidth();
+				int TEXT_HEIGHT = edText.getMeasuredWidth();
+
+				// sets the layout settings for the edittexts in the number
+				// pickers
+				EditText editText = (EditText) gameMins.getChildAt(1);
+				editText.setBackgroundResource(R.drawable.number_box);
+				editText.setTextColor(Color.parseColor("#FFFFFF"));
+				LayoutParams params = editText.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				editText = (EditText) songSec.getChildAt(1);
+				editText.setBackgroundResource(R.drawable.number_box);
+				editText.setTextColor(Color.parseColor("#FFFFFF"));
+				params = editText.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				// sets images and layout settings for the up buttons in the
+				// number pickers and removes long click ability
+				View upButton = gameSec.getChildAt(0);
+				upButton.setLongClickable(false);
+				upButton.setBackgroundResource(R.drawable.up_button);
+				upButton.setScaleX(1f);
+				params = upButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				upButton = gameMins.getChildAt(0);
+				upButton.setLongClickable(false);
+				upButton.setBackgroundResource(R.drawable.up_button);
+				upButton.setScaleX(1f);
+				params = upButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				upButton = songSec.getChildAt(0);
+				upButton.setLongClickable(false);
+				upButton.setBackgroundResource(R.drawable.up_button);
+				upButton.setScaleX(1f);
+				params = upButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				// sets images and layout settings for the down buttons in the
+				// number pickers and removes long click ability
+				View downButton = gameSec.getChildAt(2);
+				downButton.setLongClickable(false);
+				downButton.setBackgroundResource(R.drawable.down_button);
+				downButton.setScaleX(1f);
+				params = downButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				downButton = gameMins.getChildAt(2);
+				downButton.setLongClickable(false);
+				downButton.setBackgroundResource(R.drawable.down_button);
+				downButton.setScaleX(1f);
+				params = downButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+				downButton = songSec.getChildAt(2);
+				downButton.setLongClickable(false);
+				downButton.setBackgroundResource(R.drawable.down_button);
+				downButton.setScaleX(1f);
+				params = downButton.getLayoutParams();
+				params.height = TEXT_WIDTH;
+				params.width = TEXT_HEIGHT;
+
+			}
+		});
 
 		gameSec.setMaxValue(59);
 		gameMins.setMaxValue(9);
@@ -144,7 +177,7 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
-		
+
 		// removes focus so the getValue method can get updated information
 		gameSec.clearFocus();
 		gameMins.clearFocus();
