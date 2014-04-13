@@ -37,7 +37,7 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
-		
+
 		// sets images for the up buttons in the number pickers
 		View upButton = gameSec.getChildAt(0);
 		upButton.setLongClickable(false);
@@ -163,23 +163,23 @@ public class SettingsActivity extends Activity {
 			return String.format(Locale.getDefault(), "%02d", value);
 		}
 	}
-	
+
 	public void numPickerPress(View view) {
 		android.util.Log.w("asdfasdf", "akjsdfkld");
 		NumberPicker picker = (NumberPicker) view;
-		
+
 		// sets images for the up buttons in the number pickers
 		View upButton = picker.getChildAt(0);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        LayoutParams params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-		
+		upButton.setBackgroundResource(R.drawable.up_button);
+		LayoutParams params = upButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
 		// sets images for the up buttons in the number pickers
 		View downButton = picker.getChildAt(2);
 		downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
+		params = downButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
 	}
 }

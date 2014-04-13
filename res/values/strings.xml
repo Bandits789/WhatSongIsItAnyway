@@ -23,6 +23,7 @@
     <string name="statsVertBar">This is a vertical separator</string>
     <string name="statsMainTitle">You Got:</string>
     <string name="stats1Label">Accuracy:</string>
+    <string name="stats1Label2">%</string>
     <string name="stats1Val">0</string>
     <string name="stats2Label">Avg. Guess:</string>
     <string name="stats2Label2">sec.</string>

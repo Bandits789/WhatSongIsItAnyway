@@ -3,7 +3,7 @@
     package="com.android.whatsongisitanyway"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-sdk
@@ -25,37 +25,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.android.whatsongisitanyway.PlayActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" >
         </activity>
-        
         <activity
             android:name="com.android.whatsongisitanyway.GameScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name="com.android.whatsongisitanyway.StatsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name="com.android.whatsongisitanyway.HighScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name="com.android.whatsongisitanyway.SettingsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
     </application>
 
 </manifest>
