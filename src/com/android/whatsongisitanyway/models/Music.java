@@ -121,6 +121,10 @@ public class Music {
 		// Step one: take out all parens and brackets and '
 		String result = title.replaceAll("[\\[\\(\\{\\}\\)\\]\\']", "");
 
+		// Replace _ with space
+
+		result = result.replaceAll("_", " ");
+
 		// If title starts with a number followed by a period, like "2.", take
 		// it out.
 
