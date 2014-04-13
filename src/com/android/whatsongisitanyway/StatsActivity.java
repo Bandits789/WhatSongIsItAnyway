@@ -35,11 +35,11 @@ public class StatsActivity extends Activity {
 		TextView songsPlayed = (TextView) findViewById(R.id.stats4Val);
 
 		String roundedAccuracy = String.format(Locale.getDefault(), "%.3g%n",
-				stats[0]);
+				stats[0] * 100);
 		String roundedGuessTime = String.format(Locale.getDefault(), "%.3g%n",
 				stats[1]);
 
-		accuracy.setText(roundedAccuracy);
+		accuracy.setText(roundedAccuracy + " %");
 		avgGuessTime.setText(roundedGuessTime);
 		gamesPlayed.setText((int) stats[2] + "");
 		songsPlayed.setText((int) stats[3] + "");
