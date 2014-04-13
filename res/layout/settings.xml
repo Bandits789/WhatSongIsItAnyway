@@ -54,7 +54,7 @@
         android:layout_alignTop="@+id/settingsGameMin"
         android:layout_below="@+id/settingsTitle"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:text="Game\nDuration:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30sp"
@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/settingsTitle"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/settingsGameDurationLabel" />
 
@@ -84,7 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/settingsGameDurationLabel"
         android:layout_alignTop="@+id/settingsSongSec"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
         android:text="Song Duration:\n(seconds)"
         android:textSize="30sp"
         android:typeface="sans" />

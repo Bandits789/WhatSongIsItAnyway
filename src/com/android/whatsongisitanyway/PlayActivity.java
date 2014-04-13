@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -173,6 +174,12 @@ public class PlayActivity extends Activity implements
 
 			// empty text box
 			updateUILabel(R.id.songTextbox, "");
+
+			// show the song they missed
+			Toast toast = Toast.makeText(this, currentSong.getTitle(),
+					Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
 		}
 
 		goToNextSong();
@@ -228,8 +235,9 @@ public class PlayActivity extends Activity implements
 		// if they got it right, skip to the next song
 		if (points > 0) {
 			// show the score!
-			Toast toast = new Toast(this);
-			toast.setText("+" + points);
+			Toast toast = Toast.makeText(this, "+" + points, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
 
 			score += points;
 			goToNextSong();
@@ -375,7 +383,9 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Set the pause overlay screen visible or not on its own UI thread
+	 * Set the pause overlay screen visible or not on its own UI thread, as well
+	 * as setting guessing box to be enabled or not (the opposite of visible
+	 * variable)
 	 * 
 	 * @param visible
 	 *            true for visible, false for invisible
@@ -386,6 +396,8 @@ public class PlayActivity extends Activity implements
 			@Override
 			public void run() {
 				View resumeView = findViewById(R.id.resumeOverlay);
+				TextView songBox = (TextView) findViewById(R.id.songTextbox);
+				songBox.setEnabled(!visible);
 
 				if (visible) {
 					resumeView.setVisibility(View.VISIBLE);

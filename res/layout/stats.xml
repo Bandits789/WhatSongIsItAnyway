@@ -25,6 +25,7 @@
         android:id="@+id/stats1Val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stats1Label"
         android:layout_alignBottom="@+id/stats1Label"
         android:layout_toRightOf="@+id/stats1Label"
         android:paddingLeft="5dp"
@@ -149,13 +150,25 @@
         android:typeface="sans" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/TextViewSeconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/stats2Val"
         android:layout_toRightOf="@+id/stats2Val"
         android:paddingLeft="5dp"
         android:text="@string/stats2Label2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="25sp"
+        android:typeface="sans" />
+    
+    <TextView
+        android:id="@+id/TextViewPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/stats1Val"
+        android:layout_toRightOf="@+id/stats1Val"
+        android:paddingLeft="5dp"
+        android:text="@string/stats1Label2"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="25sp"
         android:typeface="sans" />
