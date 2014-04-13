@@ -38,7 +38,8 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
 
-		// sets images for the up buttons in the number pickers
+		// sets images for the up buttons in the number pickers and removes
+		// long click ability
 		View upButton = gameSec.getChildAt(0);
 		upButton.setLongClickable(false);
         upButton.setBackgroundResource(R.drawable.up_button);
@@ -143,6 +144,11 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
+		
+		// removes focus so the getValue method can get updated information
+		gameSec.clearFocus();
+		gameMins.clearFocus();
+		songSec.clearFocus();
 
 		// get everything in secs
 		int gameDuration = gameSec.getValue() + gameMins.getValue() * 60;
