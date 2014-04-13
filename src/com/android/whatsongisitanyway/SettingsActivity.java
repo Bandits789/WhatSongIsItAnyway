@@ -6,12 +6,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
 
@@ -42,18 +40,21 @@ public class SettingsActivity extends Activity {
 		
 		// sets images for the up buttons in the number pickers
 		View upButton = gameSec.getChildAt(0);
+		upButton.setLongClickable(false);
         upButton.setBackgroundResource(R.drawable.up_button);
         LayoutParams params = upButton.getLayoutParams();
 		params.height=150;
 		params.width=150;
         
         upButton = gameMins.getChildAt(0);
+        upButton.setLongClickable(false);
         upButton.setBackgroundResource(R.drawable.up_button);
         params = upButton.getLayoutParams();
 		params.height=150;
 		params.width=150;
         
         upButton = songSec.getChildAt(0);
+        upButton.setLongClickable(false);
         upButton.setBackgroundResource(R.drawable.up_button);
         params = upButton.getLayoutParams();
 		params.height=150;
@@ -83,18 +84,21 @@ public class SettingsActivity extends Activity {
         
         // sets images for the down buttons in the number pickers
         View downButton = gameSec.getChildAt(2);
+        downButton.setLongClickable(false);
         downButton.setBackgroundResource(R.drawable.down_button);
         params = downButton.getLayoutParams();
 		params.height=150;
 		params.width=150;
         
         downButton = gameMins.getChildAt(2);
+        downButton.setLongClickable(false);
         downButton.setBackgroundResource(R.drawable.down_button);
         params = downButton.getLayoutParams();
 		params.height=150;
 		params.width=150;
         
         downButton = songSec.getChildAt(2);
+        downButton.setLongClickable(false);
         downButton.setBackgroundResource(R.drawable.down_button);
         params = downButton.getLayoutParams();
 		params.height=150;

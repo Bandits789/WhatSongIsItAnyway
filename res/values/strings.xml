@@ -25,7 +25,7 @@
     <string name="stats1Label">Accuracy:</string>
     <string name="stats1Val">0</string>
     <string name="stats2Label">Avg. Guess:</string>
-    <string name="stats2Label2">s</string>
+    <string name="stats2Label2">sec.</string>
     <string name="stats2Val">0</string>
     <string name="stats3Label">Games Played:</string>
     <string name="stats3Val">0</string>
@@ -46,5 +46,9 @@
     <string name="playlistTitle">Choose a\n    Playlist</string>
     <string name="resumeButton">Resume</string>
     <string name="settingsTitle">Settings</string>
+    <string name="settingsGameDuration">Game\nDuration:</string>
+    <string name="settingsColon">:</string>
+    <string name="settingsSongDuration">Song\nDuration:\n(sec.)</string>
+    <string name="settingsSaveButton">Button used to save current settings</string>
 
 </resources>

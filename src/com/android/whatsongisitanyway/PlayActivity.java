@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.app.LoaderManager;

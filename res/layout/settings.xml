@@ -3,14 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <NumberPicker
-        android:id="@+id/settingsGameSec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/settingsGameMin"
-        android:layout_alignBottom="@+id/settingsGameMin"
-        android:layout_toRightOf="@+id/settingsColon" />
-
     <ImageButton
         android:id="@+id/settingsSaveButton"
         android:layout_width="wrap_content"
@@ -20,18 +12,11 @@
         android:layout_marginBottom="20dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/settingsSaveButton"
         android:maxHeight="60dp"
         android:onClick="saveButton"
         android:scaleType="fitCenter"
         android:src="@drawable/save" />
-
-    <NumberPicker
-        android:id="@+id/settingsSongSec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/settingsGameSec"
-        android:layout_below="@+id/settingsGameSec"
-        android:layout_marginTop="30dp" />
 
     <TextView
         android:id="@+id/settingsTitle"
@@ -46,49 +31,75 @@
         android:textStyle="bold"
         android:typeface="sans" />
 
-    <TextView
-        android:id="@+id/settingsGameDurationLabel"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/settingsGameMin"
+        android:layout_above="@+id/settingsSaveButton"
         android:layout_below="@+id/settingsTitle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:text="Game\nDuration:"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp"
-        android:typeface="sans" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
 
-    <NumberPicker
-        android:id="@+id/settingsGameMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/settingsTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/settingsGameDurationLabel" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
-    <TextView
-        android:id="@+id/settingsColon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/settingsGameMin"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/settingsGameMin"
-        android:text=":"
-        android:textSize="50sp" />
+            <TextView
+                android:id="@+id/settingsGameDurationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/settingsGameDuration"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="30sp"
+                android:typeface="sans" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/settingsGameDurationLabel"
-        android:layout_alignTop="@+id/settingsSongSec"
-        android:layout_marginTop="40dp"
-        android:background="@android:color/transparent"
-        android:text="Song Duration:\n(seconds)"
-        android:textSize="30sp"
-        android:typeface="sans" />
+            <NumberPicker
+                android:id="@+id/settingsGameMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/settingsColon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/settingsColon"
+                android:textSize="50sp" />
+
+            <NumberPicker
+                android:id="@+id/settingsGameSec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:text="@string/settingsSongDuration"
+                android:textSize="30sp"
+                android:typeface="sans" />
+
+            <NumberPicker
+                android:id="@+id/settingsSongSec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
