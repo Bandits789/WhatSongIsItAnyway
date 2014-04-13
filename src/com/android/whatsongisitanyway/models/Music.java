@@ -22,6 +22,9 @@ public class Music {
 	private final int playDuration; // secs
 	// don't play this many milliseconds from the end
 	private final int msecondsFromEnd = 30 * 1000;
+	// this is the max number of seconds you can set songDuration to be,
+	// this is here for scoring normalization
+	private final int maxDuration = 30;
 
 	/**
 	 * Make a new Music object
@@ -61,7 +64,7 @@ public class Music {
 	 * @return score for the song
 	 */
 	private int getScore() {
-		return timer.getTimeLeft() * 5;
+		return (maxDuration - getTimeElapsed()) * 5;
 	}
 
 	/**
@@ -91,11 +94,20 @@ public class Music {
 				cleanedTitle);
 
 		if (accuracy > 0.8) {
-			timeGuessedIn = playDuration - timer.getTimeLeft();
+			timeGuessedIn = getTimeElapsed();
 			return getScore();
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Calculates the amount of time elapsed since song started playing
+	 * 
+	 * @return the time elapsed
+	 */
+	private int getTimeElapsed() {
+		return playDuration - timer.getTimeLeft();
 	}
 
 	/**
