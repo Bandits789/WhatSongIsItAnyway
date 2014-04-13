@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -53,10 +52,11 @@ public class SettingsActivity extends Activity {
 		// onCreate has finished
 		ViewTreeObserver vto = edText.getViewTreeObserver();
 		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onGlobalLayout() {
 				// immediately removes the listener to prevent redrawing
-				edText.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				edText.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
 				// gets the views
 				NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);

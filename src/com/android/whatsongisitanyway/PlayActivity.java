@@ -63,7 +63,7 @@ public class PlayActivity extends Activity implements
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
 
-		// add enter listener
+		// add enter listener must always return true for the keyboard to stay
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -72,7 +72,7 @@ public class PlayActivity extends Activity implements
 					submit(view);
 					return true;
 				}
-				return false;
+				return true;
 			}
 		});
 
