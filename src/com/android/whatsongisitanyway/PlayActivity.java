@@ -174,6 +174,12 @@ public class PlayActivity extends Activity implements
 
 			// empty text box
 			updateUILabel(R.id.songTextbox, "");
+
+			// show the song they missed
+			Toast toast = Toast.makeText(this, currentSong.getTitle(),
+					Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
 		}
 
 		goToNextSong();
