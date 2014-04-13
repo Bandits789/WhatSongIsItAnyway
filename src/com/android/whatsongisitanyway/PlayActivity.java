@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -18,7 +19,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +65,17 @@ public class PlayActivity extends Activity implements
 
 		// add enter listener
 		TextView songBox = (TextView) findViewById(R.id.songTextbox);
-		songBox.setOnEditorActionListener(submitListener);
+		songBox.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View view, int keyCode, KeyEvent event) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN
+						&& keyCode == KeyEvent.KEYCODE_ENTER) {
+					submit(view);
+					return true;
+				}
+				return false;
+			}
+		});
+
 	}
 
 	@Override
@@ -147,6 +158,11 @@ public class PlayActivity extends Activity implements
 
 		// remove pause overlay
 		setPauseOverlay(false);
+
+		// show keyboard
+		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.toggleSoftInputFromWindow(this.getCurrentFocus()
+				.getWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
 		// start timer and play the first song
 		initTimerThread();
@@ -235,7 +251,8 @@ public class PlayActivity extends Activity implements
 		// if they got it right, skip to the next song
 		if (points > 0) {
 			// show the score!
-			Toast toast = Toast.makeText(this, "+" + points, Toast.LENGTH_SHORT);
+			Toast toast = Toast
+					.makeText(this, "+" + points, Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
 			toast.show();
 
@@ -437,19 +454,4 @@ public class PlayActivity extends Activity implements
 	public void giveUp(View view) {
 		gameOver();
 	}
-
-	/**
-	 * This is the on enter listener- it submits the entered text
-	 */
-	TextView.OnEditorActionListener submitListener = new TextView.OnEditorActionListener() {
-		public boolean onEditorAction(TextView view, int actionId,
-				KeyEvent event) {
-			if (actionId == EditorInfo.IME_NULL
-					&& event.getAction() == KeyEvent.ACTION_DOWN) {
-				submit(view);
-			}
-			return true;
-		}
-	};
-
 }

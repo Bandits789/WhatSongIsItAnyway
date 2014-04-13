@@ -28,8 +28,7 @@
         <activity
             android:name="com.android.whatsongisitanyway.PlayActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.android.whatsongisitanyway.GameScoreActivity"
