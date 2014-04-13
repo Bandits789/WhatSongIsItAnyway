@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import com.android.whatsongisitanyway.models.Music;
  */
 public class PlayActivity extends Activity implements
 		LoaderManager.LoaderCallbacks<Cursor> {
+	private final Activity activity = this;
 	private Game game;
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
@@ -64,7 +66,7 @@ public class PlayActivity extends Activity implements
 		mediaPlayer = new MediaPlayer();
 
 		// add enter listener must always return true for the keyboard to stay
-		TextView songBox = (TextView) findViewById(R.id.songTextbox);
+		final TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
 				if (event.getAction() == KeyEvent.ACTION_DOWN
@@ -75,6 +77,10 @@ public class PlayActivity extends Activity implements
 				return true;
 			}
 		});
+
+		activity.getWindow()
+		.setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 	}
 
@@ -415,9 +421,11 @@ public class PlayActivity extends Activity implements
 				View resumeView = findViewById(R.id.resumeOverlay);
 				TextView songBox = (TextView) findViewById(R.id.songTextbox);
 				songBox.setEnabled(!visible);
+				songBox = (TextView) findViewById(R.id.songTextbox);
 
 				if (visible) {
 					resumeView.setVisibility(View.VISIBLE);
+					songBox.setText("");
 				} else {
 					resumeView.setVisibility(View.INVISIBLE);
 				}
