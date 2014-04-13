@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -378,7 +377,9 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Set the pause overlay screen visible or not on its own UI thread
+	 * Set the pause overlay screen visible or not on its own UI thread, as well
+	 * as setting guessing box to be enabled or not (the opposite of visible
+	 * variable)
 	 * 
 	 * @param visible
 	 *            true for visible, false for invisible
@@ -389,6 +390,8 @@ public class PlayActivity extends Activity implements
 			@Override
 			public void run() {
 				View resumeView = findViewById(R.id.resumeOverlay);
+				TextView songBox = (TextView) findViewById(R.id.songTextbox);
+				songBox.setEnabled(!visible);
 
 				if (visible) {
 					resumeView.setVisibility(View.VISIBLE);

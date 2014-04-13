@@ -6,12 +6,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
 
@@ -39,66 +37,66 @@ public class SettingsActivity extends Activity {
 		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
 		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
 		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
-		
+
 		// sets images for the up buttons in the number pickers
 		View upButton = gameSec.getChildAt(0);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        LayoutParams params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        upButton = gameMins.getChildAt(0);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        upButton = songSec.getChildAt(0);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        // sets the settings for the edittexts in the number pickers
-        EditText edText = (EditText) gameSec.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        edText = (EditText) gameMins.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        edText = (EditText) songSec.getChildAt(1);
-        edText.setBackgroundResource(R.drawable.number_box);
-        edText.setTextColor(Color.parseColor("#FFFFFF"));
-        params = edText.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        // sets images for the down buttons in the number pickers
-        View downButton = gameSec.getChildAt(2);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        downButton = gameMins.getChildAt(2);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-        
-        downButton = songSec.getChildAt(2);
-        downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
+		upButton.setBackgroundResource(R.drawable.up_button);
+		LayoutParams params = upButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		upButton = gameMins.getChildAt(0);
+		upButton.setBackgroundResource(R.drawable.up_button);
+		params = upButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		upButton = songSec.getChildAt(0);
+		upButton.setBackgroundResource(R.drawable.up_button);
+		params = upButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		// sets the settings for the edittexts in the number pickers
+		EditText edText = (EditText) gameSec.getChildAt(1);
+		edText.setBackgroundResource(R.drawable.number_box);
+		edText.setTextColor(Color.parseColor("#FFFFFF"));
+		params = edText.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		edText = (EditText) gameMins.getChildAt(1);
+		edText.setBackgroundResource(R.drawable.number_box);
+		edText.setTextColor(Color.parseColor("#FFFFFF"));
+		params = edText.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		edText = (EditText) songSec.getChildAt(1);
+		edText.setBackgroundResource(R.drawable.number_box);
+		edText.setTextColor(Color.parseColor("#FFFFFF"));
+		params = edText.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		// sets images for the down buttons in the number pickers
+		View downButton = gameSec.getChildAt(2);
+		downButton.setBackgroundResource(R.drawable.down_button);
+		params = downButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		downButton = gameMins.getChildAt(2);
+		downButton.setBackgroundResource(R.drawable.down_button);
+		params = downButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
+		downButton = songSec.getChildAt(2);
+		downButton.setBackgroundResource(R.drawable.down_button);
+		params = downButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
 
 		gameSec.setMaxValue(59);
 		gameMins.setMaxValue(9);
@@ -159,23 +157,23 @@ public class SettingsActivity extends Activity {
 			return String.format(Locale.getDefault(), "%02d", value);
 		}
 	}
-	
+
 	public void numPickerPress(View view) {
 		android.util.Log.w("asdfasdf", "akjsdfkld");
 		NumberPicker picker = (NumberPicker) view;
-		
+
 		// sets images for the up buttons in the number pickers
 		View upButton = picker.getChildAt(0);
-        upButton.setBackgroundResource(R.drawable.up_button);
-        LayoutParams params = upButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
-		
+		upButton.setBackgroundResource(R.drawable.up_button);
+		LayoutParams params = upButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
+
 		// sets images for the up buttons in the number pickers
 		View downButton = picker.getChildAt(2);
 		downButton.setBackgroundResource(R.drawable.down_button);
-        params = downButton.getLayoutParams();
-		params.height=150;
-		params.width=150;
+		params = downButton.getLayoutParams();
+		params.height = 150;
+		params.width = 150;
 	}
 }
