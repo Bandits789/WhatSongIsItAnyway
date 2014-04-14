@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.whatsongisitanyway;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,9 +25,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.whatsongisitanyway.database.GameDatabaseHelper;
-import com.android.whatsongisitanyway.models.Game;
-import com.android.whatsongisitanyway.models.Music;
+import com.whatsongisitanyway.database.GameDatabaseHelper;
+import com.whatsongisitanyway.models.Game;
+import com.whatsongisitanyway.models.Music;
 
 /**
  * This is the activity where the game actually lies. This makes a music player,

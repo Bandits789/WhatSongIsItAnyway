@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway.database;
+package com.whatsongisitanyway.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.android.whatsongisitanyway.database.GameDatabase.GameData;
-import com.android.whatsongisitanyway.database.GameDatabase.OverallData;
-import com.android.whatsongisitanyway.database.GameDatabase.SettingsData;
+import com.whatsongisitanyway.database.GameDatabase.GameData;
+import com.whatsongisitanyway.database.GameDatabase.OverallData;
+import com.whatsongisitanyway.database.GameDatabase.SettingsData;
 
 /**
  * Bridges the gap between code and sqlite, helps with important things such as

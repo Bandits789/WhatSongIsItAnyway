@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.whatsongisitanyway;
 
 import java.util.Locale;
 
@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
 
-import com.android.whatsongisitanyway.database.GameDatabaseHelper;
+import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
  * Page to set settings!

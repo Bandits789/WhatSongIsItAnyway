@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.whatsongisitanyway"
+    package="com.whatsongisitanyway"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/MainTheme" >
         <activity
-            android:name="com.android.whatsongisitanyway.MainMenuActivity"
+            android:name="com.whatsongisitanyway.MainMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -26,27 +26,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android.whatsongisitanyway.PlayActivity"
+            android:name="com.whatsongisitanyway.PlayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.android.whatsongisitanyway.GameScoreActivity"
+            android:name="com.whatsongisitanyway.GameScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.android.whatsongisitanyway.StatsActivity"
+            android:name="com.whatsongisitanyway.StatsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.android.whatsongisitanyway.HighScoreActivity"
+            android:name="com.whatsongisitanyway.HighScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.android.whatsongisitanyway.SettingsActivity"
+            android:name="com.whatsongisitanyway.SettingsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

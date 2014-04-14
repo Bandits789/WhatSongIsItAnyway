@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway.models;
+package com.whatsongisitanyway.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.Random;
 
 import android.content.Context;
 
-import com.android.whatsongisitanyway.database.GameDatabaseHelper;
+import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
  * ADT that represents a single game of WSIIA. Stores the song list, and has

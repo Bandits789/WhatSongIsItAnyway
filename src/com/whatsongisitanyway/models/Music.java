@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway.models;
+package com.whatsongisitanyway.models;
 
 import java.util.Locale;
 import java.util.Random;

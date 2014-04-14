@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.whatsongisitanyway;
 
 import java.util.Locale;
 
@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.whatsongisitanyway.database.GameDatabaseHelper;
+import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
  * Activity that displays overall game stats (accuracy, avgGuessTime,

@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.whatsongisitanyway;
 
 import android.app.Activity;
 import android.content.Intent;

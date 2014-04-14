@@ -1,11 +1,11 @@
-package com.android.whatsongisitanyway.tests;
+package com.whatsongisitanyway.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.android.whatsongisitanyway.models.Music;
+import com.whatsongisitanyway.models.Music;
 
 /**
  * Tests basic song getters, scoring, and fuzzy matching (timing stuff left up

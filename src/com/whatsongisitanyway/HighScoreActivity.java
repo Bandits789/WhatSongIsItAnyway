@@ -1,4 +1,4 @@
-package com.android.whatsongisitanyway;
+package com.whatsongisitanyway;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.whatsongisitanyway.database.GameDatabaseHelper;
+import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
  * Activity that displays the highest scores overall
