@@ -47,7 +47,8 @@ public class Music {
 	public Music(String id, String title, int duration, String artist,
 			String album, int size, int playDuration) {
 		this.path = id;
-		this.title = title;
+		// we don't want underscores
+		this.title = title.replace("_", " ");
 		this.duration = duration;
 		this.artist = artist;
 		this.album = album;
@@ -120,10 +121,6 @@ public class Music {
 
 		// Step one: take out all parens and brackets and '
 		String result = title.replaceAll("[\\[\\(\\{\\}\\)\\]\\']", "");
-
-		// Replace _ with space
-
-		result = result.replaceAll("_", " ");
 
 		// If title starts with a number followed by a period, like "2.", take
 		// it out.
