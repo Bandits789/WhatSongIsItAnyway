@@ -12,6 +12,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -64,6 +65,9 @@ public class PlayActivity extends Activity implements
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
+
+		// make sure up/down volume buttons work
+		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 		// add enter listener must always return true for the keyboard to stay
 		final TextView songBox = (TextView) findViewById(R.id.songTextbox);
