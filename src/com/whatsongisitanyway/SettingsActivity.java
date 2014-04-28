@@ -158,6 +158,9 @@ public class SettingsActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
+		Intent i = new Intent(Intent.ACTION_MAIN);
+		i.addCategory(Intent.CATEGORY_HOME);
+		startActivity(i);
 	}
 
 	@Override
@@ -204,7 +207,6 @@ public class SettingsActivity extends Activity {
 	}
 
 	public void numPickerPress(View view) {
-		android.util.Log.w("asdfasdf", "akjsdfkld");
 		NumberPicker picker = (NumberPicker) view;
 
 		// sets images for the up buttons in the number pickers

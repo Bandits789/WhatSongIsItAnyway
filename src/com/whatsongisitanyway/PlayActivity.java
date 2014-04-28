@@ -90,6 +90,10 @@ public class PlayActivity extends Activity implements
 
 	@Override
 	public void onBackPressed() {
+		this.onPause();
+		Intent i = new Intent(Intent.ACTION_MAIN);
+		i.addCategory(Intent.CATEGORY_HOME);
+		startActivity(i);
 	}
 
 	@Override
