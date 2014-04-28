@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -46,6 +47,7 @@ public class PlayActivity extends Activity implements
 
 	private boolean running = false;
 	private boolean paused = false;
+	private AtomicBoolean gaveUp = new AtomicBoolean(false);
 
 	private GameDatabaseHelper dbHelper;
 	private int[] settings;
@@ -449,6 +451,11 @@ public class PlayActivity extends Activity implements
 	 * Release the media player and go to the score screen
 	 */
 	private void gameOver() {
+		// prevent multiple give ups
+		if (gaveUp.getAndSet(true)) {
+			return;
+		}
+
 		running = false;
 		if (mediaPlayer != null) {
 			mediaPlayer.release();
