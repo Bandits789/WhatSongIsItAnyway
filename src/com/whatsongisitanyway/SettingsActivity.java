@@ -158,9 +158,7 @@ public class SettingsActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		Intent i = new Intent(Intent.ACTION_MAIN);
-		i.addCategory(Intent.CATEGORY_HOME);
-		startActivity(i);
+		saveButton(null);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.whatsongisitanyway.database.GameDatabaseHelper;
 
@@ -247,6 +248,7 @@ public class Game {
 	 *         songsPlayed)
 	 */
 	public float[] endGame() {
+		Log.w("FUCK","BITCHES");
 		// so database. very sql. wow.
 		dbHelper.insertGameStats(score, getAvgGuessTime(), getAccuracy(),
 				getSongsPlayed());
