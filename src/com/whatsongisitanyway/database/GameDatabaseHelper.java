@@ -138,7 +138,6 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(GameData.COLUMN_NAME_SONGS_PLAYED, songsPlayed);
 
 		// insert the new row!
-		Log.d("db", "update game");
 		db.insert(GameData.TABLE_NAME, null, values);
 	}
 
@@ -201,7 +200,6 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		String[] selectionArgs = { String.valueOf(id) };
 
 		// update!
-		Log.d("db", "update overall");
 		db.update(OverallData.TABLE_NAME, values, selection, selectionArgs);
 	}
 

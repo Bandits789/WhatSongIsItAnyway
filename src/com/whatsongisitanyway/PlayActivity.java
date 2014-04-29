@@ -315,7 +315,6 @@ public class PlayActivity extends Activity implements
 				e.printStackTrace();
 			}
 		} else {
-			Log.w("GOTO", "NEXT");
 			// we're done!
 			gameOver();
 		}
@@ -348,7 +347,6 @@ public class PlayActivity extends Activity implements
 				}
 
 				// we ran out of time
-				Log.w("TIME", "OUT");
 				gameOver();
 			}
 		});
@@ -478,7 +476,6 @@ public class PlayActivity extends Activity implements
 	 * Called when the player clicks on the Give Up button.
 	 */
 	public void giveUp(View view) {
-		Log.w("GIVE", "UP");
 		gameOver();
 	}
 }

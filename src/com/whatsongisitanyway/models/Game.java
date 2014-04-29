@@ -248,7 +248,6 @@ public class Game {
 	 *         songsPlayed)
 	 */
 	public float[] endGame() {
-		Log.w("FUCK","BITCHES");
 		// so database. very sql. wow.
 		dbHelper.insertGameStats(score, getAvgGuessTime(), getAccuracy(),
 				getSongsPlayed());
