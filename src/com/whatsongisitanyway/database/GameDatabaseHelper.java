@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
+import com.whatsongisitanyway.database.GameDatabase.FirstTime;
 import com.whatsongisitanyway.database.GameDatabase.GameData;
 import com.whatsongisitanyway.database.GameDatabase.OverallData;
 import com.whatsongisitanyway.database.GameDatabase.SettingsData;
@@ -57,9 +57,15 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 				+ SettingsData.COLUMN_NAME_GAME_DURATION + " INTEGER,"
 				+ SettingsData.COLUMN_NAME_SONG_DURATION + " INTEGER)";
 
+		// and now first time table
+		String createFirstTime = "CREATE TABLE " + FirstTime.TABLE_NAME + " ("
+				+ FirstTime._ID + " INTEGER PRIMARY KEY,"
+				+ FirstTime.COLUMN_NAME_FIRST_TIME + " BIT)";
+
 		db.execSQL(createGames);
 		db.execSQL(createOverall);
 		db.execSQL(createSettings);
+		db.execSQL(createFirstTime);
 	}
 
 	@Override
@@ -69,6 +75,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + OverallData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + GameData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + SettingsData.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + FirstTime.TABLE_NAME);
 		onCreate(db);
 	}
 
@@ -218,7 +225,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 */
 	private void initialOverallStats(int score, float averageGuessTime,
 			float accuracy, int songsPlayed) {
-		// gets the  data repository in write mode
+		// gets the data repository in write mode
 		SQLiteDatabase db = getWritableDatabase();
 
 		// create a new map of values, where column names are the keys
@@ -316,6 +323,43 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		int[] settings = { gameDuration, songDuration };
 
 		return settings;
+	}
+
+	/**
+	 * Decides if it is the user's first time playing (after the first time this
+	 * will be false)
+	 * 
+	 * @return whether or not it the user's first time playing
+	 */
+	public boolean isFirstTime() {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = { FirstTime.COLUMN_NAME_FIRST_TIME };
+
+		Cursor cursor = db.query(FirstTime.TABLE_NAME, projection, null,
+				null, null, null, null);
+
+		// if there is something, then it is not the first time
+		cursor.moveToFirst();
+		// was first time, now make that false
+		if (cursor.isAfterLast()) {
+			// gets the data repository in write mode
+			SQLiteDatabase dbw = getWritableDatabase();
+
+			// create a new map of values, where column names are the keys
+			ContentValues values = new ContentValues();
+			values.put(FirstTime.COLUMN_NAME_FIRST_TIME, 1);
+
+			// insert the new row!
+			dbw.insert(FirstTime.TABLE_NAME, null, values);
+
+			return true;
+		}
+
+		// there was already something there, so it's not the first time
+		return false;
 	}
 
 	/**

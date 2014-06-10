@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -17,7 +19,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -49,6 +50,10 @@ public class PlayActivity extends Activity implements
 	private boolean paused = false;
 	private AtomicBoolean gaveUp = new AtomicBoolean(false);
 
+	private boolean firstTime = true;
+	private final String introMessage = "Enter the name of the song you hear. "
+			+ "Spelling and punctuation don't count!";
+
 	private GameDatabaseHelper dbHelper;
 	private int[] settings;
 
@@ -62,9 +67,10 @@ public class PlayActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_activity);
 
-		// get settings
+		// get settings and firstTime
 		dbHelper = new GameDatabaseHelper(this);
 		settings = dbHelper.getSettings();
+		firstTime = dbHelper.isFirstTime();
 
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
@@ -79,14 +85,12 @@ public class PlayActivity extends Activity implements
 				if (event.getAction() == KeyEvent.ACTION_DOWN
 						&& keyCode == KeyEvent.KEYCODE_ENTER) {
 					submit(view);
-					return true;
 				}
 				return true;
 			}
 		});
 
-		activity.getWindow()
-		.setSoftInputMode(
+		activity.getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 	}
@@ -94,9 +98,9 @@ public class PlayActivity extends Activity implements
 	@Override
 	public void onBackPressed() {
 		this.onPause();
-		Intent i = new Intent(Intent.ACTION_MAIN);
-		i.addCategory(Intent.CATEGORY_HOME);
-		startActivity(i);
+		Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+		homeIntent.addCategory(Intent.CATEGORY_HOME);
+		startActivity(homeIntent);
 	}
 
 	@Override
@@ -148,8 +152,12 @@ public class PlayActivity extends Activity implements
 			cursor.moveToNext();
 		}
 
-		// start!
-		startGame();
+		// on the first time, show the intro, otherwise start immediately
+		if (firstTime) {
+			showIntro();
+		} else {
+			startGame();
+		}
 
 	}
 
@@ -184,6 +192,22 @@ public class PlayActivity extends Activity implements
 		// start timer and play the first song
 		initTimerThread();
 		goToNextSong();
+	}
+
+	/**
+	 * Shows the intro text that hints about fuzzy matching. Upon pressing OK,
+	 * the game will start.
+	 */
+	public void showIntro() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(introMessage).setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						startGame();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	/**
@@ -477,5 +501,16 @@ public class PlayActivity extends Activity implements
 	 */
 	public void giveUp(View view) {
 		gameOver();
+	}
+
+	/**
+	 * Make sure volume buttons work
+	 */
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)
+				|| (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+			return super.onKeyUp(keyCode, event);
+		}
+		return true;
 	}
 }

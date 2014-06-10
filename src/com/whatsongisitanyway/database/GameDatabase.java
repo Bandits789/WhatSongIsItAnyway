@@ -12,6 +12,14 @@ public final class GameDatabase {
 	}
 
 	/**
+	 * FirstTime table. Keeps track of whether or not user is a first time user
+	 */
+	public static abstract class FirstTime implements BaseColumns {
+		public static final String TABLE_NAME = "firsttimetable";
+		public static final String COLUMN_NAME_FIRST_TIME = "firsttime";
+	}
+
+	/**
 	 * OverallData table. Has all the overall stats.
 	 */
 	public static abstract class OverallData implements BaseColumns {

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.whatsongisitanyway.database.GameDatabaseHelper;
 

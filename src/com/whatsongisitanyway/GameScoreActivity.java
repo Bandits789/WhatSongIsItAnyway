@@ -20,9 +20,10 @@ public class GameScoreActivity extends Activity {
 		
 		// score, avgGuessTime, accuracy, songsPlayed
 		float[] stats = getIntent().getExtras().getFloatArray("stats");
+		String scoreString = (int) stats[0] + ""; // round the score
 		TextView score = (TextView) findViewById(R.id.gameScoreScore);
 		
-		score.setText(stats[0] + "");
+		score.setText(scoreString);
 	}
 	
 	@Override
