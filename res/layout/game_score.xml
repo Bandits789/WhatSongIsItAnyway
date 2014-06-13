@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/gameScoreTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
         android:text="@+string/gameScoreTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="50sp"
@@ -19,8 +21,7 @@
         android:id="@+id/gameScoreScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreTitle"
-        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
         android:text="@string/gameScoreScore"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFF00"
@@ -31,8 +32,7 @@
         android:id="@+id/gameScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreScore"
-        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
         android:text="@string/gameScoreMessage"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30sp"
@@ -42,9 +42,7 @@
         android:id="@+id/gameScoreStatsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gameScoreReplayButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/statsButton"
@@ -57,9 +55,7 @@
         android:id="@+id/gameScoreReplayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gameScoreText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/highScoreButton"
@@ -72,9 +68,8 @@
         android:id="@+id/gameScoreMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gameScoreStatsButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/mainMenuButton"
@@ -83,4 +78,4 @@
         android:scaleType="fitCenter"
         android:src="@drawable/to_menu" />
 
-</RelativeLayout>
+</LinearLayout>

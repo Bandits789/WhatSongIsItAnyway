@@ -4,217 +4,212 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/navigationButtons"
+    <ImageButton
+        android:id="@+id/statsHighScoreButton"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/highScoreButton"
+        android:onClick="highScoreButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/stats" />
 
-        <ImageButton
-            android:id="@+id/statsHighScoreButton"
-            android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/statsMainTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:text="@string/statsMainTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp"
+        android:typeface="sans" />
+
+    <LinearLayout
+        android:id="@+id/stats1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/stats1Label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/highScoreButton"
-            android:onClick="highScoreButton"
-            android:scaleType="fitCenter"
-            android:src="@drawable/stats" />
+            android:fontFamily="sans-serif-thin"
+            android:text="@+string/stats1Label"
+            android:textSize="25sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/stats1Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats1Val"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/TextViewPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats1Label2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/stats"
+        android:id="@+id/stats2"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/statsMainTitle"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:text="@string/statsMainTitle"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="40sp"
+            android:id="@+id/stats2Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/stats2Label"
+            android:textSize="25sp"
             android:typeface="sans" />
 
-        <LinearLayout
-            android:id="@+id/stats1"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/stats2Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats2Val"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
 
-            <TextView
-                android:id="@+id/stats1Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="@+string/stats1Label"
-                android:textSize="25sp"
-                android:typeface="sans" />
+        <TextView
+            android:id="@+id/TextViewSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats2Label2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/stats1Val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats1Val"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
+    <LinearLayout
+        android:id="@+id/stats3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/TextViewPercent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats1Label2"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/stats3Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/stats3Label"
+            android:textSize="25sp"
+            android:typeface="sans" />
 
-        <LinearLayout
-            android:id="@+id/stats2"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/stats3Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats3Val"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/stats2Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="@string/stats2Label"
-                android:textSize="25sp"
-                android:typeface="sans" />
+    <LinearLayout
+        android:id="@+id/stats4"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/stats2Val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats2Val"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
+        <TextView
+            android:id="@+id/stats4Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/stats4Label"
+            android:textSize="25sp"
+            android:typeface="sans" />
 
-            <TextView
-                android:id="@+id/TextViewSeconds"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats2Label2"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/stats4Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats4Val"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/stats3"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/stats5"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/stats3Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="@string/stats3Label"
-                android:textSize="25sp"
-                android:typeface="sans" />
+        <TextView
+            android:id="@+id/stats5Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/stats5Label"
+            android:textSize="25sp"
+            android:typeface="sans" />
 
-            <TextView
-                android:id="@+id/stats3Val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats3Val"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/stats5Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/stats5Val"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="25sp"
+            android:typeface="sans" />
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/stats4"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/stats4Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="@string/stats4Label"
-                android:textSize="25sp"
-                android:typeface="sans" />
-
-            <TextView
-                android:id="@+id/stats4Val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats4Val"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stats5"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/stats5Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="@string/stats5Label"
-                android:textSize="25sp"
-                android:typeface="sans" />
-
-            <TextView
-                android:id="@+id/stats5Val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="@string/stats5Val"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="25sp"
-                android:typeface="sans" />
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/statsbottom"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/statsMainMenuButton"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:contentDescription="@string/mainMenuButton"
             android:gravity="center"
-            android:maxHeight="50dp"
             android:onClick="mainMenuButton"
             android:scaleType="fitCenter"
             android:src="@drawable/main_menu" />

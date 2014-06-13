@@ -1,170 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <LinearLayout
-        android:id="@+id/navigationButtons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageButton
-            android:id="@+id/highStatsButton"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/statsButton"
-            android:onClick="statsButton"
-            android:scaleType="fitCenter"
-            android:src="@drawable/high_scores" />
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <ImageButton
-        android:id="@+id/statsMainMenuButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/highStatsButton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/mainMenuButton"
-        android:maxHeight="50dp"
-        android:onClick="mainMenuButton"
+        android:contentDescription="@string/statsButton"
+        android:onClick="statsButton"
         android:scaleType="fitCenter"
-        android:src="@drawable/main_menu" />
+        android:src="@drawable/high_scores" />
 
-    <ImageView
-        android:id="@+id/high2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/high1wrapper"
-        android:layout_below="@+id/high1Val"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/dummySpace"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/high2"
-        android:maxWidth="40dp"
-        android:padding="0dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/number2" />
-
-    <ImageView
-        android:id="@+id/high3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/high2"
-        android:layout_below="@+id/high2"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/high3"
-        android:maxWidth="40dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/number3" />
-
-    <ImageView
-        android:id="@+id/high4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/high3"
-        android:layout_below="@+id/high3"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/high4"
-        android:maxWidth="40dp"
-        android:padding="0dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/number4" />
-
-    <ImageView
-        android:id="@+id/high5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/high4"
-        android:layout_below="@+id/high4"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/high5"
-        android:maxWidth="40dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/number5" />
-
-    <TextView
-        android:id="@+id/high1Val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/high1wrapper"
-        android:layout_centerHorizontal="true"
-        android:text="@string/high1Val"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/high2Val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/high2"
-        android:layout_centerHorizontal="true"
-        android:text="@string/high2Val"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/high3Val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/high3"
-        android:layout_centerHorizontal="true"
-        android:text="@string/high2Val"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/high4Val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/high4"
-        android:layout_centerHorizontal="true"
-        android:text="@string/high2Val"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/high5Val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/high5"
-        android:layout_centerHorizontal="true"
-        android:text="@string/high2Val"
-        android:textSize="30sp" />
-
-    <RelativeLayout
-        android:id="@+id/dummySpace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="29dp" >
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/high1wrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/dummySpace"
-        android:layout_below="@id/navigationButtons"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="50dp"
-        android:layout_toLeftOf="@id/dummySpace"
-        android:background="@android:color/transparent" >
+    <LinearLayout
+        android:id="@+id/stats1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/high1"
+            android:id="@+id/highline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:contentDescription="@string/high1"
@@ -172,6 +36,153 @@
             android:scaleType="fitCenter"
             android:src="@drawable/number1" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/high1Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/high1Val"
+            android:textSize="30sp" />
+    </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/highline2"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/high2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/high2"
+            android:maxWidth="40dp"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/number2" />
+
+        <TextView
+            android:id="@+id/high2Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/high2Val"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/highline3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/high3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/high3"
+            android:maxWidth="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/number3" />
+
+        <TextView
+            android:id="@+id/high3Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/high2Val"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/highline4"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/high4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/high4"
+            android:maxWidth="40dp"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/number4" />
+
+        <TextView
+            android:id="@+id/high4Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/high2Val"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/highline5"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/high5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/high5"
+            android:maxWidth="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/number5" />
+
+        <TextView
+            android:id="@+id/high5Val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/high2Val"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/highlinebottom"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/statsMainMenuButton"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/mainMenuButton"
+            android:gravity="center"
+            android:onClick="mainMenuButton"
+            android:scaleType="fitCenter"
+            android:src="@drawable/main_menu" />
+    </LinearLayout>
+
+</LinearLayout>
