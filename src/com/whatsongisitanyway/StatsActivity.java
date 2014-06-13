@@ -27,12 +27,14 @@ public class StatsActivity extends Activity {
 		GameDatabaseHelper dbHelper = new GameDatabaseHelper(this);
 		// accuracy, avgGuessTime, gamesPlayed, songsPlayed
 		float[] stats = dbHelper.getOverallStats();
+		String mostGuessedSong = dbHelper.getMostGuessedSong();
 
 		// set all the labels
 		TextView accuracy = (TextView) findViewById(R.id.stats1Val);
 		TextView avgGuessTime = (TextView) findViewById(R.id.stats2Val);
 		TextView gamesPlayed = (TextView) findViewById(R.id.stats3Val);
 		TextView songsPlayed = (TextView) findViewById(R.id.stats4Val);
+		TextView mostGuessed = (TextView) findViewById(R.id.stats5Val);
 
 		String roundedAccuracy = String.format(Locale.getDefault(), "%.3g",
 				stats[0] * 100);
@@ -43,6 +45,7 @@ public class StatsActivity extends Activity {
 		avgGuessTime.setText(roundedGuessTime);
 		gamesPlayed.setText((int) stats[2] + "");
 		songsPlayed.setText((int) stats[3] + "");
+		mostGuessed.setText(mostGuessedSong);
 	}
 	
 	@Override

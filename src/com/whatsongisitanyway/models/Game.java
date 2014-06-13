@@ -2,7 +2,9 @@ package com.whatsongisitanyway.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import android.content.Context;
@@ -21,12 +23,14 @@ public class Game {
 	private final Timer timer;
 
 	private final GameDatabaseHelper dbHelper;
+	// song title -> [times guessed, times skipped]
+	private final Map<String, int[]> songMap;
 	private int songsCorrect;
 	private int totalGuessTime;
 
 	// in seconds
 	private final int duration;
-	private final int skipPenalty = 2;
+	private final int skipPenalty = 2; // seconds
 
 	private int multiplier = 1;
 	private int streak = 0;
@@ -47,6 +51,7 @@ public class Game {
 		currentSongIndex = -1;
 		timer = new Timer(duration);
 		dbHelper = new GameDatabaseHelper(context);
+		songMap = new HashMap<String, int[]>();
 
 		this.duration = duration;
 
@@ -85,6 +90,7 @@ public class Game {
 	 */
 	public void skipPenalty() {
 		timer.decrement(skipPenalty);
+		songMap.put(currentSong.getTitle(), new int[] { 0, 1 }); // they skipped
 		multiplier = 1;
 		streak = 0;
 	}
@@ -94,7 +100,7 @@ public class Game {
 	 * 
 	 * @param guess
 	 *            the string of the title guessed
-	 * @return the score for the guess
+	 * @return the score for the *guess* (not total points)
 	 */
 	public int guess(String guess) {
 		int points = currentSong.guess(guess) * multiplier;
@@ -105,6 +111,7 @@ public class Game {
 			streak += 1;
 			totalGuessTime += currentSong.timeGuessedIn();
 			++songsCorrect;
+			songMap.put(currentSong.getTitle(), new int[] { 1, 0 });
 
 			// up the multiplier every 2 correct songs
 			if (streak % 2 == 0) {
@@ -114,6 +121,7 @@ public class Game {
 		}
 
 		// they guessed wrong
+		songMap.put(currentSong.getTitle(), new int[] { 0, 0 });
 		multiplier = 1;
 		streak = 0;
 		return 0;
@@ -251,7 +259,7 @@ public class Game {
 		dbHelper.insertGameStats(score, getAvgGuessTime(), getAccuracy(),
 				getSongsPlayed());
 		dbHelper.updateOverallStats(score, getAvgGuessTime(), getAccuracy(),
-				getSongsPlayed());
+				getSongsPlayed(), songMap);
 
 		float[] stats = { score, getAvgGuessTime(), getAccuracy(),
 				getSongsPlayed() };

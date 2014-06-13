@@ -1,5 +1,8 @@
 package com.whatsongisitanyway.database;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +13,7 @@ import com.whatsongisitanyway.database.GameDatabase.FirstTime;
 import com.whatsongisitanyway.database.GameDatabase.GameData;
 import com.whatsongisitanyway.database.GameDatabase.OverallData;
 import com.whatsongisitanyway.database.GameDatabase.SettingsData;
+import com.whatsongisitanyway.database.GameDatabase.SongData;
 
 /**
  * Bridges the gap between code and sqlite, helps with important things such as
@@ -49,7 +53,18 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 				+ OverallData.COLUMN_NAME_ACCURACY + " FLOAT,"
 				+ OverallData.COLUMN_NAME_AVG_GUESS_TIME + " FLOAT,"
 				+ OverallData.COLUMN_NAME_GAMES_PLAYED + " INTEGER,"
+				+ OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED + " INTEGER,"
 				+ OverallData.COLUMN_NAME_SONGS_PLAYED + " INTEGER)";
+
+		// now create the songs table
+		String createSongs = "CREATE TABLE " + SongData.TABLE_NAME + " ("
+				+ SongData._ID + " INTEGER PRIMARY KEY,"
+				+ SongData.COLUMN_NAME_TIMESTAMP
+				+ " DATETIME DEFAULT CURRENT_TIMESTAMP,"
+				+ SongData.COLUMN_NAME_SONG_TITLE + " VARCHAR(200),"
+				+ SongData.COLUMN_NAME_TIMES_GUESSED + " INTEGER,"
+				+ SongData.COLUMN_NAME_TIMES_SKIPPED + " INTEGER,"
+				+ SongData.COLUMN_NAME_TIMES_PLAYED + " INTEGER)";
 
 		// and then settings table
 		String createSettings = "CREATE TABLE " + SettingsData.TABLE_NAME
@@ -64,6 +79,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 
 		db.execSQL(createGames);
 		db.execSQL(createOverall);
+		db.execSQL(createSongs);
 		db.execSQL(createSettings);
 		db.execSQL(createFirstTime);
 	}
@@ -159,9 +175,16 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 *            accuracy of guessing in the most recent game
 	 * @param songsPlayed
 	 *            songs played until end of most recent game
+	 * @param songMap
+	 *            a map of the songs played in the most recent game (song title
+	 *            -> [times guessed, times skipped])
 	 */
 	public void updateOverallStats(int score, float averageGuessTime,
-			float accuracy, int songsPlayed) {
+			float accuracy, int songsPlayed, Map<String, int[]> songMap) {
+
+		// get the number of *new* songs played and update the song database
+		int uniqueSongsPlayed = updateSongs(songMap);
+
 		// gets the data repository in read mode
 		SQLiteDatabase db = getReadableDatabase();
 
@@ -170,7 +193,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 				OverallData.COLUMN_NAME_ACCURACY,
 				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
 				OverallData.COLUMN_NAME_GAMES_PLAYED,
-				OverallData.COLUMN_NAME_SONGS_PLAYED };
+				OverallData.COLUMN_NAME_SONGS_PLAYED,
+				OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED };
 
 		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
 				null, null, null, null);
@@ -186,6 +210,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		float oldAvgGuessTime = cursor.getFloat(2);
 		int oldGamesPlayed = cursor.getInt(3);
 		int oldSongsPlayed = cursor.getInt(4);
+		int oldUniqueSongsPlayed = cursor.getInt(5);
 
 		// find new values
 		int newSongsPlayed = oldSongsPlayed + songsPlayed;
@@ -195,6 +220,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		float newAvgGuessTime = (oldAvgGuessTime * oldGamesPlayed + averageGuessTime
 				* songsPlayed)
 				/ (float) newSongsPlayed;
+		int newUniqueSongsPlayed = oldUniqueSongsPlayed + uniqueSongsPlayed;
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
@@ -202,12 +228,13 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(OverallData.COLUMN_NAME_AVG_GUESS_TIME, newAvgGuessTime);
 		values.put(OverallData.COLUMN_NAME_GAMES_PLAYED, oldGamesPlayed + 1);
 		values.put(OverallData.COLUMN_NAME_SONGS_PLAYED, newSongsPlayed);
+		values.put(OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED,
+				newUniqueSongsPlayed);
 
-		String selection = OverallData._ID + " = ?";
-		String[] selectionArgs = { String.valueOf(id) };
+		String selection = OverallData._ID + " = " + id;
 
 		// update!
-		db.update(OverallData.TABLE_NAME, values, selection, selectionArgs);
+		db.update(OverallData.TABLE_NAME, values, selection, null);
 	}
 
 	/**
@@ -269,7 +296,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		String[] projection = { OverallData.COLUMN_NAME_ACCURACY,
 				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
 				OverallData.COLUMN_NAME_GAMES_PLAYED,
-				OverallData.COLUMN_NAME_SONGS_PLAYED };
+				OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED };
 
 		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
 				null, null, null, null);
@@ -290,6 +317,98 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		float[] stats = { accuracy, avgGuessTime, gamesPlayed, songsPlayed };
 
 		return stats;
+	}
+
+	/**
+	 * Get the most guessed song in the database. If there is a tie, the most
+	 * recently played song wins.
+	 * 
+	 * @return the most guessed song's title
+	 */
+	public String getMostGuessedSong() {
+		// gets the data repository in read mode
+		SQLiteDatabase db = getReadableDatabase();
+
+		// columns we want
+		String[] projection = { SongData.COLUMN_NAME_SONG_TITLE };
+		// first order by times guessed, then order by timestamp to break ties
+		String orderBy = SongData.COLUMN_NAME_TIMES_GUESSED + " DESC, "
+				+ SongData.COLUMN_NAME_TIMESTAMP + " DESC";
+
+		Cursor cursor = db.query(SongData.TABLE_NAME, projection, null, null,
+				null, null, orderBy);
+
+		// get all the values
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()) {
+			// nothing to show yet!
+			return "None";
+		}
+
+		return cursor.getString(0);
+	}
+
+	/**
+	 * Update the SongData database. Given a map of the new songs and their
+	 * data, we update/insert the necessary rows with new info.
+	 * 
+	 * @param songMap
+	 *            a map of song title -> [times guessed, times skipped]
+	 * @return the number of unique songs added to the database
+	 */
+	private int updateSongs(Map<String, int[]> songMap) {
+		int uniqueSongs = 0;
+
+		// gets the data repository in read/write mode
+		SQLiteDatabase db = getWritableDatabase();
+
+		// columns we want
+		String[] projection = { SongData.COLUMN_NAME_TIMES_GUESSED,
+				SongData.COLUMN_NAME_TIMES_SKIPPED,
+				SongData.COLUMN_NAME_TIMES_PLAYED };
+
+		// loop over all entries in map, insert/update rows in db
+		for (Entry<String, int[]> song : songMap.entrySet()) {
+			// we want to see if the song title is in the db (assuming song
+			// titles are unique)
+			String selection = SongData.COLUMN_NAME_SONG_TITLE + " = "
+					+ song.getKey();
+
+			Cursor cursor = db.query(SongData.TABLE_NAME, projection,
+					selection, null, null, null, null);
+
+			cursor.moveToFirst();
+			// there was no such record, insert new row
+			if (cursor.isAfterLast()) {
+				++uniqueSongs;
+
+				// create a new map of values, where column names are the keys
+				ContentValues values = new ContentValues();
+				values.put(SongData.COLUMN_NAME_SONG_TITLE, song.getKey());
+				values.put(SongData.COLUMN_NAME_TIMES_GUESSED,
+						song.getValue()[0]);
+				values.put(SongData.COLUMN_NAME_TIMES_SKIPPED,
+						song.getValue()[1]);
+				values.put(SongData.COLUMN_NAME_TIMES_PLAYED, 1);
+
+				// insert the new row!
+				db.insert(SongData.TABLE_NAME, null, values);
+			} else {
+				// create a new map of values, where column names are the keys
+				ContentValues values = new ContentValues();
+				values.put(SongData.COLUMN_NAME_TIMES_GUESSED,
+						song.getValue()[0] + cursor.getInt(0));
+				values.put(SongData.COLUMN_NAME_TIMES_SKIPPED,
+						song.getValue()[1] + cursor.getInt(1));
+				values.put(SongData.COLUMN_NAME_TIMES_PLAYED,
+						1 + cursor.getInt(2));
+
+				// update!
+				db.update(OverallData.TABLE_NAME, values, selection, null);
+			}
+		}
+
+		return uniqueSongs;
 	}
 
 	/**
@@ -332,28 +451,25 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 * @return whether or not it the user's first time playing
 	 */
 	public boolean isFirstTime() {
-		// gets the data repository in read mode
-		SQLiteDatabase db = getReadableDatabase();
+		// gets the data repository in read/write mode
+		SQLiteDatabase db = getWritableDatabase();
 
 		// columns we want
 		String[] projection = { FirstTime.COLUMN_NAME_FIRST_TIME };
 
-		Cursor cursor = db.query(FirstTime.TABLE_NAME, projection, null,
-				null, null, null, null);
+		Cursor cursor = db.query(FirstTime.TABLE_NAME, projection, null, null,
+				null, null, null);
 
 		// if there is something, then it is not the first time
 		cursor.moveToFirst();
 		// was first time, now make that false
 		if (cursor.isAfterLast()) {
-			// gets the data repository in write mode
-			SQLiteDatabase dbw = getWritableDatabase();
-
 			// create a new map of values, where column names are the keys
 			ContentValues values = new ContentValues();
 			values.put(FirstTime.COLUMN_NAME_FIRST_TIME, 1);
 
 			// insert the new row!
-			dbw.insert(FirstTime.TABLE_NAME, null, values);
+			db.insert(FirstTime.TABLE_NAME, null, values);
 
 			return true;
 		}

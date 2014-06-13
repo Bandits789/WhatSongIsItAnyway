@@ -32,6 +32,8 @@
     <string name="stats3Val">0</string>
     <string name="stats4Label">Songs Played:</string>
     <string name="stats4Val">0</string>
+    <string name="stats5Label">Most Guessed:</string>
+    <string name="stats5Val">None</string>
     <string name="mainMenuButton">This button takes you to the main menu</string>
     <string name="high1">Highest score</string>
     <string name="high1Val">0</string>

@@ -28,6 +28,7 @@ public final class GameDatabase {
 		public static final String COLUMN_NAME_AVG_GUESS_TIME = "avgguesstime";
 		public static final String COLUMN_NAME_ACCURACY = "accuracy";
 		public static final String COLUMN_NAME_SONGS_PLAYED = "songsplayed";
+		public static final String COLUMN_NAME_UNIQUE_SONGS_PLAYED = "uniquesongsplayed";
 	}
 
 	/**
@@ -40,6 +41,18 @@ public final class GameDatabase {
 		public static final String COLUMN_NAME_ACCURACY = "accuracy";
 		public static final String COLUMN_NAME_SCORE = "score";
 		public static final String COLUMN_NAME_SONGS_PLAYED = "songsplayed";
+	}
+
+	/**
+	 * SongData table. Has all the info for each song played so far
+	 */
+	public static abstract class SongData implements BaseColumns {
+		public static final String TABLE_NAME = "songdata";
+		public static final String COLUMN_NAME_TIMESTAMP = "timestamp";
+		public static final String COLUMN_NAME_SONG_TITLE = "songtitle";
+		public static final String COLUMN_NAME_TIMES_GUESSED = "timesguessed";
+		public static final String COLUMN_NAME_TIMES_SKIPPED = "timesskipped";
+		public static final String COLUMN_NAME_TIMES_PLAYED = "timesplayed";
 	}
 
 	/**
