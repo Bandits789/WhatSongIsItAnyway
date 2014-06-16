@@ -4,3 +4,4 @@
 hs_err*
 lint.xml
 .classpath
+.DS_Store

@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.Formatter;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.whatsongisitanyway.Analytics.TrackerName;
 import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
@@ -154,6 +157,12 @@ public class SettingsActivity extends Activity {
 		gameSec.setValue(seconds);
 		gameMins.setValue(minutes);
 		songSec.setValue(settings[1]);
+
+		// analytics stuff, send screen view
+		Tracker t = ((Analytics) getApplication())
+				.getTracker(TrackerName.APP_TRACKER);
+		t.setScreenName("com.whatsongisitanyway.SettingsActivity");
+		t.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override

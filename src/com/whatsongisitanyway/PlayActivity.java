@@ -29,6 +29,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.whatsongisitanyway.Analytics.TrackerName;
 import com.whatsongisitanyway.database.GameDatabaseHelper;
 import com.whatsongisitanyway.models.Game;
 import com.whatsongisitanyway.models.Music;
@@ -92,6 +95,12 @@ public class PlayActivity extends Activity implements
 
 		activity.getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+		// analytics stuff, send screen view
+		Tracker t = ((Analytics) getApplication())
+				.getTracker(TrackerName.APP_TRACKER);
+		t.setScreenName("com.whatsongisitanyway.PlayActivity");
+		t.send(new HitBuilders.AppViewBuilder().build());
 
 	}
 

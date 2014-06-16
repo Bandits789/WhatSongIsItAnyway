@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.whatsongisitanyway.Analytics.TrackerName;
 import com.whatsongisitanyway.database.GameDatabaseHelper;
 
 /**
@@ -16,11 +19,11 @@ import com.whatsongisitanyway.database.GameDatabaseHelper;
  * gamesPlayed, songsPlayed)
  */
 public class StatsActivity extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.stats);
 
 		// get stats from database
@@ -46,30 +49,37 @@ public class StatsActivity extends Activity {
 		gamesPlayed.setText((int) stats[2] + "");
 		songsPlayed.setText((int) stats[3] + "");
 		mostGuessed.setText(mostGuessedSong);
+
+		// analytics stuff, send screen view
+		Tracker t = ((Analytics) getApplication())
+				.getTracker(TrackerName.APP_TRACKER);
+		t.setScreenName("com.whatsongisitanyway.StatsActivity");
+		t.send(new HitBuilders.AppViewBuilder().build());
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	/**
 	 * Button listener that opens the high score menu when pressed
 	 * 
 	 * @param view
 	 */
-	public void highScoreButton (View view) {
+	public void highScoreButton(View view) {
 		Intent intent = new Intent(this, HighScoreActivity.class);
 		startActivity(intent);
 	}
-	
-	 /** Button listener that opens the main menu when pressed
+
+	/**
+	 * Button listener that opens the main menu when pressed
 	 * 
 	 * @param view
 	 */
-	public void mainMenuButton (View view) {
+	public void mainMenuButton(View view) {
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
