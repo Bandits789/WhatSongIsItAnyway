@@ -60,6 +60,7 @@ public class PlayActivity extends Activity implements
 	private int[] settings;
 
 	private final List<Music> songsList = new ArrayList<Music>();
+	private AudioManager audio;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class PlayActivity extends Activity implements
 		mediaPlayer = new MediaPlayer();
 
 		// make sure up/down volume buttons work
-		setVolumeControlStream(AudioManager.STREAM_MUSIC);
+		audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
 		// add enter listener must always return true for the keyboard to stay
 		final TextView songBox = (TextView) findViewById(R.id.songTextbox);
@@ -267,7 +268,7 @@ public class PlayActivity extends Activity implements
 			game.pause();
 			// hide play view and show resume overlay
 			setPauseOverlay(true);
-			
+
 			sendEvent("pause button");
 		}
 	}
@@ -321,7 +322,7 @@ public class PlayActivity extends Activity implements
 		// update scores
 		updateUILabel(R.id.streak, "Streak: " + game.getStreak());
 		updateUILabel(R.id.multiplier, "Multiplier: " + game.getMultiplier());
-		
+
 		sendScore("submit", points);
 	}
 
@@ -524,15 +525,20 @@ public class PlayActivity extends Activity implements
 		gameOver("give up");
 	}
 
-	/**
-	 * Make sure volume buttons work
-	 */
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)
-				|| (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
-			return super.onKeyUp(keyCode, event);
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_VOLUME_UP:
+			audio.adjustVolume(AudioManager.ADJUST_RAISE,
+					AudioManager.FLAG_SHOW_UI);
+			return true;
+		case KeyEvent.KEYCODE_VOLUME_DOWN:
+			audio.adjustVolume(AudioManager.ADJUST_LOWER,
+					AudioManager.FLAG_SHOW_UI);
+			return true;
+		default:
+			return false;
 		}
-		return true;
 	}
 
 	/**
