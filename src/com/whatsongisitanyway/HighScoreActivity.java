@@ -42,10 +42,10 @@ public class HighScoreActivity extends Activity {
 		high5.setText(String.valueOf(scores[4]));
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.HighScoreActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.HighScoreActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override

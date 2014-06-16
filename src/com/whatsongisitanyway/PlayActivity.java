@@ -54,8 +54,7 @@ public class PlayActivity extends Activity implements
 	private AtomicBoolean gaveUp = new AtomicBoolean(false);
 
 	private boolean firstTime = true;
-	private final String introMessage = "Enter the name of the song you hear. "
-			+ "Spelling and punctuation don't count!";
+	private Tracker tracker;
 
 	private GameDatabaseHelper dbHelper;
 	private int[] settings;
@@ -97,10 +96,10 @@ public class PlayActivity extends Activity implements
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.PlayActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.PlayActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 
 	}
 
@@ -209,7 +208,7 @@ public class PlayActivity extends Activity implements
 	 */
 	public void showIntro() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(introMessage).setCancelable(false)
+		builder.setMessage(R.string.introMessage).setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						startGame();
@@ -217,11 +216,13 @@ public class PlayActivity extends Activity implements
 				});
 		AlertDialog alert = builder.create();
 		alert.show();
+
+		sendEvent("first time");
 	}
 
 	/**
-	 * Either starts up media player if it is null, or skips to the next song if
-	 * a song is already playing
+	 * Skips to the next song (or starts playing if nothing is currently
+	 * playing). Also applies the skip penalty and shows the skipped song title.
 	 * 
 	 * @param view
 	 */
@@ -235,8 +236,8 @@ public class PlayActivity extends Activity implements
 			// penalty for skipping
 			game.skipPenalty();
 			// multiplier and streak are lost
-			updateUILabel(R.id.streak, "Streak: 0");
-			updateUILabel(R.id.multiplier, "Multiplier: 1");
+			updateUILabel(R.id.streak, getString(R.string.streak));
+			updateUILabel(R.id.multiplier, getString(R.string.multiplier));
 
 			// empty text box
 			updateUILabel(R.id.songTextbox, "");
@@ -246,6 +247,8 @@ public class PlayActivity extends Activity implements
 					Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
 			toast.show();
+
+			sendEvent("skip button");
 		}
 
 		goToNextSong();
@@ -257,15 +260,15 @@ public class PlayActivity extends Activity implements
 	 * @param view
 	 */
 	public void pause(View view) {
-		if (running) {
-			if (!paused) {
-				// if running and not paused, pause it
-				paused = true;
-				mediaPlayer.pause();
-				game.pause();
-				// hide play view and show resume overlay
-				setPauseOverlay(true);
-			}
+		if (running && !paused) {
+			// if running and not paused, pause it
+			paused = true;
+			mediaPlayer.pause();
+			game.pause();
+			// hide play view and show resume overlay
+			setPauseOverlay(true);
+			
+			sendEvent("pause button");
 		}
 	}
 
@@ -283,6 +286,8 @@ public class PlayActivity extends Activity implements
 			paused = false;
 			mediaPlayer.start();
 			game.resume();
+
+			sendEvent("resume button");
 		}
 	}
 
@@ -316,6 +321,8 @@ public class PlayActivity extends Activity implements
 		// update scores
 		updateUILabel(R.id.streak, "Streak: " + game.getStreak());
 		updateUILabel(R.id.multiplier, "Multiplier: " + game.getMultiplier());
+		
+		sendScore("submit", points);
 	}
 
 	/**
@@ -349,7 +356,7 @@ public class PlayActivity extends Activity implements
 			}
 		} else {
 			// we're done!
-			gameOver();
+			gameOver("no more songs");
 		}
 	}
 
@@ -380,7 +387,7 @@ public class PlayActivity extends Activity implements
 				}
 
 				// we ran out of time
-				gameOver();
+				gameOver("time out");
 			}
 		});
 
@@ -479,9 +486,12 @@ public class PlayActivity extends Activity implements
 	}
 
 	/**
-	 * Release the media player and go to the score screen
+	 * Release the media player, send score to db, and go to the score screen
+	 * 
+	 * @param reason
+	 *            reason for the game ending (time out, no more songs, gave up)
 	 */
-	private void gameOver() {
+	private void gameOver(final String reason) {
 		// prevent multiple give ups
 		if (gaveUp.getAndSet(true)) {
 			return;
@@ -498,6 +508,8 @@ public class PlayActivity extends Activity implements
 			stats = game.endGame();
 		}
 
+		sendScore(reason, score);
+
 		// Go to the score screen
 		Intent intent = new Intent(PlayActivity.this, GameScoreActivity.class)
 				.putExtra("stats", stats);
@@ -509,7 +521,7 @@ public class PlayActivity extends Activity implements
 	 * Called when the player clicks on the Give Up button.
 	 */
 	public void giveUp(View view) {
-		gameOver();
+		gameOver("give up");
 	}
 
 	/**
@@ -521,5 +533,36 @@ public class PlayActivity extends Activity implements
 			return super.onKeyUp(keyCode, event);
 		}
 		return true;
+	}
+
+	/**
+	 * Sends a button press event to Google Analytics
+	 * 
+	 * @param label
+	 *            label of the event (ie. the button pressed) in the format:
+	 *            R.string.label
+	 */
+	private void sendEvent(final String label) {
+		tracker.send(new HitBuilders.EventBuilder()
+				.setCategory(getString(R.string.playActivityCategory))
+				.setAction(label).build());
+
+	}
+
+	/**
+	 * Sends the score to Google Analytics, along with a label to determine if
+	 * the score is from submitting a song, giving up, or the game ending
+	 * 
+	 * @param label
+	 *            submit, give up, time up, or no more songs
+	 * @param score
+	 *            either the global game score, or the points earned for the
+	 *            guess
+	 */
+	private void sendScore(final String label, final int score) {
+		tracker.send(new HitBuilders.EventBuilder()
+				.setCategory(getString(R.string.playActivityCategory))
+				.setAction(label).setLabel("score").setValue(score).build());
+
 	}
 }

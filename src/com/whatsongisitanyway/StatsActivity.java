@@ -51,10 +51,10 @@ public class StatsActivity extends Activity {
 		mostGuessed.setText(mostGuessedSong);
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.StatsActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.StatsActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override

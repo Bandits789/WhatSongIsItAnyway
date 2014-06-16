@@ -26,6 +26,7 @@ import com.whatsongisitanyway.database.GameDatabaseHelper;
 public class SettingsActivity extends Activity {
 	private GameDatabaseHelper dbHelper;
 	private int[] settings;
+	private Tracker tracker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,10 +160,10 @@ public class SettingsActivity extends Activity {
 		songSec.setValue(settings[1]);
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.SettingsActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.SettingsActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override
@@ -175,32 +176,6 @@ public class SettingsActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
-
-	/**
-	 * On click on the save button, save the settings to the database and go
-	 * back to main menu
-	 * 
-	 * @param view
-	 */
-	public void saveButton(View view) {
-		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
-		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
-		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
-
-		// removes focus so the getValue method can get updated information
-		gameSec.clearFocus();
-		gameMins.clearFocus();
-		songSec.clearFocus();
-
-		// get everything in secs
-		int gameDuration = gameSec.getValue() + gameMins.getValue() * 60;
-		int songDuration = songSec.getValue();
-
-		dbHelper.updateSettings(gameDuration, songDuration);
-
-		Intent intent = new Intent(this, MainMenuActivity.class);
-		startActivity(intent);
 	}
 
 	/**
@@ -229,5 +204,41 @@ public class SettingsActivity extends Activity {
 		params = downButton.getLayoutParams();
 		params.height = 150;
 		params.width = 150;
+	}
+
+	/**
+	 * On click on the save button, save the settings to the database and go
+	 * back to main menu
+	 * 
+	 * @param view
+	 */
+	public void saveButton(View view) {
+		NumberPicker gameSec = (NumberPicker) findViewById(R.id.settingsGameSec);
+		NumberPicker gameMins = (NumberPicker) findViewById(R.id.settingsGameMin);
+		NumberPicker songSec = (NumberPicker) findViewById(R.id.settingsSongSec);
+
+		// removes focus so the getValue method can get updated information
+		gameSec.clearFocus();
+		gameMins.clearFocus();
+		songSec.clearFocus();
+
+		// get everything in secs
+		int gameDuration = gameSec.getValue() + gameMins.getValue() * 60;
+		int songDuration = songSec.getValue();
+
+		dbHelper.updateSettings(gameDuration, songDuration);
+
+		// send the settings to Google Analytics
+		tracker.send(new HitBuilders.EventBuilder()
+				.setCategory(getString(R.string.settingsActivityCategory))
+				.setAction("save settings").setLabel("game duration")
+				.setValue(gameDuration).build());
+		tracker.send(new HitBuilders.EventBuilder()
+				.setCategory(getString(R.string.settingsActivityCategory))
+				.setAction("save settings").setLabel("song duration")
+				.setValue(songDuration).build());
+
+		Intent intent = new Intent(this, MainMenuActivity.class);
+		startActivity(intent);
 	}
 }

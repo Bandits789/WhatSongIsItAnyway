@@ -13,7 +13,6 @@ import com.google.android.gms.analytics.Tracker;
 public class Analytics extends Application {
 
 	private static final String PROPERTY_ID = "UA-51968141-1";
-
 	public static int GENERAL_TRACKER = 0;
 
 	public enum TrackerName {

@@ -22,10 +22,10 @@ public class MainMenuActivity extends Activity {
 		setContentView(R.layout.main_menu);
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.MainMenuActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.MainMenuActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override

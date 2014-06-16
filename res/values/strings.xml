@@ -46,12 +46,14 @@
     <string name="high5">Fifth-highest score</string>
     <string name="high5Val">0</string>
     <string name="giveUpButton">Give up the game and quit</string>
-    <string name="playlistTitle">Choose a\n    Playlist</string>
     <string name="resumeButton">Resume</string>
     <string name="settingsTitle">Settings</string>
     <string name="settingsGameDuration">Game\nDuration:</string>
     <string name="settingsColon">:</string>
     <string name="settingsSongDuration">Song\nDuration:\n(sec.)</string>
     <string name="settingsSaveButton">Button used to save current settings</string>
+    <string name="introMessage">Enter the name of the song you hear. Spelling and punctuation don\'t count!</string>
+    <string name="playActivityCategory">Play Activity Category</string>
+    <string name="settingsActivityCategory">Settings Activity Category</string>
 
 </resources>

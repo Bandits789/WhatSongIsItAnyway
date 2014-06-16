@@ -30,10 +30,10 @@ public class GameScoreActivity extends Activity {
 		score.setText(scoreString);
 
 		// analytics stuff, send screen view
-		Tracker t = ((Analytics) getApplication())
+		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		t.setScreenName("com.whatsongisitanyway.GameScoreActivity");
-		t.send(new HitBuilders.AppViewBuilder().build());
+		tracker.setScreenName("com.whatsongisitanyway.GameScoreActivity");
+		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
 	@Override
