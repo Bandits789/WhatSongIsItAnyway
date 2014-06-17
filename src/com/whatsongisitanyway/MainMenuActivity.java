@@ -1,6 +1,7 @@
 package com.whatsongisitanyway;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,6 +42,9 @@ public class MainMenuActivity extends Activity {
 	 * @param view
 	 */
 	public void playButton(View view) {
+		// show loading dialog, first time may take a bit
+		ProgressDialog.show(this, getString(R.string.loadingLabel),
+				getString(R.string.loadingMessage));
 		Intent intent = new Intent(this, PlayActivity.class);
 		startActivity(intent);
 	}

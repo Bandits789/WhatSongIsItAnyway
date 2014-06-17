@@ -55,5 +55,7 @@
     <string name="introMessage">Enter the name of the song you hear. Spelling and punctuation don\'t count!</string>
     <string name="playActivityCategory">Play Activity Category</string>
     <string name="settingsActivityCategory">Settings Activity Category</string>
+    <string name="loadingLabel">Loading</string>
+    <string name="loadingMessage">Charging the flux capacitor&#8230;</string>
 
 </resources>
