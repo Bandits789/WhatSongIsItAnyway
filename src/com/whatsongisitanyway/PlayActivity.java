@@ -15,7 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,7 +42,6 @@ import com.whatsongisitanyway.models.Music;
  */
 public class PlayActivity extends Activity implements
 		LoaderManager.LoaderCallbacks<Cursor> {
-	private final Activity activity = this;
 	private Game game;
 	private MediaPlayer mediaPlayer;
 	private Music currentSong = null;
@@ -60,7 +58,7 @@ public class PlayActivity extends Activity implements
 	private int[] settings;
 
 	private final List<Music> songsList = new ArrayList<Music>();
-	private AudioManager audio;
+	private InputMethodManager inputMethodManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,22 +76,25 @@ public class PlayActivity extends Activity implements
 		// make a new media player
 		mediaPlayer = new MediaPlayer();
 
-		// make sure up/down volume buttons work
-		audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		// get keyboard controls
+		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-		// add enter listener must always return true for the keyboard to stay
+		// submit on enter
 		final TextView songBox = (TextView) findViewById(R.id.songTextbox);
 		songBox.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
 				if (event.getAction() == KeyEvent.ACTION_DOWN
 						&& keyCode == KeyEvent.KEYCODE_ENTER) {
 					submit(view);
+					return true; // keep keyboard up
 				}
-				return true;
+				// make sure android handles other keys down
+				return false;
 			}
 		});
 
-		activity.getWindow().setSoftInputMode(
+		// only command that will get keyboard to pop up upon opening app
+		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 		// analytics stuff, send screen view
@@ -192,11 +193,6 @@ public class PlayActivity extends Activity implements
 
 		// remove pause overlay
 		setPauseOverlay(false);
-
-		// show keyboard
-		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.toggleSoftInputFromWindow(this.getCurrentFocus()
-				.getWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
 		// start timer and play the first song
 		initTimerThread();
@@ -460,7 +456,7 @@ public class PlayActivity extends Activity implements
 	/**
 	 * Set the pause overlay screen visible or not on its own UI thread, as well
 	 * as setting guessing box to be enabled or not (the opposite of visible
-	 * variable)
+	 * variable) and keyboard to be shown/hidden
 	 * 
 	 * @param visible
 	 *            true for visible, false for invisible
@@ -473,13 +469,20 @@ public class PlayActivity extends Activity implements
 				View resumeView = findViewById(R.id.resumeOverlay);
 				TextView songBox = (TextView) findViewById(R.id.songTextbox);
 				songBox.setEnabled(!visible);
-				songBox = (TextView) findViewById(R.id.songTextbox);
 
 				if (visible) {
 					resumeView.setVisibility(View.VISIBLE);
 					songBox.setText("");
+					// hide keyboard
+					getWindow()
+							.setSoftInputMode(
+							WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 				} else {
 					resumeView.setVisibility(View.INVISIBLE);
+					// show keyboard (no idea why hide/show aren't parallel
+					// commands but this is the only thing that works)
+					inputMethodManager.toggleSoftInputFromWindow(
+							getCurrentFocus().getWindowToken(), 0, 0);
 				}
 			}
 		});
@@ -523,22 +526,6 @@ public class PlayActivity extends Activity implements
 	 */
 	public void giveUp(View view) {
 		gameOver("give up");
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_VOLUME_UP:
-			audio.adjustVolume(AudioManager.ADJUST_RAISE,
-					AudioManager.FLAG_SHOW_UI);
-			return true;
-		case KeyEvent.KEYCODE_VOLUME_DOWN:
-			audio.adjustVolume(AudioManager.ADJUST_LOWER,
-					AudioManager.FLAG_SHOW_UI);
-			return true;
-		default:
-			return false;
-		}
 	}
 
 	/**

@@ -91,6 +91,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + OverallData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + GameData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + SettingsData.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + SongData.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + FirstTime.TABLE_NAME);
 		onCreate(db);
 	}
@@ -404,7 +405,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 						1 + cursor.getInt(2));
 
 				// update!
-				db.update(OverallData.TABLE_NAME, values, selection, null);
+				db.update(SongData.TABLE_NAME, values, selection, null);
 			}
 		}
 
