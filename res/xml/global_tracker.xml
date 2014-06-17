@@ -4,6 +4,7 @@
 
     <!-- Enable automatic Activity measurement -->
     <bool name="ga_autoActivityTracking">true</bool>
+    <bool name="ga_reportUncaughtExceptions">true</bool>
 
     <!-- The screen names that will appear in reports -->
     <screenName name="com.whatsongisitanyway.GameScoreActivity">Game Score</screenName>
