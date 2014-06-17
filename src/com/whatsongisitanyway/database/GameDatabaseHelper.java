@@ -371,8 +371,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		for (Entry<String, int[]> song : songMap.entrySet()) {
 			// we want to see if the song title is in the db (assuming song
 			// titles are unique)
-			String selection = SongData.COLUMN_NAME_SONG_TITLE + " = "
-					+ song.getKey();
+			String selection = SongData.COLUMN_NAME_SONG_TITLE + " = \""
+					+ song.getKey() + "\"";
 
 			Cursor cursor = db.query(SongData.TABLE_NAME, projection,
 					selection, null, null, null, null);
