@@ -8,7 +8,7 @@
         android:id="@+id/settingsTitle"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/settingsTitle"

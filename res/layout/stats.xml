@@ -189,7 +189,7 @@
             android:paddingLeft="5dp"
             android:text="@string/stats5Val"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:typeface="sans" />
     </LinearLayout>
 
