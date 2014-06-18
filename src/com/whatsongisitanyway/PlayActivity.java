@@ -93,10 +93,6 @@ public class PlayActivity extends Activity implements
 			}
 		});
 
-		// only command that will get keyboard to pop up upon opening app
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
 		// analytics stuff, send screen view
 		tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
@@ -190,6 +186,10 @@ public class PlayActivity extends Activity implements
 		ProgressBar timerBar = (ProgressBar) findViewById(R.id.scoreBar);
 		timerBar.setMax(game.getDuration());
 		timerBar.setProgress(0);
+
+		// only command that will get keyboard to pop up upon opening app
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 		// remove pause overlay
 		setPauseOverlay(false);
