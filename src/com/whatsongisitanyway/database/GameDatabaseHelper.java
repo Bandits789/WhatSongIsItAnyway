@@ -186,32 +186,15 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		// get the number of *new* songs played and update the song database
 		int uniqueSongsPlayed = updateSongs(songMap);
 
-		// gets the data repository in read mode
-		SQLiteDatabase db = getReadableDatabase();
+		// gets the data repository in write mode
+		SQLiteDatabase db = getWritableDatabase();
 
-		// columns we want
-		String[] projection = { OverallData._ID,
-				OverallData.COLUMN_NAME_ACCURACY,
-				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
-				OverallData.COLUMN_NAME_GAMES_PLAYED,
-				OverallData.COLUMN_NAME_SONGS_PLAYED,
-				OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED };
-
-		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
-				null, null, null, null);
-
-		// get all the values
-		cursor.moveToFirst();
-		if (cursor.isAfterLast()) {
-			initialOverallStats(score, averageGuessTime, accuracy, songsPlayed);
-			return;
-		}
-		float id = cursor.getInt(0);
-		float oldAccuracy = cursor.getFloat(1);
-		float oldAvgGuessTime = cursor.getFloat(2);
-		int oldGamesPlayed = cursor.getInt(3);
-		int oldSongsPlayed = cursor.getInt(4);
-		int oldUniqueSongsPlayed = cursor.getInt(5);
+		float[] oldStats = getOverallStats();
+		float oldAccuracy = oldStats[0];
+		float oldAvgGuessTime = oldStats[1];
+		int oldGamesPlayed = (int) oldStats[2];
+		int oldSongsPlayed = (int) oldStats[3];
+		int oldUniqueSongsPlayed = (int) oldStats[4];
 
 		// find new values
 		int newSongsPlayed = oldSongsPlayed + songsPlayed;
@@ -232,39 +215,14 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		values.put(OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED,
 				newUniqueSongsPlayed);
 
-		String selection = OverallData._ID + " = " + id;
-
-		// update!
-		db.update(OverallData.TABLE_NAME, values, selection, null);
-	}
-
-	/**
-	 * Initially when there are no overall stats, insert the first game stats
-	 * into overall
-	 * 
-	 * @param score
-	 *            score of the most recent game
-	 * @param averageGuessTime
-	 *            average amount of time to guess the song
-	 * @param accuracy
-	 *            accuracy of guessing in the most recent game
-	 * @param songsPlayed
-	 *            songs played until end of most recent game
-	 */
-	private void initialOverallStats(int score, float averageGuessTime,
-			float accuracy, int songsPlayed) {
-		// gets the data repository in write mode
-		SQLiteDatabase db = getWritableDatabase();
-
-		// create a new map of values, where column names are the keys
-		ContentValues values = new ContentValues();
-		values.put(OverallData.COLUMN_NAME_ACCURACY, accuracy);
-		values.put(OverallData.COLUMN_NAME_AVG_GUESS_TIME, averageGuessTime);
-		values.put(OverallData.COLUMN_NAME_GAMES_PLAYED, 1);
-		values.put(OverallData.COLUMN_NAME_SONGS_PLAYED, songsPlayed);
-
-		// insert the new row!
-		db.insert(OverallData.TABLE_NAME, null, values);
+		// if this is the first stats update, insert
+		if (oldGamesPlayed == 0) {
+			db.insert(OverallData.TABLE_NAME, null, values);
+		} else {
+			// otherwise we update the first column
+			String selection = OverallData._ID + " = 1";
+			db.update(OverallData.TABLE_NAME, values, selection, null);
+		}
 	}
 
 	/**
@@ -287,7 +245,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	/**
 	 * Gets the overall stats in a float array
 	 * 
-	 * @return a float array of accuracy, avgGuessTime, gamesPlayed, songsPlayed
+	 * @return a float array of accuracy, avgGuessTime, gamesPlayed,
+	 *         songsPlayed, uniqueSongsPlayed
 	 */
 	public float[] getOverallStats() {
 		// gets the data repository in read mode
@@ -297,6 +256,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		String[] projection = { OverallData.COLUMN_NAME_ACCURACY,
 				OverallData.COLUMN_NAME_AVG_GUESS_TIME,
 				OverallData.COLUMN_NAME_GAMES_PLAYED,
+				OverallData.COLUMN_NAME_SONGS_PLAYED,
 				OverallData.COLUMN_NAME_UNIQUE_SONGS_PLAYED };
 
 		Cursor cursor = db.query(OverallData.TABLE_NAME, projection, null,
@@ -306,7 +266,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		cursor.moveToFirst();
 		if (cursor.isAfterLast()) {
 			// nothing to show yet!
-			float[] nothing = { 0, 0, 0, 0 };
+			float[] nothing = { 0, 0, 0, 0, 0 };
 			return nothing;
 		}
 
@@ -314,8 +274,10 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		float avgGuessTime = cursor.getFloat(1);
 		int gamesPlayed = cursor.getInt(2);
 		int songsPlayed = cursor.getInt(3);
+		int uniqueSongsPlayed = cursor.getInt(4);
 
-		float[] stats = { accuracy, avgGuessTime, gamesPlayed, songsPlayed };
+		float[] stats = { accuracy, avgGuessTime, gamesPlayed, songsPlayed,
+				uniqueSongsPlayed };
 
 		return stats;
 	}

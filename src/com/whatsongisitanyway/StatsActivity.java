@@ -47,7 +47,8 @@ public class StatsActivity extends Activity {
 		accuracy.setText(roundedAccuracy);
 		avgGuessTime.setText(roundedGuessTime);
 		gamesPlayed.setText((int) stats[2] + "");
-		songsPlayed.setText((int) stats[3] + "");
+		// stats[3] is total songs, stats[4] is unique songs
+		songsPlayed.setText((int) stats[4] + "");
 		mostGuessed.setText(mostGuessedSong);
 
 		// analytics stuff, send screen view
