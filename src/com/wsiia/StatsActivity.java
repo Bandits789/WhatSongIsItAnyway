@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import java.util.Locale;
 
@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
-import com.whatsongisitanyway.database.GameDatabaseHelper;
+import com.wsiia.Analytics.TrackerName;
+import com.wsiia.database.GameDatabaseHelper;
 
 /**
  * Activity that displays overall game stats (accuracy, avgGuessTime,
@@ -54,7 +54,7 @@ public class StatsActivity extends Activity {
 		// analytics stuff, send screen view
 		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.StatsActivity");
+		tracker.setScreenName("com.wsiia.StatsActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 

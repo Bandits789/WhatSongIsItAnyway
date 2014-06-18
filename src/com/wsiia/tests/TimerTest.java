@@ -1,11 +1,11 @@
-package com.whatsongisitanyway.tests;
+package com.wsiia.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.whatsongisitanyway.models.Timer;
+import com.wsiia.models.Timer;
 
 /**
  * Tests the timer running, pausing, and decrementing time. Warning: these tests

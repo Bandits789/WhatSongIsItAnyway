@@ -1,4 +1,4 @@
-package com.whatsongisitanyway.database;
+package com.wsiia.database;
 
 import android.provider.BaseColumns;
 

@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,10 +30,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
-import com.whatsongisitanyway.database.GameDatabaseHelper;
-import com.whatsongisitanyway.models.Game;
-import com.whatsongisitanyway.models.Music;
+import com.wsiia.Analytics.TrackerName;
+import com.wsiia.database.GameDatabaseHelper;
+import com.wsiia.models.Game;
+import com.wsiia.models.Music;
 
 /**
  * This is the activity where the game actually lies. This makes a music player,
@@ -96,7 +96,7 @@ public class PlayActivity extends Activity implements
 		// analytics stuff, send screen view
 		tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.PlayActivity");
+		tracker.setScreenName("com.wsiia.PlayActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 
 	}

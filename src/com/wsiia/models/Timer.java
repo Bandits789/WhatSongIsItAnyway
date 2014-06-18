@@ -1,4 +1,4 @@
-package com.whatsongisitanyway.models;
+package com.wsiia.models;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.whatsongisitanyway.tests;
+package com.wsiia.tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.whatsongisitanyway.models.Game;
-import com.whatsongisitanyway.models.Music;
+import com.wsiia.models.Game;
+import com.wsiia.models.Music;
 
 /**
  * Tests getting next song, guessing, and skipping songs. Timer stuff left to

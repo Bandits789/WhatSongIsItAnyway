@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
+import com.wsiia.Analytics.TrackerName;
 
 /**
  * This screen shows right after a game is over and shows the user's score/stats
@@ -32,7 +32,7 @@ public class GameScoreActivity extends Activity {
 		// analytics stuff, send screen view
 		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.GameScoreActivity");
+		tracker.setScreenName("com.wsiia.GameScoreActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 

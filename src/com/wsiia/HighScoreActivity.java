@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
-import com.whatsongisitanyway.database.GameDatabaseHelper;
+import com.wsiia.Analytics.TrackerName;
+import com.wsiia.database.GameDatabaseHelper;
 
 /**
  * Activity that displays the highest scores overall
@@ -44,7 +44,7 @@ public class HighScoreActivity extends Activity {
 		// analytics stuff, send screen view
 		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.HighScoreActivity");
+		tracker.setScreenName("com.wsiia.HighScoreActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 

@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import java.util.HashMap;
 

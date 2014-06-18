@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.whatsongisitanyway"
+    package="com.wsiia"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -13,7 +13,7 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.whatsongisitanyway.Analytics"
+        android:name="com.wsiia.Analytics"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -23,7 +23,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.whatsongisitanyway.MainMenuActivity"
+            android:name="com.wsiia.MainMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -33,27 +33,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.whatsongisitanyway.PlayActivity"
+            android:name="com.wsiia.PlayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.whatsongisitanyway.GameScoreActivity"
+            android:name="com.wsiia.GameScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.whatsongisitanyway.StatsActivity"
+            android:name="com.wsiia.StatsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.whatsongisitanyway.HighScoreActivity"
+            android:name="com.wsiia.HighScoreActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.whatsongisitanyway.SettingsActivity"
+            android:name="com.wsiia.SettingsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

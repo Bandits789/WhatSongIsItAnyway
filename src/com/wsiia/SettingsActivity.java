@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import java.util.Locale;
 
@@ -17,8 +17,8 @@ import android.widget.NumberPicker.Formatter;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
-import com.whatsongisitanyway.database.GameDatabaseHelper;
+import com.wsiia.Analytics.TrackerName;
+import com.wsiia.database.GameDatabaseHelper;
 
 /**
  * Page to set settings!
@@ -162,7 +162,7 @@ public class SettingsActivity extends Activity {
 		// analytics stuff, send screen view
 		tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.SettingsActivity");
+		tracker.setScreenName("com.wsiia.SettingsActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 

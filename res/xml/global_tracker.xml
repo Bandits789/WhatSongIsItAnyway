@@ -7,12 +7,12 @@
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
     <!-- The screen names that will appear in reports -->
-    <screenName name="com.whatsongisitanyway.GameScoreActivity">Game Score</screenName>
-    <screenName name="com.whatsongisitanyway.HighScoreActivity">High Score</screenName>
-    <screenName name="com.whatsongisitanyway.MainMenuActivity">Main Menu</screenName>
-    <screenName name="com.whatsongisitanyway.PlayActivity">Play</screenName>
-    <screenName name="com.whatsongisitanyway.SettingsActivity">Settings</screenName>
-    <screenName name="com.whatsongisitanyway.StatsActivity">Stats</screenName>
+    <screenName name="com.wsiia.GameScoreActivity">Game Score</screenName>
+    <screenName name="com.wsiia.HighScoreActivity">High Score</screenName>
+    <screenName name="com.wsiia.MainMenuActivity">Main Menu</screenName>
+    <screenName name="com.wsiia.PlayActivity">Play</screenName>
+    <screenName name="com.wsiia.SettingsActivity">Settings</screenName>
+    <screenName name="com.wsiia.StatsActivity">Stats</screenName>
     <!--  The following value should be replaced with correct property id. -->
     <string name="ga_trackingId">UA-51968141-1</string>
 </resources>

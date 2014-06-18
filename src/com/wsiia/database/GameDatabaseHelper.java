@@ -1,4 +1,4 @@
-package com.whatsongisitanyway.database;
+package com.wsiia.database;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,11 +9,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.whatsongisitanyway.database.GameDatabase.FirstTime;
-import com.whatsongisitanyway.database.GameDatabase.GameData;
-import com.whatsongisitanyway.database.GameDatabase.OverallData;
-import com.whatsongisitanyway.database.GameDatabase.SettingsData;
-import com.whatsongisitanyway.database.GameDatabase.SongData;
+import com.wsiia.database.GameDatabase.FirstTime;
+import com.wsiia.database.GameDatabase.GameData;
+import com.wsiia.database.GameDatabase.OverallData;
+import com.wsiia.database.GameDatabase.SettingsData;
+import com.wsiia.database.GameDatabase.SongData;
 
 /**
  * Bridges the gap between code and sqlite, helps with important things such as

@@ -1,4 +1,4 @@
-package com.whatsongisitanyway;
+package com.wsiia;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.whatsongisitanyway.Analytics.TrackerName;
+import com.wsiia.Analytics.TrackerName;
 
 /**
  * The first screen the user sees - navigates to settings, high scores, and
@@ -25,7 +25,7 @@ public class MainMenuActivity extends Activity {
 		// analytics stuff, send screen view
 		Tracker tracker = ((Analytics) getApplication())
 				.getTracker(TrackerName.APP_TRACKER);
-		tracker.setScreenName("com.whatsongisitanyway.MainMenuActivity");
+		tracker.setScreenName("com.wsiia.MainMenuActivity");
 		tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
 
