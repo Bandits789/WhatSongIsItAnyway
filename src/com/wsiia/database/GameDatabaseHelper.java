@@ -24,6 +24,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	// version.
 	public static final int DATABASE_VERSION = 1;
 	public static final String DATABASE_NAME = "WSIIAData.db";
+	private static final int defaultGameDuration = 3 * 60; // 3 min
+	private static final int defaultSongDuration = 20; // 20 secs
 
 	/**
 	 * Makes a database helper
@@ -235,8 +237,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
-		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, 2 * 60);
-		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, 10);
+		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, defaultGameDuration);
+		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, defaultSongDuration);
 
 		// insert the new row!
 		db.insert(SettingsData.TABLE_NAME, null, values);
@@ -284,7 +286,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 
 	/**
 	 * Get the most guessed song in the database. If there is a tie, the most
-	 * recently played song wins.
+	 * recently played song wins. If no song has been guessed correctly, None is
+	 * returned
 	 * 
 	 * @return the most guessed song's title
 	 */
@@ -293,7 +296,8 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = getReadableDatabase();
 
 		// columns we want
-		String[] projection = { SongData.COLUMN_NAME_SONG_TITLE };
+		String[] projection = { SongData.COLUMN_NAME_SONG_TITLE,
+				SongData.COLUMN_NAME_TIMES_GUESSED };
 		// first order by times guessed, then order by timestamp to break ties
 		String orderBy = SongData.COLUMN_NAME_TIMES_GUESSED + " DESC, "
 				+ SongData.COLUMN_NAME_TIMESTAMP + " DESC";
@@ -305,6 +309,11 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		cursor.moveToFirst();
 		if (cursor.isAfterLast()) {
 			// nothing to show yet!
+			return "None";
+		}
+
+		// if no songs have been guessed correctly
+		if (cursor.getInt(1) == 0) {
 			return "None";
 		}
 
@@ -395,7 +404,7 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 		if (cursor.isAfterLast()) {
 			// insert defaults
 			initialSettings();
-			int[] defaultSettings = { 2 * 60, 10 };
+			int[] defaultSettings = { defaultGameDuration, defaultSongDuration };
 			return defaultSettings;
 		}
 
