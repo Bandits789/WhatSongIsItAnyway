@@ -112,31 +112,19 @@ public class GameDatabaseHelper extends SQLiteOpenHelper {
 	 *            how long should the songs play for (seconds)
 	 */
 	public void updateSettings(int gameDuration, int songDuration) {
-		// gets the data repository in read mode
-		SQLiteDatabase db = getReadableDatabase();
-
-		// columns we want
-		String[] projection = { SettingsData._ID };
-
-		Cursor cursor = db.query(SettingsData.TABLE_NAME, projection, null,
-				null, null, null, null);
-
-		// get all the values
-		cursor.moveToFirst();
-
-		// get id
-		float id = cursor.getInt(0);
+		// gets the data repository in write mode
+		SQLiteDatabase db = getWritableDatabase();
 
 		// create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
 		values.put(SettingsData.COLUMN_NAME_GAME_DURATION, gameDuration);
 		values.put(SettingsData.COLUMN_NAME_SONG_DURATION, songDuration);
 
-		String selection = SettingsData._ID + " = ?";
-		String[] selectionArgs = { String.valueOf(id) };
+		// always update the first entry
+		String selection = SettingsData._ID + " = 1";
 
 		// update!
-		db.update(SettingsData.TABLE_NAME, values, selection, selectionArgs);
+		db.update(SettingsData.TABLE_NAME, values, selection, null);
 	}
 
 	/**
